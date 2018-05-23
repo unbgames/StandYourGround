@@ -1,0 +1,5 @@
+bin/
+dep/
+JOGO
+*.zip
+test.cpp
