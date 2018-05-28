@@ -15,6 +15,7 @@
 class SpriteVector : public Component {
     public:
         SpriteVector(GameObject& associated);
+        ~SpriteVector();
 
         // Adicionar uma sprite seta o currentSprite
         // para ela

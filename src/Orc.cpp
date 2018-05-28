@@ -1,51 +1,51 @@
-#include "../include/Elfa.h"
+#include "../include/Orc.h"
 #include "../include/InputManager.h"
 #include "../include/SpriteVector.h"
 
-Elfa* Elfa::elfa = nullptr;
+Orc* Orc::orc = nullptr;
 
-Elfa::Elfa(GameObject& associated) : Component(associated), 
+Orc::Orc(GameObject& associated) : Component(associated), 
                                      hp(100), direction("esq"), 
                                      facing("frente"), movement("idle") {
 }
 
-Elfa::~Elfa() {
+Orc::~Orc() {
 
 }
 
-void Elfa::Start() {
+void Orc::Start() {
 
 }
 
 
-void Elfa::Update(float dt) {
+void Orc::Update(float dt) {
     InputManager &inp = InputManager::GetInstance();
     velX = 0;
     velY = 0;
     // Seta o state do personagem que indica qual sprite sera renderizada
     // State sera movement + facing + direction
-    if(inp.IsKeyDown(A_KEY)) {
+    if(inp.IsKeyDown(LEFT_ARROW_KEY)) {
         movement = "run";
         direction = "esq";
         facing = "frente";
-        velX = -VELOCITY*dt;
-    } else if(inp.IsKeyDown(D_KEY)) {
+        velX = -ORC_VELOCITY*dt;
+    } else if(inp.IsKeyDown(RIGHT_ARROW_KEY)) {
         movement = "run";
         direction = "dir";
         facing = "frente";
-        velX = VELOCITY*dt;
+        velX = ORC_VELOCITY*dt;
     } else {
         movement = "idle";
     }
 
-    if(inp.IsKeyDown(W_KEY)) {
+    if(inp.IsKeyDown(UP_ARROW_KEY)) {
         movement = "run";
         facing = "costa";
-        velY = -VELOCITY*dt;
-    } else if(inp.IsKeyDown(S_KEY)) {
+        velY = -ORC_VELOCITY*dt;
+    } else if(inp.IsKeyDown(DOWN_ARROW_KEY)) {
         movement = "run";
         facing = "frente";
-        velY = VELOCITY*dt;
+        velY = ORC_VELOCITY*dt;
     } else {
         if (movement != "run") // Se o run for setado somente no A e D ele nao deixa idle aqui
             movement = "idle";
@@ -54,22 +54,22 @@ void Elfa::Update(float dt) {
     
 }
 
-void Elfa::Render() {
+void Orc::Render() {
 
 }
 
-bool Elfa::Is(std::string type) {
-    return type == "Elfa";
+bool Orc::Is(std::string type) {
+    return type == "Orc";
 }
 
-std::string Elfa::Type() {
-    return "Elfa";
+std::string Orc::Type() {
+    return "Orc";
 }
 
-void Elfa::NotifyCollision(GameObject &other) {
+void Orc::NotifyCollision(GameObject &other) {
 
 }
 
-std::string Elfa::GetState() {
+std::string Orc::GetState() {
     return movement + "_" + facing + "_" + direction;
 }

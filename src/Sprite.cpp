@@ -17,6 +17,7 @@ Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float f
 }
 
 Sprite::~Sprite() {
+    
 }
 
 int Sprite::GetWidth() {

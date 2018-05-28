@@ -1,17 +1,16 @@
-#ifndef ELFA_H
-#define ELFA_H
+#ifndef ORC_H
+#define ORC_H
 
 #include "GameObject.h"
 #include "Component.h"
 #include "Timer.h"
 
-const float VELOCITY = 100;
+const float ORC_VELOCITY = 100;
 
-
-class Elfa : public Component {
+class Orc : public Component {
     public:
-        Elfa(GameObject& associated);
-        ~Elfa();
+        Orc(GameObject& associated);
+        ~Orc();
         void Start();
         void Update(float dt);
         void Render();
@@ -21,7 +20,7 @@ class Elfa : public Component {
         
         std::string GetState();
 
-        static Elfa* elfa;
+        static Orc* orc;
     private:
         int hp;
         std::string direction; // esquerda ou direita

@@ -4,6 +4,10 @@ SpriteVector::SpriteVector(GameObject& associated) : Component(associated), curr
 
 }
 
+SpriteVector::~SpriteVector() {
+
+}
+
 void SpriteVector::AddSprite(std::string key, std::string file, int frameCount, float frameTime,
                        float secondsToSelfDestruct, Vec2 scale) {
     Sprite* spr = new Sprite(associated, file, frameCount, frameTime, secondsToSelfDestruct);
@@ -18,6 +22,7 @@ void SpriteVector::AddSprite(std::string key, std::string file, int frameCount, 
 void SpriteVector::SetCurSprite(std::string currentSprite) {
     if (sprites.find(currentSprite) == sprites.end()) {
         std::cout << "Tentando usar a sprite inexistente da key: " << currentSprite << std::endl;
+        exit(-1);
     } else {
         this->currentSprite = currentSprite;
     }
@@ -26,6 +31,7 @@ void SpriteVector::SetCurSprite(std::string currentSprite) {
 Sprite * SpriteVector::SpriteVector::GetCurSprite() {
     if(sprites.find(currentSprite) == sprites.end()) {
         std::cout << "Tentando pegar sprite vazia de chave: " << currentSprite << std::endl;
+        exit(-1);
     }
     return sprites[currentSprite];
 }
