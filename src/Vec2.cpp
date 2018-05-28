@@ -3,6 +3,12 @@
 #include <cmath>
 Vec2::Vec2() : x(0), y(0){
 }
+Vec2::Vec2(std::initializer_list<float> initList) {
+    if (initList.size() >= 2) {
+        x = initList.begin()[0];
+        y = initList.begin()[1];
+    }
+}
 
 Vec2::Vec2 (float _x, float _y) : x(_x), y(_y){
 }

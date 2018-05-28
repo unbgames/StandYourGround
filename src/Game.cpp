@@ -108,6 +108,7 @@ Game::Game(std::string title, int width, int height) : storedState(nullptr), wid
 		hasStarted = false;
 		return;
 	}
+
 	// Font Renderer
 	if(TTF_Init()==-1) {
 	    printf("TTF_Init: %s\n", TTF_GetError());
@@ -122,9 +123,9 @@ Game::Game(std::string title, int width, int height) : storedState(nullptr), wid
 	int w,h;
 	SDL_GetWindowSize(window, &w,&h);
 	std::cout<<"WINDOW SIZE: ("<<w<<','<<h<<')'<<std::endl;
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
 
 	srand(time(NULL));
-	SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" );
 	hasStarted = true;
 	dt = 0;
 	frameStart = 0;

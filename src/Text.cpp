@@ -5,7 +5,7 @@
 
 Text::Text(GameObject& associated, std::string fontFile, int fontSize, TextStyle style,
   std::string text, SDL_Color color) : Component(associated), font(nullptr), texture(nullptr), text(text),
-  style(style), fontFile(fontFile), fontSize(fontSize), color(color), fg({0, 0, 0}) {
+  style(style), fontFile(fontFile), fontSize(fontSize), color(color), fg({0, 0, 0, 0}) {
     RemakeTexture();
 }
 

@@ -46,7 +46,7 @@ void Sprite::Open(std::string file) {
     int w, h;
     if (SDL_QueryTexture(texture.get(), nullptr, nullptr, &w, &h) != 0) { // error
         SDL_DestroyTexture(texture.get());
-        std::cerr << "Error Sprite SDL: " << SDL_GetError() << std::endl;
+        // std::cerr << "Error Sprite SDL: " << SDL_GetError() << std::endl;
         return;
     }
     height = h;
@@ -58,16 +58,17 @@ void Sprite::Render() {
     Vec2 camPos = Camera::pos;
     // std::cout <<'('<< associated.box.GetX() + camPos.GetX()<<','<<associated.box.GetY() + camPos.GetY()<<')'<<std::endl;
     Render(associated.box.GetX() + camPos.GetX(), associated.box.GetY() + camPos.GetY());
-
 }
 
 void Sprite::Render(float x, float y) {
     SDL_Rect dstRect;
-
     dstRect.x = x;
     dstRect.y = y;
     dstRect.w = clipRect.w * scale.GetX();
     dstRect.h = clipRect.h * scale.GetY();
+
+    // std::cout << "Render at (" << x<<','<< y<<')';
+    // std::cout << "Size as (" << dstRect.h <<','<< dstRect.w <<')';
     if (texture == nullptr) {
         std::cerr << "Error Sprite: Trying to render null texture." <<std::endl;
     }
@@ -116,6 +117,10 @@ void Sprite::SetScale (float scaleX, float scaleY) {
     if (scaleX != 0 && scaleY != 0) {
         scale.Set(scaleX, scaleY);
     }
+}
+
+void Sprite::SetScale (Vec2 scale) {
+    SetScale(scale.GetX(), scale.GetY());
 }
 
 Vec2 Sprite::GetScale() {

@@ -1,0 +1,4 @@
+100 150
+sea.csv sea.png 10 10
+floor_base.csv floor_base.png 10 10
+decoracao.csv floor_base.png 10 10

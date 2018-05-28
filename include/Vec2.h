@@ -2,10 +2,12 @@
 #define VEC2_H
 
 #include <iostream>
+#include <initializer_list>
 
 class Vec2 {
 public:
     Vec2();
+    Vec2(std::initializer_list<float> list);
     Vec2(float x, float y);
     void Rotate(float rad);
     Vec2 GetRotated(float rad) const;

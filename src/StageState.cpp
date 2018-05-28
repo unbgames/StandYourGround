@@ -7,8 +7,7 @@
 #include "../include/PenguinBody.h"
 #include "../include/StageState.h"
 #include "../include/Sound.h"
-#include "../include/TileMap.h"
-#include "../include/TileSet.h"
+#include "../include/LayeredTile.h"
 #include "../include/InputManager.h"
 #include "../include/Camera.h"
 #include "../include/Collider.h"
@@ -36,27 +35,28 @@ StageState::StageState() : State(), music("./assets/audio/stageState.ogg"), rand
     bgObj->box.SetOrigin(0, 0);
     bgObj->box.SetSize(1024, 600);
 
-    auto tileSetObj = std::make_shared<GameObject>();
-    objectArray.push_back(tileSetObj);
-    TileSet *set = new TileSet(*tileSetObj, "./assets/img/tileset.png", 64, 64);
-    TileMap *tileMap = new TileMap(*tileSetObj, "./assets/map/tileMap.txt", set);
-    tileSetObj->AddComponent(tileMap);
+    auto tileObj = std::make_shared<GameObject>();
+    objectArray.push_back(tileObj);
+    LayeredTile *tileLayers = new LayeredTile(*tileObj, "./assets/map/", "levels.txt", {4, 4});
+    // TileSet *set = new TileSet(*tileSetObj, "./assets/map/sea.png", 10, 10);
+    // TileMap *tileMap = new TileMap(*tileSetObj, "./assets/map/sea.csv", set);
+    tileObj->AddComponent(tileLayers);
 
-    auto penguinObj = std::make_shared<GameObject>();
-    objectArray.push_back(penguinObj);
-    penguinObj->box.SetCenter(512, 300);
-    PenguinBody *penguin = new PenguinBody(*penguinObj);
-    Camera::Follow(penguinObj);
-    penguinObj->AddComponent(penguin);
+    // auto penguinObj = std::make_shared<GameObject>();
+    // objectArray.push_back(penguinObj);
+    // penguinObj->box.SetCenter(512, 300);
+    // PenguinBody *penguin = new PenguinBody(*penguinObj);
+    // Camera::Follow(penguinObj);
+    // penguinObj->AddComponent(penguin);
+    //
+    // auto alienObj = std::make_shared<GameObject>();
+    // objectArray.push_back(alienObj);
+    // alienObj->box.SetOrigin(700, 400);
+    // Alien *alien = new Alien(*alienObj, 5);
+    // alienObj->AddComponent(alien);
 
-    auto alienObj = std::make_shared<GameObject>();
-    objectArray.push_back(alienObj);
-    alienObj->box.SetOrigin(700, 400);
-    Alien *alien = new Alien(*alienObj, 5);
-    alienObj->AddComponent(alien);
-
-    std::cout<<alienObj->box.GetX()<<" " <<alienObj->box.GetY()<<" "<<alienObj->box.GetW()<<" "<<alienObj->box.GetH()<<std::endl;
-    std::cout<<penguinObj->box.GetX()<<" "<<penguinObj->box.GetY()<<" "<<penguinObj->box.GetW()<<" "<<penguinObj->box.GetH()<<std::endl;
+    // std::cout<<alienObj->box.GetX()<<" " <<alienObj->box.GetY()<<" "<<alienObj->box.GetW()<<" "<<alienObj->box.GetH()<<std::endl;
+    // std::cout<<penguinObj->box.GetX()<<" "<<penguinObj->box.GetY()<<" "<<penguinObj->box.GetW()<<" "<<penguinObj->box.GetH()<<std::endl;
 }
 
 StageState::~StageState() {

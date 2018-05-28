@@ -33,6 +33,7 @@ public:
     void SetClip(int x, int y, int w, int h);
     void SetClip(Rect rec);
     void SetScale(float scaleX, float scaleY);
+    void SetScale(Vec2 scale);
     Vec2 GetScale();
 
     void SetFrame(int frame);

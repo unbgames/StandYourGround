@@ -3,31 +3,23 @@
 
 #include <iostream>
 
-#include "Component.h"
+#include "Vec2.h"
 #include "TileSet.h"
 
-class TileMap : public Component {
+class TileMap {
 public:
-    TileMap (GameObject& associated, std::string file, TileSet *tileSet);
+    TileMap (std::string file, Vec2 mapSize);
     ~TileMap();
     void Load(std::string file);
-    void SetTileSet(TileSet *tileSet);
-    int At(int x, int y, int z = 0);
-    bool Is(std::string type);
-    std::string Type();
-    void Update(float dt);
-    void Render();
-    void RenderLayer(int layer, int cameraX = 0, int cameraY = 0);
     int GetWidth();
     int GetHeight();
-    int GetDepth();
+    int GetItem(unsigned int row, unsigned int column) const;
 
 private:
     std::vector<int> tileMatrix;
     TileSet *tileSet;
     int mapWidth;
     int mapHeight;
-    int mapDepth;
 };
 
 #endif /* TILEMAP_H */
