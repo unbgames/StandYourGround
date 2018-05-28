@@ -63,7 +63,7 @@ Game::Game(std::string title, int width, int height) : storedState(nullptr), wid
 		return;
 	}
 
-	int flags_mix = MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG;
+	int flags_mix = MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG;
     int init_mix = Mix_Init(flags_mix);
 	if ((init_mix&flags_mix) != flags_mix) {
 		printf("Error Mix_Init: %s\n", Mix_GetError());
@@ -164,7 +164,7 @@ Vec2 Game::GetWindowSize() {
 
 Game &Game::GetInstance() {
     if (instance == nullptr) {
-        instance = new Game("Lucas Mota Ribeiro 12/0016885", 1024, 600);
+        instance = new Game("Stand Your Ground", 1024, 600);
     }
     return *instance;
 }

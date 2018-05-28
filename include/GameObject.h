@@ -20,6 +20,7 @@ public:
     void AddComponent(Component *cpt);
     void RemoveComponent(Component *cpt);
     Component *GetComponent(std::string type);
+    Component *GetComponentByName(std::string name);
     bool HasComponent(std::string type);
     void Start();
     void NotifyCollision(GameObject &other);

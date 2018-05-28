@@ -70,6 +70,17 @@ Component *GameObject::GetComponent(std::string type) {
     //std::cout<<"GetCmp isDead:"<<((isDead)?"True":"False")<<std::endl;
     return nullptr;
 }
+
+Component *GameObject::GetComponentByName(std::string name) {
+    for (Component *cmp : components) {
+        if (cmp->GetName() == name) {
+            return cmp;
+        }
+    }
+    //std::cout<<"GetCmp isDead:"<<((isDead)?"True":"False")<<std::endl;
+    return nullptr;
+}
+
 bool GameObject::HasComponent(std::string type) {
     for (Component *cmp : components) {
         if (cmp->Is(type)) {

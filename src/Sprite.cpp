@@ -8,7 +8,7 @@
 
 Sprite::Sprite(GameObject &associated, int frameCount, float frameTime, float secondsToSelfDestruct) :
     Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount),
-    frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct) {
+    frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct), currentFrame(0) {
 }
 
 Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float frameTime,
@@ -123,19 +123,33 @@ Vec2 Sprite::GetScale() {
 
 void Sprite::Update(float dt) {
     timer.Update(dt);
-    if (secondsToSelfDestruct != 0) {
-        // std::cout<<"RECT:"<<associated.box.GetX()<<" "<<associated.box.GetY()<<" "<<associated.box.GetW()<<" "<<associated.box.GetH()<<std::endl;
-        // std::cout<<"TIME:"<<timer.Get()<<std::endl;
+    if (timer.Get() >= frameTime) {
+        timer.Restart();
+        currentFrame++;
+        if(currentFrame >= frameCount) {
+            currentFrame = 0;
+        }
+        SetFrame(currentFrame);
+    }
+    /*if (secondsToSelfDestruct != 0) {
         if (timer.Get() > secondsToSelfDestruct) {
             associated.RequestDelete();
         } else {
             long frame = static_cast<long>(std::floor(timer.Get()*1000/frameTime));
-            // if (frameCount == 3) std::cout<<"Elapsed:"<<timeElapsed<<" dt:"<<dt<<" Frame:"<<frame<<std::endl;
+            
             clipRect.x = (frame%frameCount)*width;
         }
     } else {
+        
         long frame = static_cast<long>(std::floor(timer.Get()*1000/frameTime));
+
         // if (frameCount == 3) std::cout<<"Elapsed:"<<timeElapsed<<" dt:"<<dt<<" Frame:"<<frame<<std::endl;
         clipRect.x = (frame%frameCount)*width;
-    }
+       
+    }*/
+}
+
+
+void Sprite::SetFrame(int frame) {
+    SetClip((width)*frame, 0, clipRect.w, clipRect.h);
 }

@@ -18,9 +18,13 @@ public:
     virtual void Start();
     virtual void NotifyCollision(GameObject &other);
 
+    void SetName(std::string name);
+    std::string GetName();
+
     const Rect GetBox() const;
 protected:
     GameObject &associated;
+    std::string name;
 };
 
 #endif /* COMPONENT_H */

@@ -15,3 +15,11 @@ void Component::NotifyCollision(GameObject &other) {
 const Rect Component::GetBox() const {
     return associated.box;
 }
+
+void Component::SetName(std::string name) {
+    this->name = name;
+}
+
+std::string Component::GetName() {
+    return name;
+}
