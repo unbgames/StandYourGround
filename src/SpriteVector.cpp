@@ -17,6 +17,9 @@ void SpriteVector::AddSprite(std::string key, std::string file, int frameCount, 
     spr->SetScale(scale.GetX(), scale.GetY());
     sprites[key] = spr;
     currentSprite = key;
+    if (sprites.size() == 1) {
+        associated.box.SetSize(spr->GetWidth(), spr->GetHeight());
+    }
 }
 
 void SpriteVector::SetCurSprite(std::string currentSprite) {

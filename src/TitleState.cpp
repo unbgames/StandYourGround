@@ -1,7 +1,6 @@
 #include "../include/TitleState.h"
 #include "../include/GameObject.h"
 #include "../include/InputManager.h"
-#include "../include/StageState.h"
 #include "../include/Text.h"
 #include "../include/Game.h"
 #include "../include/Sprite.h"
@@ -40,7 +39,7 @@ void TitleState::Update(float dt) {
     }
     if (inp.KeyPress(SPACE_KEY)) {
         quitRequested = true;
-        Game::GetInstance().Push(new StageState());
+        // Game::GetInstance().Push(new StageState());
         // std::cout<<"GOOD ";
     }
 }

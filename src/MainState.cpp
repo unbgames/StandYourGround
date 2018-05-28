@@ -7,6 +7,8 @@
 #include "../include/Elfa.h"
 #include "../include/Orc.h"
 #include "../include/Collider.h"
+#include "../include/Camera.h"
+#include "../include/LayeredTile.h"
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
     auto bgObj = std::make_shared<GameObject>();
@@ -20,6 +22,13 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     bgObj->box.SetOrigin(0, 0);
     bgObj->box.SetSize(1024, 600);
 
+    auto tileObj = std::make_shared<GameObject>();
+    objectArray.push_back(tileObj);
+    LayeredTile *tileLayers = new LayeredTile(*tileObj, "./assets/map/", "levels.txt", {4, 4});
+    // TileSet *set = new TileSet(*tileSetObj, "./assets/map/sea.png", 10, 10);
+    // TileMap *tileMap = new TileMap(*tileSetObj, "./assets/map/sea.csv", set);
+    tileObj->AddComponent(tileLayers);
+
     goElfa->box.SetOrigin(30, 30);
     SpriteVector *vectorElfa = new SpriteVector(*goElfa);
     goElfa->AddComponent(vectorElfa);
@@ -27,6 +36,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goElfa->AddComponent(player);
     Collider* colElfa = new Collider(*goElfa);
     goElfa->AddComponent(colElfa);
+    Camera::Follow(goElfa);
     objectArray.push_back(goElfa);
 
     goOrc->box.SetOrigin(60, 30);
@@ -37,6 +47,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     Collider *colOrc = new Collider(*goOrc);
     goOrc->AddComponent(colOrc);
     objectArray.push_back(goOrc);
+
 }
 
 MainState::~MainState() {
@@ -51,7 +62,7 @@ void MainState::LoadAssets() {
         vector->AddSprite("run_frente_dir", "./assets/img/elfa/correndo/elfa_run_dir.png", 4, 0.11, 0.0, {4, 4});
         vector->AddSprite("run_frente_esq", "./assets/img/elfa/correndo/elfa_run_esq.png", 4, 0.11, 0.0, {4, 4});
         vector->AddSprite("idle_frente_dir", "./assets/img/elfa/idle/elfa_idle_dir.png", 10, 0.11, 0.0, {4, 4});
-        
+
         vector->AddSprite("run_costa_dir", "./assets/img/elfa/correndo/elfa_run_costa_dir.png", 4, 0.11, 0.0, {4, 4});
         vector->AddSprite("idle_costa_dir", "./assets/img/elfa/idle/elfa_idle_costa_dir.png", 5, 0.11, 0.0, {4, 4});
         vector->AddSprite("run_costa_esq", "./assets/img/elfa/correndo/elfa_run_costa_esq.png", 4, 0.11, 0.0, {4, 4});
@@ -64,7 +75,7 @@ void MainState::LoadAssets() {
         vectorOrc->AddSprite("run_frente_dir", "./assets/img/orc/correndo/orc_run_dir.png", 4, 0.11, 0.0, {4, 4});
         vectorOrc->AddSprite("run_frente_esq", "./assets/img/orc/correndo/orc_run_esq.png", 4, 0.11, 0.0, {4, 4});
         vectorOrc->AddSprite("idle_frente_dir", "./assets/img/orc/idle/orc_idle_dir.png", 10, 0.11, 0.0, {4, 4});
-        
+
         vectorOrc->AddSprite("run_costa_dir", "./assets/img/orc/correndo/orc_run_costa_dir.png", 4, 0.11, 0.0, {4, 4});
         vectorOrc->AddSprite("idle_costa_dir", "./assets/img/orc/idle/orc_idle_costa_dir.png", 5, 0.11, 0.0, {4, 4});
         vectorOrc->AddSprite("run_costa_esq", "./assets/img/orc/correndo/orc_run_costa_esq.png", 4, 0.11, 0.0, {4, 4});
@@ -77,6 +88,7 @@ bool MainState::QuitRequested() {
 }
 
 void MainState::Update(float dt) {
+    Camera::Update(dt);
     InputManager &inp = InputManager::GetInstance();
     if (inp.QuitRequested()) {
         quitRequested = true;
@@ -101,7 +113,6 @@ void MainState::Update(float dt) {
 void MainState::Render() {
     RenderArray();
 }
-
 
 void MainState::Start() {
     LoadAssets();
