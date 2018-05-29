@@ -12,6 +12,7 @@ public:
     bool Contains(float x, float y) const;
     Vec2 Center() const;
     Vec2 Origin() const;
+    Vec2 BottomLeft() const;
     static float CenterDist(const Rect &a, const Rect &b);
 
     void Shift(float dx, float dy);

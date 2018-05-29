@@ -1,4 +1,5 @@
 #include "../include/State.h"
+#include <algorithm>
 
 State::State() : popRequested(false), quitRequested(false), started(false){
 }
@@ -57,6 +58,17 @@ void State::UpdateArray(float dt) {
             objectArray[i]->Update(dt);
         }
     }
+    // Reorder, first by layer, and than from position. Lower renders first..
+    std::sort(objectArray.begin(), objectArray.end(), [] (const std::shared_ptr<GameObject> obj1,
+      const std::shared_ptr<GameObject> obj2) {
+        if ((*obj1).layer < (*obj2).layer) return true;
+        if ((*obj1).layer > (*obj2).layer) return false;
+
+        if ((*obj1).box.BottomLeft().GetY() < (*obj2).box.BottomLeft().GetY()) return true;
+        else {
+            return false;
+        }
+    });
 }
 
 void State::RenderArray() {

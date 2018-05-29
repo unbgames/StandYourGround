@@ -27,6 +27,7 @@ public:
 
     Rect box;
     float angle;
+    unsigned int layer;
 
 private:
     std::vector<Component*> components;

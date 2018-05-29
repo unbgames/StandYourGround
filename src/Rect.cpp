@@ -13,6 +13,10 @@ Vec2 Rect::Center() const {
     return Vec2(x+w/2, y + h/2);
 }
 
+Vec2 Rect::BottomLeft() const {
+    return Vec2(x, y+h);
+}
+
 Vec2 Rect::Origin() const {
     return Vec2(x, y);
 }

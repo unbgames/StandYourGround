@@ -18,6 +18,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     Sprite *spr = new Sprite(*bgObj, "./assets/img/ocean.jpg");
     bgObj->AddComponent(spr);
     CameraFollower *followerBg = new CameraFollower(*bgObj);
+    bgObj->layer = 0;
     bgObj->AddComponent(followerBg);
     bgObj->box.SetOrigin(0, 0);
     bgObj->box.SetSize(1024, 600);
@@ -25,8 +26,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     auto tileObj = std::make_shared<GameObject>();
     objectArray.push_back(tileObj);
     LayeredTile *tileLayers = new LayeredTile(*tileObj, "./assets/map/", "levels.txt", {4, 4});
-    // TileSet *set = new TileSet(*tileSetObj, "./assets/map/sea.png", 10, 10);
-    // TileMap *tileMap = new TileMap(*tileSetObj, "./assets/map/sea.csv", set);
+    tileObj->layer = 1;
     tileObj->AddComponent(tileLayers);
 
     goElfa->box.SetOrigin(30, 30);
@@ -37,6 +37,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     Collider* colElfa = new Collider(*goElfa);
     goElfa->AddComponent(colElfa);
     Camera::Follow(goElfa);
+    goElfa->layer = 2;
     objectArray.push_back(goElfa);
 
     goOrc->box.SetOrigin(60, 30);
@@ -46,6 +47,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goOrc->AddComponent(enemy);
     Collider *colOrc = new Collider(*goOrc);
     goOrc->AddComponent(colOrc);
+    goOrc->layer = 2;
     objectArray.push_back(goOrc);
 
 }
