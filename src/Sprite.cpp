@@ -8,7 +8,7 @@
 
 Sprite::Sprite(GameObject &associated, int frameCount, float frameTime, float secondsToSelfDestruct) :
     Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount),
-    currentFrame(0), frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct) {
+    currentFrame(0), frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct), hide(false), offset({0, 0}) {
 }
 
 Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float frameTime,
@@ -17,7 +17,7 @@ Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float f
 }
 
 Sprite::~Sprite() {
-
+    std::cout << "DELETOU SPRITE" << std::endl;
 }
 
 int Sprite::GetWidth() {
@@ -55,9 +55,10 @@ void Sprite::Open(std::string file) {
 }
 
 void Sprite::Render() {
-    Vec2 camPos = Camera::pos;
-    // std::cout <<'('<< associated.box.GetX() + camPos.GetX()<<','<<associated.box.GetY() + camPos.GetY()<<')'<<std::endl;
-    Render(associated.box.GetX() + camPos.GetX(), associated.box.GetY() + camPos.GetY());
+    if(!hide) { 
+        Vec2 camPos = Camera::pos;
+        Render(associated.box.GetX() + camPos.GetX() + offset.GetX(), associated.box.GetY() + camPos.GetY() + offset.GetY());
+    }
 }
 
 void Sprite::Render(float x, float y) {
@@ -158,4 +159,16 @@ void Sprite::Update(float dt) {
 
 void Sprite::SetFrame(int frame) {
     SetClip((width)*frame, 0, clipRect.w, clipRect.h);
+}
+
+void Sprite::SetOffset(Vec2 offset) {
+    this->offset.Set(offset.GetX(), offset.GetY());
+}
+
+void Sprite::Hide() {
+    hide = true;
+}
+
+void Sprite::Show() {
+    hide = false;
 }

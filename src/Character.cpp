@@ -35,31 +35,49 @@ void Character::PlaySound(const std::string &key, int volume) {
 std::string Character::StateToString(const CharState &state) {
     std::string ret;
     // std::cerr << "STAT MOVE:" <<((state.move == Movement::idle) ?"MOVE":"IDLE")<< std::endl;
-    switch (state.move) {
-        case Movement::idle:
-            ret += "idle";
-        break;
-        case Movement::run:
-            ret += "run";
-        break;
+    if(state.act == Action::no_action) {
+        switch (state.move) {
+            case Movement::idle:
+                ret += "idle";
+            break;
+            case Movement::run:
+                ret += "run";
+            break;
+        }
+        ret += '_';
+        switch (state.face) {
+            case Facing::up:
+                ret += "costa";
+            break;
+            case Facing::down:
+                ret += "frente";
+            break;
+        }
+        ret += '_';
+        switch (state.dir) {
+            case Direction::esq:
+                ret += "esq";
+            break;
+            case Direction::dir:
+                ret += "dir";
+            break;
+        }
     }
-    ret += '_';
-    switch (state.face) {
-        case Facing::up:
-            ret += "costa";
-        break;
-        case Facing::down:
-            ret += "frente";
-        break;
-    }
-    ret += '_';
-    switch (state.dir) {
-        case Direction::esq:
-            ret += "esq";
-        break;
-        case Direction::dir:
-            ret += "dir";
-        break;
+    else {
+        switch(state.act) {
+            case Action::atq:
+                ret += "atq";
+                break;
+        }
+        ret += '_';
+        switch (state.dir) {
+            case Direction::esq:
+                ret += "esq";
+            break;
+            case Direction::dir:
+                ret += "dir";
+            break;
+        }
     }
     // std::cout<<"STATE:"<<ret<<std::endl;
     return ret;

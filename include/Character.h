@@ -22,26 +22,33 @@ enum class Movement {
     run,
 };
 
+enum class Action {
+    no_action,
+    atq,
+};
+
 typedef struct CharState {
     Direction dir;
     Facing face;
     Movement move;
+    Action act;
 
     CharState& operator=(const CharState& a)
     {
        dir = a.dir;
        face = a.face;
        move = a.move;
+       act = a.act;
        return *this;
    };
 
     bool operator==(const CharState& a) const
     {
-        return (dir == a.dir && face == a.face &&  move == a.move);
+        return (dir == a.dir && face == a.face &&  move == a.move && act == a.act);
     };
     bool operator!=(const CharState& a) const
     {
-        return !(dir == a.dir && face == a.face &&  move == a.move);
+        return !(dir == a.dir && face == a.face &&  move == a.move && act == a.act);
     };
 } CharState;
 

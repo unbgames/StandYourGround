@@ -22,9 +22,11 @@ public:
     std::string GetName();
 
     const Rect GetBox() const;
+
 protected:
     GameObject &associated;
     std::string name;
+    
 };
 
 #endif /* COMPONENT_H */

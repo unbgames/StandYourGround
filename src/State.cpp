@@ -54,8 +54,11 @@ void State::StartArray() {
 
 void State::UpdateArray(float dt) {
     for (unsigned int i = 0; i < objectArray.size(); i++) {
+        objectArray[i]->Update(dt);
         if (objectArray[i] != nullptr) {
-            objectArray[i]->Update(dt);
+            if(objectArray[i]->IsDead()) {
+                objectArray.erase(objectArray.begin() + i);
+            }
         }
     }
     // Reorder, first by layer, and than from position. Lower renders first..

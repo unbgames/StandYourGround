@@ -5,7 +5,7 @@
 Elfa* Elfa::elfa = nullptr;
 
 Elfa::Elfa(GameObject& associated) : Character(associated,
-  {Direction::esq, Facing::up, Movement::idle}), timer(true) {
+  {Direction::esq, Facing::up, Movement::idle, Action::no_action}), timer(true) {
     hp = 100;
     speed = 100;
     AddSound("footstep", "./assets/audio/footstep.wav");

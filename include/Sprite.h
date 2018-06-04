@@ -40,6 +40,11 @@ public:
     void SetFrameCount(int frameCount);
     void SetFrameTime(float frameTime);
 
+
+    void SetOffset(Vec2 offset);
+    void Hide();
+    void Show();
+
 private:
     std::shared_ptr<SDL_Texture> texture;
     SDL_Rect clipRect;
@@ -51,6 +56,9 @@ private:
     float frameTime;
     float secondsToSelfDestruct;
     Timer timer;
+
+    Vec2 offset;
+    bool hide;
 };
 
 #endif /* SPRITE_H */

@@ -6,7 +6,7 @@
 Orc* Orc::orc = nullptr;
 
 Orc::Orc(GameObject& associated) : Character(associated,
-  {Direction::esq, Facing::up, Movement::idle}) {
+  {Direction::esq, Facing::up, Movement::idle, Action::no_action}) {
     hp = 100;
     speed = 100;
     AddSound("footstep", "./assets/audio/footstep.wav");
@@ -25,7 +25,7 @@ void Orc::Update(float dt) {
     velY = 0;
     // Seta o state do personagem que indica qual sprite sera renderizada
     // State sera movement + facing + direction
-    CharState newState = {state.dir, state.face, Movement::idle};
+    CharState newState = {state.dir, state.face, Movement::idle, Action::no_action};
     if(inp.IsKeyDown(LEFT_ARROW_KEY)) {
         newState = {
             Direction::esq,
@@ -54,6 +54,8 @@ void Orc::Update(float dt) {
             Movement::run,
         };
         velY = speed * dt;
+    } else if(inp.IsKeyDown(SPACE_KEY)) {
+        newState.act = Action::atq;
     } else {
         // Se o run for setado somente no A e D ele nao deixa idle aqui
         state.move = Movement::idle;
@@ -81,6 +83,7 @@ void Orc::Update(float dt) {
         state = newState;
         // std::cout<<"CHANGED STATE:"<<StateToString(state)<<std::endl;
     }
+    oldBox = associated.box;
     associated.box.Shift(shift);
 }
 
@@ -97,5 +100,7 @@ std::string Orc::Type() {
 }
 
 void Orc::NotifyCollision(GameObject &other) {
-
+    if(other.GetComponent("Item") == nullptr) {
+        associated.box = oldBox;
+    }
 }

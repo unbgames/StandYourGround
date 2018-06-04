@@ -71,7 +71,6 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goItem->AddComponent(new Item(*goItem));
     goItem->layer = 1;
     objectArray.push_back(goItem);
-
 }
 
 MainState::~MainState() {
@@ -103,6 +102,9 @@ void MainState::LoadAssets() {
         vectorOrc->AddSprite("idle_costa_dir", "./assets/img/orc/idle/orc_idle_costa_dir.png", 5, 0.11, 0.0, {4, 4});
         vectorOrc->AddSprite("run_costa_esq", "./assets/img/orc/correndo/orc_run_costa_esq.png", 4, 0.11, 0.0, {4, 4});
         vectorOrc->AddSprite("idle_costa_esq", "./assets/img/orc/idle/orc_idle_costa_esq.png", 5, 0.11, 0.0, {4, 4});
+
+        vectorOrc->AddSprite("atq_dir", "./assets/img/orc/atq/orc_atq_dir.png", 9, 0.04, 0.0, {4, 4});
+        vectorOrc->AddSprite("atq_esq", "./assets/img/orc/atq/orc_atq_esq.png", 9, 0.04, 0.0, {4, 4});
     }
 }
 
