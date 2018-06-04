@@ -14,7 +14,12 @@
 #include "../include/Tree.h"
 #include "../include/Text.h"
 #include "../include/GameTimer.h"
+#include "../include/Debug.h"
 
+#ifdef DEBUG
+    bool DEBUG_GO = false;
+    bool DEBUG_TILE = false;
+#endif // DEBUG
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
     auto bgObj = std::make_shared<GameObject>();
@@ -147,12 +152,24 @@ void MainState::Update(float dt) {
     Camera::Update(dt);
 
     InputManager &inp = InputManager::GetInstance();
+
+    #ifdef DEBUG
+        if (inp.KeyPress(F1_KEY)) { // Game Object
+            DEBUG_GO = !DEBUG_GO;
+        }
+        if (inp.KeyPress(F2_KEY)) {
+            DEBUG_TILE = !DEBUG_TILE;
+        }
+    #endif // DEBUG
+
+
     if (inp.QuitRequested()) {
         quitRequested = true;
     }
     if (inp.KeyPress(ESCAPE_KEY)) {
         quitRequested = true;
     }
+
     Elfa *elfa = (Elfa *) goElfa->GetComponent("Elfa");
     SpriteVector *sprVec = (SpriteVector *) goElfa->GetComponent("SpriteVector");
     if(elfa != nullptr && sprVec != nullptr) {

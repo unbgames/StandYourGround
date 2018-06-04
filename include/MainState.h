@@ -21,7 +21,6 @@ class MainState : public State {
         bool started;
         std::shared_ptr<GameObject> goElfa;
         std::shared_ptr<GameObject> goOrc;
-        
 };
 
 #endif

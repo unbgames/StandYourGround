@@ -75,29 +75,6 @@ void Sprite::Render(float x, float y) {
     }
     SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(), &clipRect, &dstRect, associated.angle*180/PI,
         nullptr, SDL_FLIP_NONE);
-#ifdef DEBUG
-	SDL_Point points[5];
-
-	Vec2 point = (associated.box.Origin() - associated.box.Center()).GetRotated( associated.angle )
-					+ associated.box.Center() + Camera::pos;
-	points[0] = {(int)point.GetX(), (int)point.GetY()};
-	points[4] = {(int)point.GetX(), (int)point.GetY()};
-
-	point = (Vec2(associated.box.GetX() + associated.box.GetW(), associated.box.GetY()) - associated.box.Center()).GetRotated( associated.angle)
-					+ associated.box.Center() + Camera::pos;
-	points[1] = {(int)point.GetX(), (int)point.GetY()};
-
-	point = (Vec2(associated.box.GetX() + associated.box.GetW(), associated.box.GetY() + associated.box.GetH()) - associated.box.Center()).GetRotated( associated.angle)
-					+ associated.box.Center() + Camera::pos;
-	points[2] = {(int)point.GetX(), (int)point.GetY()};
-
-	point = (Vec2(associated.box.GetX(), associated.box.GetY() + associated.box.GetH()) - associated.box.Center()).GetRotated( associated.angle)
-					+ associated.box.Center() + Camera::pos;
-	points[3] = {(int)point.GetX(), (int)point.GetY()};
-
-	SDL_SetRenderDrawColor(Game::GetInstance().GetRenderer(), ((secondsToSelfDestruct == 0)?255:0), 70, ((secondsToSelfDestruct == 0)?0:255), SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawLines(Game::GetInstance().GetRenderer(), points, 5);
-#endif // DEBUG
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {

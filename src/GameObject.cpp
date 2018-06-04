@@ -4,7 +4,9 @@
 
 #include "../include/Component.h"
 #include "../include/GameObject.h"
+#include "../include/Camera.h"
 #include "../include/Game.h"
+#include "../include/Debug.h"
 
 GameObject::GameObject() : angle(0), isDead(false), started(false) {
 }
@@ -31,6 +33,31 @@ void GameObject::Render() {
         if (cmp != nullptr) {
             cmp->Render();
         }
+    }
+
+    if (DEBUG_GO) {
+    	SDL_Point points[5];
+
+    	Vec2 point = (box.Origin() - box.Center()).GetRotated(angle )
+    					+ box.Center() + Camera::pos;
+    	points[0] = {(int)point.GetX(), (int)point.GetY()};
+    	points[4] = {(int)point.GetX(), (int)point.GetY()};
+
+    	point = (Vec2(box.GetX() + box.GetW(), box.GetY()) - box.Center()).GetRotated(angle)
+    					+ box.Center() + Camera::pos;
+    	points[1] = {(int)point.GetX(), (int)point.GetY()};
+
+    	point = (Vec2(box.GetX() + box.GetW(), box.GetY() + box.GetH()) - box.Center()).GetRotated(angle)
+    					+ box.Center() + Camera::pos;
+
+        points[2] = {(int)point.GetX(), (int)point.GetY()};
+
+    	point = (Vec2(box.GetX(), box.GetY() + box.GetH()) - box.Center()).GetRotated(angle)
+    					+ box.Center() + Camera::pos;
+    	points[3] = {(int)point.GetX(), (int)point.GetY()};
+
+    	SDL_SetRenderDrawColor(Game::GetInstance().GetRenderer(), 0, 70, 255, SDL_ALPHA_OPAQUE);
+    	SDL_RenderDrawLines(Game::GetInstance().GetRenderer(), points, 5);
     }
     //std::cout<<"Render isDead:"<<((isDead)?"True":"False")<<std::endl;
 }

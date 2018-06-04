@@ -11,6 +11,9 @@
 #define S_KEY               SDLK_s
 #define SPACE_KEY           SDLK_SPACE
 #define ESCAPE_KEY          SDLK_ESCAPE
+#define F1_KEY              SDLK_F1
+#define F2_KEY              SDLK_F2
+#define F3_KEY              SDLK_F3
 
 #define LEFT_MOUSE_BUTTON   SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON  SDL_BUTTON_RIGHT
