@@ -62,6 +62,7 @@ protected:
     void PlaySound(const std::string &key, int volume = 128);
 
     float velX, velY;
+    Rect oldBox;
 };
 
 #endif /* CHARACTER_H */

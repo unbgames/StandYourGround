@@ -4,6 +4,7 @@
 
 #include "../include/Component.h"
 #include "../include/GameObject.h"
+#include "../include/Game.h"
 
 GameObject::GameObject() : angle(0), isDead(false), started(false) {
 }
@@ -22,11 +23,14 @@ void GameObject::Update(float dt) {
     for (Component *cmp : components) {
         if (cmp != nullptr) cmp->Update(dt);
     }
+
 }
 
 void GameObject::Render() {
     for (Component *cmp : components) {
-        if (cmp != nullptr) cmp->Render();
+        if (cmp != nullptr) {
+            cmp->Render();
+        }
     }
     //std::cout<<"Render isDead:"<<((isDead)?"True":"False")<<std::endl;
 }

@@ -75,6 +75,7 @@ void Elfa::Update(float dt) {
         state = newState;
         // std::cout<<"CHANGED STATE:"<<StateToString(state)<<std::endl;
     }
+    oldBox = associated.box;
     associated.box.Shift(shift);
 }
 
@@ -91,5 +92,7 @@ std::string Elfa::Type() {
 }
 
 void Elfa::NotifyCollision(GameObject &other) {
-
+    if(other.GetComponent("Item") == nullptr) {
+        associated.box = oldBox;
+    }
 }

@@ -9,6 +9,8 @@
 #include "../include/Collider.h"
 #include "../include/Camera.h"
 #include "../include/LayeredTile.h"
+#include "../include/Item.h"
+#include "../include/Collision.h"
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
     auto bgObj = std::make_shared<GameObject>();
@@ -35,21 +37,40 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     Elfa* player = new Elfa(*goElfa);
     Elfa::elfa = player;
     goElfa->AddComponent(player);
-    Collider* colElfa = new Collider(*goElfa);
+    Collider* colElfa = new Collider(*goElfa, {0.9, 0.9});
     goElfa->AddComponent(colElfa);
     Camera::Follow(goElfa);
     goElfa->layer = 2;
     objectArray.push_back(goElfa);
 
-    goOrc->box.SetOrigin(60, 30);
+    goOrc->box.SetOrigin(100, 300);
     SpriteVector *vectorOrc = new SpriteVector(*goOrc);
     goOrc->AddComponent(vectorOrc);
     Orc* enemy = new Orc(*goOrc);
     goOrc->AddComponent(enemy);
-    Collider *colOrc = new Collider(*goOrc);
+    Collider *colOrc = new Collider(*goOrc, {0.9, 0.9});
     goOrc->AddComponent(colOrc);
     goOrc->layer = 2;
     objectArray.push_back(goOrc);
+
+    auto goBoulder = std::make_shared<GameObject>();
+    goBoulder->box.SetOrigin(300, 300);
+    Sprite* boulderSprite = new Sprite(*goBoulder, "./assets/img/items/boulder.png");
+    goBoulder->AddComponent(boulderSprite);
+    goBoulder->box.SetSize(boulderSprite->GetWidth() - 35, boulderSprite->GetHeight());
+    goBoulder->AddComponent(new Collider(*goBoulder, {1, 1}, {35, 0}));
+    goBoulder->layer = 2;
+    objectArray.push_back(goBoulder);
+
+    auto goItem = std::make_shared<GameObject>();
+    goItem->box.SetOrigin(300, 100);
+    Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
+    goItem->AddComponent(itemSprite);
+    goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
+    goItem->AddComponent(new Collider(*goItem));
+    goItem->AddComponent(new Item(*goItem));
+    goItem->layer = 1;
+    objectArray.push_back(goItem);
 
 }
 
@@ -89,8 +110,18 @@ bool MainState::QuitRequested() {
     return quitRequested;
 }
 
+void checkCollision(GameObject* go1, GameObject* go2) {
+    Collider* col1 = (Collider *) go1->GetComponent("Collider");
+    Collider* col2 = (Collider *) go2->GetComponent("Collider");
+    if(Collision::IsColliding(col1->box, col2->box, go1->angle, go2->angle)) {
+        go1->NotifyCollision(*go2);
+        go2->NotifyCollision(*go1);
+    }
+}
+
 void MainState::Update(float dt) {
     Camera::Update(dt);
+    
     InputManager &inp = InputManager::GetInstance();
     if (inp.QuitRequested()) {
         quitRequested = true;
@@ -109,7 +140,19 @@ void MainState::Update(float dt) {
     if(orc != nullptr && sprVecOrc != nullptr) {
         sprVecOrc->SetCurSprite(Character::StateToString(orc->GetState()));
     }
+
     UpdateArray(dt);
+   
+    for(int i = 0; i < objectArray.size(); i++) {
+        GameObject* go1 = objectArray[i].get();
+        if(go1->GetComponent("Collider") != nullptr) {
+            for(int j = i + 1; j < objectArray.size(); j++) {
+                GameObject* go2 = objectArray[j].get();
+                if(go2->GetComponent("Collider") != nullptr)
+                    checkCollision(go1, go2);
+            }
+        }
+    }
 }
 
 void MainState::Render() {
