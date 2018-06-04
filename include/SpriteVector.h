@@ -35,4 +35,4 @@ class SpriteVector : public Component {
         std::string currentSprite;
 };
 
-#endif
+#endif /* SPRITEVECTOR_H */

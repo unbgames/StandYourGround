@@ -24,7 +24,7 @@ void TilePair::RenderAt(int offsetX, int offsetY) {
     // std::cout << "Map Size: ("<<mapSize.GetX() <<','<<mapSize.GetY()<<")"<<std::endl;
     for (unsigned int row = 0; row < mapSize.GetX(); row++) {
         for (unsigned int col = 0; col < mapSize.GetY(); col++) {
-            unsigned idx = col + row * mapSize.GetY();
+            // unsigned idx = col + row * mapSize.GetY();
             float posX = static_cast<float>((col * tileWidth * scale.GetX()) + offsetX);
             float posY = static_cast<float>((row * tileHeight * scale.GetY()) + offsetY);
 

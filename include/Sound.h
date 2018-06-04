@@ -9,12 +9,13 @@
 
 class Sound : public Component {
 public:
-    Sound(GameObject &associated);
-    Sound(GameObject &associated, std::string file);
+    Sound(GameObject &associated, bool shouldReplay = false);
+    Sound(GameObject &associated, std::string file, bool shouldReplay = false);
     ~Sound();
 
     void Play(int times = 1);
     bool Playing();
+    void SetVolume(unsigned int volume);
     void Stop();
     void Open(std::string file);
     bool IsOpen();
@@ -24,9 +25,13 @@ public:
     bool Is(std::string type);
     std::string Type();
 
+    bool started;
+
 private:
     std::shared_ptr<Mix_Chunk> chunk;
+    unsigned int volume;
     int channel;
+    bool shouldReplay;
 };
 
 #endif /* SOUND_H */

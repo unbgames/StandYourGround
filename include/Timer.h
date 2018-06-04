@@ -3,14 +3,18 @@
 
 class Timer {
 public:
-    Timer();
+    Timer(bool startPaused = false);
 
     void Update(float dt);
     void Restart();
     float Get();
+    void Pause();
+    void Stop();
+    void Start();
 
 private:
     float time;
+    bool paused;
 };
 
 #endif /* TIMER_H */

@@ -40,6 +40,9 @@ void LayeredTile::Load(std::string file) {
 int LayeredTile::At(unsigned int x, unsigned int y, unsigned int z) {
     if (x < mapWidth && y < mapHeight && z < mapDepth) {
         return tileLayers[z].GetMapAt(x, y);
+    } else {
+        std::cout << "Out of bounds."<<std::endl;
+        return -100;
     }
 }
 

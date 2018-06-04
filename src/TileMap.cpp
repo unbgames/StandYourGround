@@ -5,7 +5,7 @@
 #include "../include/TileMap.h"
 #include "../include/Camera.h"
 
-TileMap::TileMap (std::string file, Vec2 mapSize) : mapHeight(mapSize.GetX()), mapWidth(mapSize.GetY()) {
+TileMap::TileMap (std::string file, Vec2 mapSize) : mapWidth(mapSize.GetY()), mapHeight(mapSize.GetX()) {
     Load(file);
 }
 

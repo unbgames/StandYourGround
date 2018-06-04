@@ -33,6 +33,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     SpriteVector *vectorElfa = new SpriteVector(*goElfa);
     goElfa->AddComponent(vectorElfa);
     Elfa* player = new Elfa(*goElfa);
+    Elfa::elfa = player;
     goElfa->AddComponent(player);
     Collider* colElfa = new Collider(*goElfa);
     goElfa->AddComponent(colElfa);
@@ -55,7 +56,6 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
 MainState::~MainState() {
     objectArray.clear();
 }
-
 
 void MainState::LoadAssets() {
     SpriteVector *vector = (SpriteVector*) goElfa->GetComponent("SpriteVector");
@@ -101,13 +101,13 @@ void MainState::Update(float dt) {
     Elfa *elfa = (Elfa *) goElfa->GetComponent("Elfa");
     SpriteVector *sprVec = (SpriteVector *) goElfa->GetComponent("SpriteVector");
     if(elfa != nullptr && sprVec != nullptr) {
-        sprVec->SetCurSprite(elfa->GetState());
+        sprVec->SetCurSprite(Character::StateToString(elfa->GetState()));
     }
 
     Orc *orc = (Orc *) goOrc->GetComponent("Orc");
-    SpriteVector *sprVecOrc = (SpriteVector *) goOrc ->GetComponent("SpriteVector");
+    SpriteVector *sprVecOrc = (SpriteVector *) goOrc->GetComponent("SpriteVector");
     if(orc != nullptr && sprVecOrc != nullptr) {
-        sprVecOrc->SetCurSprite(orc->GetState());
+        sprVecOrc->SetCurSprite(Character::StateToString(orc->GetState()));
     }
     UpdateArray(dt);
 }

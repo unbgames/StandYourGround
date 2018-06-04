@@ -1,34 +1,24 @@
 #ifndef ELFA_H
 #define ELFA_H
 
-#include "GameObject.h"
-#include "Component.h"
 #include "Timer.h"
+#include "Character.h"
 
-const float VELOCITY = 100;
+class Elfa : public Character {
+public:
+    Elfa(GameObject& associated);
+    ~Elfa();
+    void Start();
+    void Update(float dt);
+    void Render();
+    bool Is(std::string type);
+    std::string Type();
+    void NotifyCollision(GameObject &other);
 
+    static Elfa* elfa;
 
-class Elfa : public Component {
-    public:
-        Elfa(GameObject& associated);
-        ~Elfa();
-        void Start();
-        void Update(float dt);
-        void Render();
-        bool Is(std::string type);
-        std::string Type();
-        void NotifyCollision(GameObject &other);
-        
-        std::string GetState();
-
-        static Elfa* elfa;
-    private:
-        int hp;
-        std::string direction; // esquerda ou direita
-        std::string facing; // costa ou frente
-        std::string movement; // idle ou run
-
-        float velX, velY;
+private:
+    Timer timer;
 };
 
-#endif
+#endif /* ELFA_H */

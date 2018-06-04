@@ -4,54 +4,78 @@
 
 Elfa* Elfa::elfa = nullptr;
 
-Elfa::Elfa(GameObject& associated) : Component(associated), 
-                                     hp(100), direction("esq"), 
-                                     facing("frente"), movement("idle") {
+Elfa::Elfa(GameObject& associated) : Character(associated,
+  {Direction::esq, Facing::up, Movement::idle}), timer(true) {
+    hp = 100;
+    speed = 100;
+    AddSound("footstep", "./assets/audio/footstep.wav");
 }
 
 Elfa::~Elfa() {
-
 }
 
 void Elfa::Start() {
-
 }
 
-
 void Elfa::Update(float dt) {
+    timer.Update(dt);
     InputManager &inp = InputManager::GetInstance();
     velX = 0;
     velY = 0;
     // Seta o state do personagem que indica qual sprite sera renderizada
     // State sera movement + facing + direction
+    CharState newState = {state.dir, state.face, Movement::idle};
     if(inp.IsKeyDown(A_KEY)) {
-        movement = "run";
-        direction = "esq";
-        facing = "frente";
-        velX = -VELOCITY*dt;
+        newState = {
+            Direction::esq,
+            Facing::down,
+            Movement::run,
+        };
+        velX = -speed * dt;
     } else if(inp.IsKeyDown(D_KEY)) {
-        movement = "run";
-        direction = "dir";
-        facing = "frente";
-        velX = VELOCITY*dt;
-    } else {
-        movement = "idle";
-    }
-
-    if(inp.IsKeyDown(W_KEY)) {
-        movement = "run";
-        facing = "costa";
-        velY = -VELOCITY*dt;
+        newState = {
+            Direction::dir,
+            Facing::down,
+            Movement::run,
+        };
+        velX = speed * dt;
+    } else if(inp.IsKeyDown(W_KEY)) {
+        newState = {
+            state.dir,
+            Facing::up,
+            Movement::run,
+        };
+        velY = -speed * dt;
     } else if(inp.IsKeyDown(S_KEY)) {
-        movement = "run";
-        facing = "frente";
-        velY = VELOCITY*dt;
+        newState = {
+            state.dir,
+            Facing::down,
+            Movement::run,
+        };
+        velY = speed * dt;
     } else {
-        if (movement != "run") // Se o run for setado somente no A e D ele nao deixa idle aqui
-            movement = "idle";
+        // Se o run for setado somente no A e D ele nao deixa idle aqui
+        state.move = Movement::idle;
     }
-    associated.box.Shift({velX, velY});
-    
+    Vec2 shift(velX, velY);
+    if (shift.Mag() > 0) { // Is moving
+        // std::cout<<"MOVING"<<std::endl;
+        timer.Start();
+        float elapsed = timer.Get();
+        if (elapsed > 0.22 || elapsed == 0) {
+            // std::cout<<"PLAY SOUND"<<std::endl;
+            PlaySound("footstep");
+            timer.Restart();
+        }
+    } else { // Stopped
+        // std::cout<<"STOPPED"<<std::endl;
+        timer.Stop();
+    }
+    if (newState != state) {
+        state = newState;
+        // std::cout<<"CHANGED STATE:"<<StateToString(state)<<std::endl;
+    }
+    associated.box.Shift(shift);
 }
 
 void Elfa::Render() {
@@ -68,8 +92,4 @@ std::string Elfa::Type() {
 
 void Elfa::NotifyCollision(GameObject &other) {
 
-}
-
-std::string Elfa::GetState() {
-    return movement + "_" + facing + "_" + direction;
 }

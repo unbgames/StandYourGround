@@ -93,5 +93,5 @@ float CenterDist(const Rect &a, const Rect &b) {
 }
 
 SDL_Rect Rect::toSDL() const {
-    return SDL_Rect{x, y, w, h};
+    return SDL_Rect{int(x), int(y), int(w), int(h)};
 }

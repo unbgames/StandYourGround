@@ -13,7 +13,7 @@ TileSet::TileSet (GameObject& associated, std::string file, Vec2 size, Vec2 scal
 }
 
 void TileSet::RenderTile(int index, float x, float y) {
-    if (index < rows * columns && index >= 0) {
+    if (index < int(rows * columns) && index >= 0) {
         int tileColumn = (index)%columns;
         int tileRow = floor((index)/columns);
         tileSet.SetClip(tileColumn*tileWidth, tileRow*tileHeight, tileWidth, tileHeight);

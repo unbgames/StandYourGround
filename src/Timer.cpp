@@ -1,11 +1,12 @@
 #include "../include/Timer.h"
 
-Timer::Timer() : time(0) {
-
+Timer::Timer(bool startPaused) : time(0), paused(startPaused){
 }
 
 void Timer::Update(float dt) {
-    time += dt;
+    if (!paused) {
+        time += dt;
+    }
 }
 
 void Timer::Restart() {
@@ -14,4 +15,17 @@ void Timer::Restart() {
 
 float Timer::Get() {
     return time;
+}
+
+void Timer::Pause() {
+    paused = true;
+}
+
+void Timer::Stop() {
+    paused = true;
+    time = 0;
+}
+
+void Timer::Start() {
+    paused = false;
 }

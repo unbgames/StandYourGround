@@ -31,7 +31,7 @@ void SpriteVector::SetCurSprite(std::string currentSprite) {
     }
 }
 
-Sprite * SpriteVector::SpriteVector::GetCurSprite() {
+Sprite * SpriteVector::GetCurSprite() {
     if(sprites.find(currentSprite) == sprites.end()) {
         std::cout << "Tentando pegar sprite vazia de chave: " << currentSprite << std::endl;
         exit(-1);

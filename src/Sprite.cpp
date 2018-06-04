@@ -8,7 +8,7 @@
 
 Sprite::Sprite(GameObject &associated, int frameCount, float frameTime, float secondsToSelfDestruct) :
     Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount),
-    frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct), currentFrame(0) {
+    currentFrame(0), frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct) {
 }
 
 Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float frameTime,
@@ -17,7 +17,7 @@ Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float f
 }
 
 Sprite::~Sprite() {
-    
+
 }
 
 int Sprite::GetWidth() {
@@ -142,16 +142,16 @@ void Sprite::Update(float dt) {
             associated.RequestDelete();
         } else {
             long frame = static_cast<long>(std::floor(timer.Get()*1000/frameTime));
-            
+
             clipRect.x = (frame%frameCount)*width;
         }
     } else {
-        
+
         long frame = static_cast<long>(std::floor(timer.Get()*1000/frameTime));
 
         // if (frameCount == 3) std::cout<<"Elapsed:"<<timeElapsed<<" dt:"<<dt<<" Frame:"<<frame<<std::endl;
         clipRect.x = (frame%frameCount)*width;
-       
+
     }*/
 }
 
