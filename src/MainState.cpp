@@ -11,6 +11,7 @@
 #include "../include/LayeredTile.h"
 #include "../include/Item.h"
 #include "../include/Collision.h"
+#include "../include/Tree.h"
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
     auto bgObj = std::make_shared<GameObject>();
@@ -54,7 +55,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     objectArray.push_back(goOrc);
 
     auto goBoulder = std::make_shared<GameObject>();
-    goBoulder->box.SetOrigin(300, 300);
+    goBoulder->box.SetOrigin(700, 500);
     Sprite* boulderSprite = new Sprite(*goBoulder, "./assets/img/items/boulder.png");
     goBoulder->AddComponent(boulderSprite);
     goBoulder->box.SetSize(boulderSprite->GetWidth() - 35, boulderSprite->GetHeight());
@@ -63,7 +64,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     objectArray.push_back(goBoulder);
 
     auto goItem = std::make_shared<GameObject>();
-    goItem->box.SetOrigin(300, 100);
+    goItem->box.SetOrigin(500, 100);
     Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
     goItem->AddComponent(itemSprite);
     goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
@@ -71,6 +72,16 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goItem->AddComponent(new Item(*goItem));
     goItem->layer = 1;
     objectArray.push_back(goItem);
+
+    auto goTree = std::make_shared<GameObject>();
+    goTree->box.SetOrigin(100, 100);
+    Sprite *treeSprite = new Sprite(*goTree, "./assets/img/items/tree.png");
+    goTree->AddComponent(treeSprite);
+    goTree->box.SetSize(treeSprite->GetWidth(), treeSprite->GetHeight());
+    goTree->AddComponent(new Collider(*goTree, {0.07, 0.2}, {30, 220}));
+    goTree->AddComponent(new Tree(*goTree));
+    goTree->layer = 2;
+    objectArray.push_back(goTree);
 }
 
 MainState::~MainState() {

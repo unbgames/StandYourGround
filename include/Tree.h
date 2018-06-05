@@ -1,6 +1,7 @@
 #ifndef TREE_H
 #define TREE_H
 
+#include "Timer.h"
 #include "Component.h"
 #include "GameObject.h"
 
@@ -15,6 +16,9 @@ class Tree : public Component {
         void NotifyCollision(GameObject &other);
     private:
         int hp;
+        bool hitable; // Se o orc consegue bater na arvore
+        float timeToLoseHp;
+        Timer hitTime;
 };
 
 #endif
