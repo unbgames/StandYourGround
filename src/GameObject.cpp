@@ -4,8 +4,6 @@
 
 #include "../include/Component.h"
 #include "../include/GameObject.h"
-#include "../include/Camera.h"
-#include "../include/Game.h"
 #include "../include/Debug.h"
 
 GameObject::GameObject() : angle(0), isDead(false), started(false) {
@@ -35,6 +33,7 @@ void GameObject::Render() {
         }
     }
 
+    #ifdef DEBUG
     if (DEBUG_GO) {
     	SDL_Point points[5];
 
@@ -59,6 +58,7 @@ void GameObject::Render() {
     	SDL_SetRenderDrawColor(Game::GetInstance().GetRenderer(), 0, 70, 255, SDL_ALPHA_OPAQUE);
     	SDL_RenderDrawLines(Game::GetInstance().GetRenderer(), points, 5);
     }
+    #endif // DEBUG
     //std::cout<<"Render isDead:"<<((isDead)?"True":"False")<<std::endl;
 }
 

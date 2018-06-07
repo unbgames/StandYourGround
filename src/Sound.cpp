@@ -21,9 +21,11 @@ void Sound::Play(int times) {
             Stop();
         }
         if (!started || !Playing()) {
-            channel = Mix_PlayChannel(-1, chunk.get(), 0);
-            Mix_Volume(channel, volume);
-            started = true;
+            int channel = Mix_PlayChannel(-1, chunk.get(), 0);
+            if (channel > -1) {
+                Mix_Volume(channel, volume);
+                started = true;
+            }
             // std::cerr<< "Sound at channel:"<<channel<<" at "<<&(*this)<<std::endl;
         }
     } else {
@@ -34,13 +36,27 @@ void Sound::Play(int times) {
 bool Sound::Playing() {
     // std::cout<<"Channel:"<<channel<<std::endl;
     // std::cout<<"Ta tocando"<<(Mix_Playing(channel)?"True":"False")<<std::endl;
-    return (Mix_Playing(channel) == 1);
+    bool isPlaying = false;
+    for (auto iter = channels.begin(); iter != channels.end();) {
+        if (Mix_Playing(channels[*iter]) == 1) {
+            isPlaying = true;
+            ++iter;
+        } else {
+            channeld.erase(iter);
+        }
+    }
+    return (started && isPlaying);
 }
 
 void Sound::Stop() {
     if (chunk != nullptr && Playing()) {
-        Mix_HaltChannel(channel);
-        started = false;
+        // std::cout<<"Channel "<<channel<<" HALTED"<<std::endl;
+        //
+        for (const int &channel : channels) {
+            Mix_HaltChannel(channel);
+            started = false;
+        }
+        channels.clear();
     }
 }
 

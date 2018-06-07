@@ -9,7 +9,7 @@ Orc::Orc(GameObject& associated) : Character(associated,
   {Direction::esq, Facing::up, Movement::idle, Action::no_action}) {
     hp = 100;
     speed = 100;
-    AddSound("footstep", "./assets/audio/footstep.wav");
+    AddSound("footstep", "./assets/audio/footstep_grass.wav");
 }
 
 Orc::~Orc() {

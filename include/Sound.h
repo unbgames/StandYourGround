@@ -28,9 +28,9 @@ public:
     bool started;
 
 private:
+    std::vector<int> channels;
     std::shared_ptr<Mix_Chunk> chunk;
     unsigned int volume;
-    int channel;
     bool shouldReplay;
 };
 

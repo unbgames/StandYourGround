@@ -155,9 +155,11 @@ void MainState::Update(float dt) {
 
     #ifdef DEBUG
         if (inp.KeyPress(F1_KEY)) { // Game Object
+            std::cout << "Debug GO: " << (!DEBUG_GO?"ON":"OFF")<<std::endl;
             DEBUG_GO = !DEBUG_GO;
         }
-        if (inp.KeyPress(F2_KEY)) {
+        if (inp.KeyPress(F2_KEY)) { // Tile
+            std::cout << "Debug Tiles: " << (!DEBUG_GO?"ON":"OFF")<<std::endl;
             DEBUG_TILE = !DEBUG_TILE;
         }
     #endif // DEBUG

@@ -91,6 +91,10 @@ void Sprite::SetClip(Rect rec) {
     clipRect.w = rec.GetW();
 }
 
+Rect Sprite::GetClip() {
+    return Rect(clipRect.x, clipRect.y, clipRect.w, clipRect.h);
+}
+
 void Sprite::SetScale (float scaleX, float scaleY) {
     if (scaleX != 0 && scaleY != 0) {
         scale.Set(scaleX, scaleY);
