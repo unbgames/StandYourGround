@@ -19,6 +19,7 @@
 #ifdef DEBUG
     bool DEBUG_GO = false;
     bool DEBUG_TILE = false;
+    bool DEBUG_COL = false;
 #endif // DEBUG
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
@@ -161,6 +162,10 @@ void MainState::Update(float dt) {
         if (inp.KeyPress(F2_KEY)) { // Tile
             std::cout << "Debug Tiles: " << (!DEBUG_GO?"ON":"OFF")<<std::endl;
             DEBUG_TILE = !DEBUG_TILE;
+        }
+        if (inp.KeyPress(F3_KEY)) { // Collision
+            std::cout << "Debug COL: " << (!DEBUG_COL?"ON":"OFF")<<std::endl;
+            DEBUG_COL = !DEBUG_COL;
         }
     #endif // DEBUG
 
