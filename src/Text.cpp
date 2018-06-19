@@ -78,22 +78,27 @@ void Text::Update(float dt) {
 
 void Text::SetText(std::string t) {
     text = t;
+    RemakeTexture();
 }
 
 void Text::SetColor(SDL_Color c) {
     color = c;
+    RemakeTexture();
 }
 
 void Text::SetStyle(TextStyle s) {
     style = s;
+    RemakeTexture();
 }
 
 void Text::SetFontFile(std::string f) {
     fontFile = f;
+    RemakeTexture();
 }
 
 void Text::SetFontSize(int s) {
     fontSize = s;
+    RemakeTexture();
 }
 
 void Text::RemakeTexture() {

@@ -12,6 +12,9 @@
 #include "../include/Item.h"
 #include "../include/Collision.h"
 #include "../include/Tree.h"
+#include "../include/Text.h"
+#include "../include/GameTimer.h"
+
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
     auto bgObj = std::make_shared<GameObject>();
@@ -82,6 +85,14 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goTree->AddComponent(new Tree(*goTree));
     goTree->layer = 2;
     objectArray.push_back(goTree);
+
+    auto goTimer = std::make_shared<GameObject>();
+    goTimer->box.SetOrigin(450, 0);
+    GameTimer *countDownTimer = new GameTimer(*goTimer, 4, 15);
+    goTimer->AddComponent(countDownTimer);
+    goTimer->box.SetSize(countDownTimer->GetBox().GetW(), countDownTimer->GetBox().GetH());
+    goTimer->layer = 2;
+    objectArray.push_back(goTimer);
 }
 
 MainState::~MainState() {

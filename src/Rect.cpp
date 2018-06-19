@@ -52,7 +52,6 @@ void Rect::SetCenter(float _x, float _y)  {
 void Rect::SetSize(float _w, float _h)  {
     h = _h;
     w = _w;
-    std::cout<<"Size:"<<w<<std::endl;
 }
 
 void Rect::SetScale(Vec2 scale)  {
