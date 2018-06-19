@@ -125,8 +125,8 @@ void MainState::LoadAssets() {
         vectorOrc->AddSprite("run_costa_esq", "./assets/img/orc/correndo/orc_run_costa_esq.png", 4, 0.11, 0.0, {4, 4});
         vectorOrc->AddSprite("idle_costa_esq", "./assets/img/orc/idle/orc_idle_costa_esq.png", 5, 0.11, 0.0, {4, 4});
 
-        vectorOrc->AddSprite("atq_dir", "./assets/img/orc/atq/orc_atq_dir.png", 9, 0.04, 0.0, {4, 4});
-        vectorOrc->AddSprite("atq_esq", "./assets/img/orc/atq/orc_atq_esq.png", 9, 0.04, 0.0, {4, 4});
+        vectorOrc->AddSprite("atq_dir", "./assets/img/orc/atq/orc_atq_dir.png", 9, 0.02, 0.0, {4, 4});
+        vectorOrc->AddSprite("atq_esq", "./assets/img/orc/atq/orc_atq_esq.png", 9, 0.02, 0.0, {4, 4});
     }
 }
 
@@ -145,7 +145,7 @@ void checkCollision(GameObject* go1, GameObject* go2) {
 
 void MainState::Update(float dt) {
     Camera::Update(dt);
-    
+
     InputManager &inp = InputManager::GetInstance();
     if (inp.QuitRequested()) {
         quitRequested = true;
@@ -166,7 +166,7 @@ void MainState::Update(float dt) {
     }
 
     UpdateArray(dt);
-   
+
     for(int i = 0; i < objectArray.size(); i++) {
         GameObject* go1 = objectArray[i].get();
         if(go1->GetComponent("Collider") != nullptr) {

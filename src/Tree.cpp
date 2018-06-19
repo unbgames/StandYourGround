@@ -6,7 +6,7 @@ Tree::Tree(GameObject& associated) : Component(associated), hp(100), hitable(fal
 
 void Tree::Update(float dt) {
     InputManager& inp = InputManager::GetInstance();
-    if(inp.IsKeyDown(SPACE_KEY)) {
+    if(inp.IsKeyDown(SPACE_KEY) && hitable) {
         hitTime.Update(dt);
         if(hitTime.Get() > timeToLoseHp) {
             hitTime.Restart();
@@ -17,11 +17,11 @@ void Tree::Update(float dt) {
     else {
         hitTime.Restart();
     }
-    
+
     if(hp <= 0) {
         associated.RequestDelete();
     }
-    hitable = false;
+    //hitable = false;
 }
 
 void Tree::Render() {
@@ -38,6 +38,7 @@ std::string Tree::Type() {
 
 void Tree::NotifyCollision(GameObject &other) {
     if(other.GetComponent("Orc") != nullptr) {
+        std::cout << "COLIDIU" << std::endl;
         hitable = true;
     }
 }
