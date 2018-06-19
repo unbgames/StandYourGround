@@ -18,6 +18,7 @@ public:
 
     void RenderAt(int offsetX, int offsetY);
     int GetMapAt(int row, int columns) const;
+    std::vector<int> GetTilesAt(const Rect &box, const Vec2 &scale) const;
 
 private:
     std::string mapFile;
@@ -26,6 +27,9 @@ private:
     TileSet tileSet;
     Vec2 mapSize;
     Vec2 scale;
+    Vec2 tileSize;
+
+    Rect BoxToTileBox(const Rect &box, const Vec2 &scale) const;
 };
 
 #endif /* TILEPAIR_H */

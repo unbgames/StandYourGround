@@ -8,7 +8,6 @@
 #include "../include/Orc.h"
 #include "../include/Collider.h"
 #include "../include/Camera.h"
-#include "../include/LayeredTile.h"
 #include "../include/Item.h"
 #include "../include/Collision.h"
 #include "../include/Tree.h"
@@ -20,6 +19,7 @@
     bool DEBUG_GO = false;
     bool DEBUG_TILE = false;
     bool DEBUG_COL = false;
+    unsigned int DEBUG_TILE_BORDER_LAYER = -1;
 #endif // DEBUG
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
@@ -37,17 +37,22 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
 
     auto tileObj = std::make_shared<GameObject>();
     objectArray.push_back(tileObj);
-    LayeredTile *tileLayers = new LayeredTile(*tileObj, "./assets/map/", "levels.txt", {4, 4});
+    tileLayers = new LayeredTile(*tileObj, "./assets/map/", "levels.txt", {4, 4}, 1);
+
+    #ifdef DEBUG
+        DEBUG_TILE_BORDER_LAYER = 1;
+    #endif // DEBUG
+
     tileObj->layer = 1;
     tileObj->AddComponent(tileLayers);
 
-    goElfa->box.SetOrigin(30, 30);
+    goElfa->box.SetOrigin(300, 300);
     SpriteVector *vectorElfa = new SpriteVector(*goElfa);
     goElfa->AddComponent(vectorElfa);
     Elfa* player = new Elfa(*goElfa);
     Elfa::elfa = player;
     goElfa->AddComponent(player);
-    Collider* colElfa = new Collider(*goElfa, {0.9, 0.9});
+    Collider* colElfa = new Collider(*goElfa, {0.15, 0.6}, {0, 40});
     goElfa->AddComponent(colElfa);
     Camera::Follow(goElfa);
     goElfa->layer = 2;
@@ -58,7 +63,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goOrc->AddComponent(vectorOrc);
     Orc* enemy = new Orc(*goOrc);
     goOrc->AddComponent(enemy);
-    Collider *colOrc = new Collider(*goOrc, {0.9, 0.9});
+    Collider *colOrc = new Collider(*goOrc, {0.15, 0.6}, {0, 40});
     goOrc->AddComponent(colOrc);
     goOrc->layer = 2;
     objectArray.push_back(goOrc);
@@ -68,7 +73,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     Sprite* boulderSprite = new Sprite(*goBoulder, "./assets/img/items/boulder.png");
     goBoulder->AddComponent(boulderSprite);
     goBoulder->box.SetSize(boulderSprite->GetWidth() - 35, boulderSprite->GetHeight());
-    goBoulder->AddComponent(new Collider(*goBoulder, {1, 1}, {35, 0}));
+    goBoulder->AddComponent(new Collider(*goBoulder, {1, 1}, {0, 0}));
     goBoulder->layer = 2;
     objectArray.push_back(goBoulder);
 
@@ -200,6 +205,19 @@ void MainState::Update(float dt) {
                     checkCollision(go1, go2);
             }
         }
+    }
+
+    // Collision with border map.
+    Collider *colliderElfa = (Collider *) goElfa->GetComponent("Collider");
+    Collider *colliderOrc = (Collider *) goOrc->GetComponent("Collider");
+    // colideBox.Shift(-Camera::pos);
+    if (tileLayers->Collide(colliderElfa->box)){
+        GameObject aux;
+        goElfa->NotifyCollision(aux);
+    }
+    if (tileLayers->Collide(colliderOrc->box)){
+        GameObject aux;
+        goOrc->NotifyCollision(aux);
     }
 }
 

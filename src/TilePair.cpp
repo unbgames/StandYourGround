@@ -6,7 +6,7 @@
 TilePair::TilePair(GameObject& associated, std::string mapFile, Vec2 mapSize,
   std::string setFile, Vec2 tileSize, Vec2 scale, int flags) :
   tileMap(mapFile, mapSize), tileSet(associated, setFile, tileSize, scale),
-  mapSize(mapSize), scale(scale) {
+  mapSize(mapSize), scale(scale), tileSize(tileSize) {
 }
 
 TilePair::~TilePair() {
@@ -45,4 +45,29 @@ void TilePair::RenderAt(int offsetX, int offsetY) {
 
 int TilePair::GetMapAt(int row, int column) const {
     return tileMap.GetItem(row, column);
+}
+Rect TilePair::BoxToTileBox(const Rect &box, const Vec2 &scale) const {
+    // std::cout << tileSize<<std::endl;
+    int left = std::ceil(box.GetX() / (tileSize.GetX() * scale.GetX()));
+    int right = std::ceil((box.GetX() + box.GetW()) / (tileSize.GetX() * scale.GetX()));
+    int top = std::ceil(box.GetY() / (tileSize.GetY() * scale.GetY()));
+    int bottom = std::ceil((box.GetY() + box.GetH()) / (tileSize.GetY() * scale.GetY()));
+
+    // std::cout << "Old (" << box.GetX() <<','<< box.GetY()<<','<< (box.GetX() + box.GetW()) <<','<< (box.GetY() + box.GetH())  <<")"<<std::endl;
+    // std::cout << "New (" << left <<','<< top<<','<< right <<','<< bottom  <<")"<<std::endl;
+    return Rect(left, top, right - left, bottom - top);
+}
+
+std::vector<int> TilePair::GetTilesAt(const Rect &box, const Vec2 &scale) const {
+    std::vector<int> tiles;
+    Rect tileRect = BoxToTileBox(box, scale);
+    for (int i = tileRect.GetX(); i <= tileRect.GetX() + tileRect.GetW(); i++) {
+        for (int j = tileRect.GetY(); j <= tileRect.GetY() + tileRect.GetH(); j++) {
+            // TODO: finish using the layer
+            int idx = tileMap.GetItem(j - 1, i - 1);
+            // std::cout << idx;
+            tiles.push_back(idx);
+        }
+    }
+    return tiles;
 }

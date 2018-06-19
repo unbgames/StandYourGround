@@ -2,6 +2,7 @@
 #define MAIN_STATE_H
 
 #include "State.h"
+#include "LayeredTile.h"
 
 class MainState : public State {
 public:
@@ -22,6 +23,7 @@ private:
     bool started;
     std::shared_ptr<GameObject> goElfa;
     std::shared_ptr<GameObject> goOrc;
+    LayeredTile *tileLayers;
 };
 
 #endif

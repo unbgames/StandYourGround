@@ -1,6 +1,7 @@
 #include "../include/Elfa.h"
 #include "../include/InputManager.h"
 #include "../include/SpriteVector.h"
+#include "../include/Game.h"
 
 Elfa* Elfa::elfa = nullptr;
 

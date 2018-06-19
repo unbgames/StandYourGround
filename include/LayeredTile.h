@@ -8,7 +8,7 @@
 
 class LayeredTile : public Component {
 public:
-    LayeredTile (GameObject& associated, std::string path, std::string file, Vec2 scale = {1, 1});
+    LayeredTile (GameObject& associated, std::string path, std::string file, Vec2 scale = {1, 1}, unsigned int collideLayer = 0);
     ~LayeredTile();
 
     void Load(std::string file);
@@ -21,6 +21,7 @@ public:
     int GetWidth();
     int GetHeight();
     int GetDepth();
+    bool Collide(const Rect &box);
 
 private:
     std::string path;
@@ -28,6 +29,9 @@ private:
     unsigned int mapWidth;
     unsigned int mapHeight;
     unsigned int mapDepth;
+    unsigned int setHeight;
+    unsigned int setWidth;
+    unsigned int collideLayer;
     Vec2 scale;
 };
 

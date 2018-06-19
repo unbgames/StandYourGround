@@ -108,6 +108,7 @@ Game::Game(std::string title, int width, int height) : storedState(nullptr), wid
 		hasStarted = false;
 		return;
 	}
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
 	// Font Renderer
 	if(TTF_Init()==-1) {
