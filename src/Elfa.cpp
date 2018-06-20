@@ -25,12 +25,13 @@ void Elfa::Update(float dt) {
     velY = 0;
     // Seta o state do personagem que indica qual sprite sera renderizada
     // State sera movement + facing + direction
-    CharState newState = {state.dir, state.face, Movement::idle};
+    CharState newState = {state.dir, state.face, Movement::idle, Action::no_action};
     if(inp.IsKeyDown(A_KEY)) {
         newState = {
             Direction::esq,
             Facing::down,
             Movement::run,
+            Action::no_action
         };
         velX = -speed * dt;
     } else if(inp.IsKeyDown(D_KEY)) {
@@ -38,6 +39,7 @@ void Elfa::Update(float dt) {
             Direction::dir,
             Facing::down,
             Movement::run,
+            Action::no_action
         };
         velX = speed * dt;
     } else if(inp.IsKeyDown(W_KEY)) {
@@ -45,6 +47,7 @@ void Elfa::Update(float dt) {
             state.dir,
             Facing::up,
             Movement::run,
+            Action::no_action
         };
         velY = -speed * dt;
     } else if(inp.IsKeyDown(S_KEY)) {
@@ -52,6 +55,7 @@ void Elfa::Update(float dt) {
             state.dir,
             Facing::down,
             Movement::run,
+            Action::no_action
         };
         velY = speed * dt;
     } else {
@@ -93,7 +97,11 @@ std::string Elfa::Type() {
 }
 
 void Elfa::NotifyCollision(GameObject &other) {
-    if(other.GetComponent("Item") == nullptr) {
+    if(other.GetComponent("Item") != nullptr) {
+        Item* item = (Item*) other.GetComponent("Item");
+        
+    }
+    else {
         associated.box = oldBox;
     }
 }

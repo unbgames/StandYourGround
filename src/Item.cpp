@@ -1,11 +1,12 @@
 #include "../include/Item.h"
 #include "../include/InputManager.h"
+#include "../include/Bag.h"
 
-Item::Item(GameObject& associated) : Component(associated), 
+Item::Item(GameObject& associated, ItemType type) : Component(associated), 
                                      pickable(false),
-                                     pick(new Sprite(associated, "./assets/img/items/pickable.png")) {
+                                     pick(new Sprite(associated, "./assets/img/items/pickable.png")), type(type) {
     pick->SetScale({0.2, 0.2});
-    pick->SetOffset({associated.box.GetW()/2 - 10, -(associated.box.GetH()/2 - 10)});
+    pick->SetOffset({associated.box.GetW()/2 - 10, -(associated.box.GetH()/2 + 30)});
     associated.AddComponent(pick);
     pick->Hide();
 }
@@ -13,8 +14,9 @@ Item::Item(GameObject& associated) : Component(associated),
 void Item::Update(float dt) {
     if(pickable) {
         InputManager& inp = InputManager::GetInstance();
-        if(inp.IsKeyDown(SDLK_e)) {
-            std::cout << "Delete";
+        if(inp.KeyPress(SDLK_e)) {
+            std::cout << "Picked Item" << std::endl;
+            Bag::PickItem(type);
             associated.RequestDelete();
         }
     }

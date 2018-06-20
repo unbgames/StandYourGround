@@ -61,6 +61,12 @@ void Sprite::Render() {
     }
 }
 
+void Sprite::RenderNoCam() {
+    if(!hide) { 
+        Render(associated.box.GetX() + offset.GetX(), associated.box.GetY() + offset.GetY());
+    }
+}
+
 void Sprite::Render(float x, float y) {
     SDL_Rect dstRect;
     dstRect.x = x;

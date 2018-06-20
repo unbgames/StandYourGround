@@ -13,7 +13,10 @@
 #include "../include/Tree.h"
 #include "../include/Text.h"
 #include "../include/GameTimer.h"
+#include "../include/HUD.h"
+
 #include "../include/Debug.h"
+
 
 #ifdef DEBUG
     bool DEBUG_GO = false;
@@ -68,24 +71,45 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goOrc->layer = 2;
     objectArray.push_back(goOrc);
 
-    auto goBoulder = std::make_shared<GameObject>();
-    goBoulder->box.SetOrigin(700, 500);
-    Sprite* boulderSprite = new Sprite(*goBoulder, "./assets/img/items/boulder.png");
-    goBoulder->AddComponent(boulderSprite);
-    goBoulder->box.SetSize(boulderSprite->GetWidth() - 35, boulderSprite->GetHeight());
-    goBoulder->AddComponent(new Collider(*goBoulder, {1, 1}, {0, 0}));
-    goBoulder->layer = 2;
-    objectArray.push_back(goBoulder);
 
-    auto goItem = std::make_shared<GameObject>();
-    goItem->box.SetOrigin(500, 100);
-    Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
-    goItem->AddComponent(itemSprite);
-    goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
-    goItem->AddComponent(new Collider(*goItem));
-    goItem->AddComponent(new Item(*goItem));
-    goItem->layer = 1;
-    objectArray.push_back(goItem);
+    for(int i = 1; i < 15; i++) {
+        auto goItem = std::make_shared<GameObject>();
+        goItem->box.SetOrigin(600, 100*i);
+        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
+        itemSprite->SetScale(0.2, 0.2);
+        goItem->AddComponent(itemSprite);
+        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
+        goItem->AddComponent(new Collider(*goItem));
+        goItem->AddComponent(new Item(*goItem, ItemType::berry));
+        goItem->layer = 3;
+        objectArray.push_back(goItem);
+    }
+
+    for(int i = 1; i < 15; i++) {
+        auto goItem = std::make_shared<GameObject>();
+        goItem->box.SetOrigin(800, 100*i);
+        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/cipo.png");
+        itemSprite->SetScale(0.3, 0.3);
+        goItem->AddComponent(itemSprite);
+        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
+        goItem->AddComponent(new Collider(*goItem));
+        goItem->AddComponent(new Item(*goItem, ItemType::cipo));
+        goItem->layer = 3;
+        objectArray.push_back(goItem);
+    }
+
+    for(int i = 1; i < 15; i++) {
+        auto goItem = std::make_shared<GameObject>();
+        goItem->box.SetOrigin(1000, 100*i);
+        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/galho.png");
+        itemSprite->SetScale(0.4, 0.4);
+        goItem->AddComponent(itemSprite);
+        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
+        goItem->AddComponent(new Collider(*goItem));
+        goItem->AddComponent(new Item(*goItem, ItemType::galho));
+        goItem->layer = 3;
+        objectArray.push_back(goItem);
+    }
 
     auto goTree = std::make_shared<GameObject>();
     goTree->box.SetOrigin(100, 100);
@@ -97,13 +121,13 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goTree->layer = 2;
     objectArray.push_back(goTree);
 
-    auto goTimer = std::make_shared<GameObject>();
-    goTimer->box.SetOrigin(450, 0);
-    GameTimer *countDownTimer = new GameTimer(*goTimer, 4, 15);
-    goTimer->AddComponent(countDownTimer);
-    goTimer->box.SetSize(countDownTimer->GetBox().GetW(), countDownTimer->GetBox().GetH());
-    goTimer->layer = 2;
-    objectArray.push_back(goTimer);
+    // Concentra todos os elementos do HUD dentro da classe HUD
+    auto goHUD = std::make_shared<GameObject>();
+    HUD* hud = new HUD(*goHUD, Elfa::elfa);
+    goHUD->AddComponent(hud);
+    goHUD->layer = 5;
+    objectArray.push_back(goHUD);
+    
 }
 
 MainState::~MainState() {

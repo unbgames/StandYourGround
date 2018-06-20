@@ -46,6 +46,8 @@ public:
     void Hide();
     void Show();
 
+    void RenderNoCam();
+
 private:
     std::shared_ptr<SDL_Texture> texture;
     SDL_Rect clipRect;
