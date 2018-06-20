@@ -21,6 +21,7 @@ public:
     bool Is(std::string type);
     std::string Type();
     void Render();
+    void RenderNoCam();
     void Render(float x, float y);
     void Update(float dt);
 

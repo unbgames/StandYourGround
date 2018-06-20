@@ -81,3 +81,7 @@ void State::RenderArray() {
         }
     }
 }
+
+void State::Quit() {
+    quitRequested = true;
+}

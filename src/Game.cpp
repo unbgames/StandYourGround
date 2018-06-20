@@ -166,7 +166,7 @@ Vec2 Game::GetWindowSize() {
 
 Game &Game::GetInstance() {
     if (instance == nullptr) {
-        instance = new Game("Stand Your Ground", 1024, 600);
+        instance = new Game("Stand Your Ground", SCREEN_WIDTH, SCREEN_HEIGHT);
     }
     return *instance;
 }

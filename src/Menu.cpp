@@ -1,13 +1,19 @@
 #include "../include/Menu.h"
 #include "../include/InputManager.h"
+#include "../include/Game.h"
 
 Menu::Menu(GameObject& associated) : Component(associated), selection(0) {
-    associated.box.SetSize(200, 300);
-    associated.box.SetOrigin(400, 400);
+    nextOptionPosition = SCREEN_HEIGHT*0.3;
 }
 
-void Menu::AddOption(MenuItem* item) {
-    items.emplace_back(item);
+void Menu::AddOption(std::string option, std::function<void()> func) {
+    GameObject *goMenuItem = new GameObject();
+    MenuItem* menuItem = new MenuItem(*goMenuItem, option, func);
+    goMenuItem->layer = 2;
+    goMenuItem->box.SetOrigin({SCREEN_WIDTH/2 - menuItem->GetTextWidth()/2, 
+                               nextOptionPosition});
+    items.emplace_back(menuItem);
+    nextOptionPosition += 60;
 }
 
 void Menu::Update(float dt) {
@@ -20,14 +26,14 @@ void Menu::Update(float dt) {
         selection = selection < items.size() - 1 ? ++selection : selection;
     }
     items[selection]->Selected();
-    if(inp.KeyPress(SDLK_KP_ENTER)) {
+    if(inp.KeyPress(SDLK_RETURN)) {
         items[selection]->Chosen();
     }
 }
 
 void Menu::Render() {
     for(int i = 0; i < items.size(); i++) {
-        items[i]->text->Render();
+        items[i]->Render();
     }
 }
 

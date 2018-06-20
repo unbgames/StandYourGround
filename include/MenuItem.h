@@ -12,7 +12,10 @@ class MenuItem {
         void Selected();
         void Deselected();
         void Chosen();
+
+        void Render();
         Text* text;
+        float GetTextWidth();
     private:
         std::string option;
         std::function<void()> action;

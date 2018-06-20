@@ -9,6 +9,9 @@
 #include <memory>
 #include <SDL2/SDL.h>
 
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 600;
+
 class Game {
 public:
     ~Game();

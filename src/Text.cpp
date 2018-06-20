@@ -29,6 +29,11 @@ void Text::Render() {
     Vec2 camPos = Camera::pos;
     Render(associated.box.GetX() + camPos.GetX(), associated.box.GetY() + camPos.GetY());
 }
+
+void Text::RenderNoCam() {
+    Render(associated.box.GetX(), associated.box.GetY());
+}
+
 void Text::Render(float x, float y) {
     SDL_Rect clipRect = associated.box.toSDL();
     SDL_Rect dstRect;

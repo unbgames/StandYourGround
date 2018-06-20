@@ -25,6 +25,8 @@ public:
     bool PopRequested();
     bool QuitRequested();
 
+    void Quit();
+
 protected:
     void StartArray();
     virtual void UpdateArray(float dt);

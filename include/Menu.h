@@ -7,7 +7,7 @@
 class Menu : public Component {
     public:
         Menu(GameObject& associated);
-        void AddOption(MenuItem* item);
+        void AddOption(std::string option, std::function<void()> func);
 
         void Update(float dt);
         void Render();
@@ -16,6 +16,7 @@ class Menu : public Component {
         void NotifyCollision(GameObject &other);
     private:
         int selection;
+        float nextOptionPosition;
         std::vector<MenuItem*> items;
 };
 
