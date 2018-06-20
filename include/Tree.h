@@ -8,6 +8,7 @@
 class Tree : public Component {
     public:
         Tree(GameObject& associated);
+        ~Tree();
 
         void Update(float dt);
         void Render();

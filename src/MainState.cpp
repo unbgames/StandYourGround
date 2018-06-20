@@ -14,7 +14,9 @@
 #include "../include/Text.h"
 #include "../include/GameTimer.h"
 #include "../include/Forest.h"
+#include "../include/HUD.h"
 #include "../include/Debug.h"
+
 
 #ifdef DEBUG
     bool DEBUG_GO = false;
@@ -77,13 +79,52 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goForest->layer = 2;
     objectArray.push_back(goForest);
 
-    auto goTimer = std::make_shared<GameObject>();
-    goTimer->box.SetOrigin(450, 0);
-    GameTimer *countDownTimer = new GameTimer(*goTimer, 4, 15);
-    goTimer->AddComponent(countDownTimer);
-    goTimer->box.SetSize(countDownTimer->GetBox().GetW(), countDownTimer->GetBox().GetH());
-    goTimer->layer = 4;
-    objectArray.push_back(goTimer);
+    for(int i = 1; i < 15; i++) {
+        auto goItem = std::make_shared<GameObject>();
+        goItem->box.SetOrigin(600, 100*i);
+        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
+        itemSprite->SetScale(0.2, 0.2);
+        goItem->AddComponent(itemSprite);
+        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
+        goItem->AddComponent(new Collider(*goItem));
+        goItem->AddComponent(new Item(*goItem, ItemType::berry));
+        goItem->layer = 2;
+        objectArray.push_back(goItem);
+    }
+
+    for(int i = 1; i < 15; i++) {
+        auto goItem = std::make_shared<GameObject>();
+        goItem->box.SetOrigin(800, 100*i);
+        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/cipo.png");
+        itemSprite->SetScale(0.3, 0.3);
+        goItem->AddComponent(itemSprite);
+        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
+        goItem->AddComponent(new Collider(*goItem));
+        goItem->AddComponent(new Item(*goItem, ItemType::cipo));
+        goItem->layer = 2;
+        objectArray.push_back(goItem);
+    }
+
+    for(int i = 1; i < 15; i++) {
+        auto goItem = std::make_shared<GameObject>();
+        goItem->box.SetOrigin(1000, 100*i);
+        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/galho.png");
+        itemSprite->SetScale(0.4, 0.4);
+        goItem->AddComponent(itemSprite);
+        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
+        goItem->AddComponent(new Collider(*goItem));
+        goItem->AddComponent(new Item(*goItem, ItemType::galho));
+        goItem->layer = 2;
+        objectArray.push_back(goItem);
+    }
+
+
+    // Concentra todos os elementos do HUD dentro da classe HUD
+    auto goHUD = std::make_shared<GameObject>();
+    HUD* hud = new HUD(*goHUD, Elfa::elfa);
+    goHUD->AddComponent(hud);
+    goHUD->layer = 5;
+    objectArray.push_back(goHUD);
 }
 
 MainState::~MainState() {
@@ -198,6 +239,18 @@ void MainState::Update(float dt) {
     if (tileLayers->Collide(colliderOrc->box)){
         GameObject aux;
         goOrc->NotifyCollision(aux);
+    }
+    for (unsigned int i = 0; i < objectArray.size(); i++) {
+        // std::cout<<"Obj:"<<i<<std::endl;
+        if (objectArray[i]->IsDead()) {
+            std::cout<<"Morreu de fato"<<std::endl;
+            auto soundComp = objectArray[i].get()->GetComponent("Sound");
+            if (!soundComp || !static_cast<Sound *>(soundComp)->Playing()) {
+                std::cerr << "Morreu"<<std::endl;
+                objectArray.erase(objectArray.begin() + i);
+                i--; //adjust iterator ???
+            }
+        }
     }
 }
 

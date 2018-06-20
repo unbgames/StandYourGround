@@ -10,6 +10,7 @@
 class Collider : public Component{
 public:
     Collider(GameObject &associated, Vec2 scale = {1, 1}, Vec2 offset = {0, 0});
+    ~Collider();
 
     void Update(float dt);
     void Render();

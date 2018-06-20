@@ -16,7 +16,10 @@ void Forest::Update(float dt) {
 
 void Forest::Render() {
     for (auto tree : treeVector) {
-        tree->Render();
+        auto shared_tree = tree.lock();
+        if (shared_tree != nullptr) {
+            shared_tree->Render();
+        }
     }
 }
 

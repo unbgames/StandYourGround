@@ -57,7 +57,12 @@ void State::UpdateArray(float dt) {
         objectArray[i]->Update(dt);
         if (objectArray[i] != nullptr) {
             if(objectArray[i]->IsDead()) {
-                objectArray.erase(objectArray.begin() + i);
+                auto test = objectArray.begin() + i;
+                int c = (*test).use_count();
+                if (c > 1) {
+                    std::cout<<"WARNING!!! REMOVING GO WITH USE COUNT:"<<c<<std::endl;
+                }
+                objectArray.erase(test);
             }
         }
     }

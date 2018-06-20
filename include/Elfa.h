@@ -3,6 +3,7 @@
 
 #include "Timer.h"
 #include "Character.h"
+#include "Bag.h"
 
 class Elfa : public Character {
 public:
@@ -19,6 +20,7 @@ public:
 
 private:
     Timer timer;
+
 };
 
 #endif /* ELFA_H */

@@ -4,6 +4,9 @@
 Collider::Collider(GameObject &associated, Vec2 scale, Vec2 offset) : Component(associated), scale(scale),
     offset(offset) {
 }
+Collider::~Collider() {
+    std::cout <<"Removed Collider"<<std::endl;
+}
 
 void Collider::Update(float dt) {
     box = associated.box;

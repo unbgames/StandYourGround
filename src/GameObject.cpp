@@ -63,12 +63,15 @@ void GameObject::Render() {
 }
 
 bool GameObject::IsDead() {
+    if (isDead) {
+        // std::cout<<"DEEEEAD"<<std::endl;
+    }
     return isDead;
 }
 
 void GameObject::RequestDelete() {
     isDead = true;
-    //std::cout<<"ReqDelete isDead:"<<((isDead)?"True":"False")<<std::endl;
+    // std::cout<<"ReqDelete isDead:"<<((isDead)?"True":"False")<<std::endl;
 }
 
 void GameObject::AddComponent(Component *cpt) {

@@ -10,6 +10,9 @@ Tree::Tree(GameObject& associated) : Component(associated), hp(100), hitable(fal
     associated.AddComponent(treeSprite);
     associated.box.SetSize(treeSprite->GetWidth(), treeSprite->GetHeight());
 }
+Tree::~Tree() {
+
+}
 
 void Tree::Update(float dt) {
     InputManager& inp = InputManager::GetInstance();
@@ -24,6 +27,7 @@ void Tree::Update(float dt) {
     else {
         hitTime.Restart();
     }
+
     const Rect &rect = associated.box;
     auto sprite = (Sprite *) associated.GetComponent("Sprite");
     if (rect.Contains(Elfa::elfa->BottomLeft()) || rect.Contains(Elfa::elfa->BottomRight())) {
@@ -31,6 +35,7 @@ void Tree::Update(float dt) {
     } else {
         sprite->Opacity(100);
     }
+
     if(hp <= 0) {
         associated.RequestDelete();
     }

@@ -1,9 +1,11 @@
 #include "../include/GameTimer.h"
+#include "../include/Game.h"
 
 GameTimer::GameTimer(GameObject& associated, int startingMin, int startingSec) : Component(associated), 
-                                                                                 timeText(new Text(associated, "./assets/font/pixel.ttf", 80, TextStyle::SOLID, "5:00", {0, 0, 0, 0})) {
+                                                                                 timeText(new Text(associated, "./assets/font/pixel.ttf", 80, TextStyle::SOLID, "-:--", {0, 0, 0, 0})) {
     min = startingMin;
     sec = startingSec;
+    associated.box.SetOrigin({SCREEN_WIDTH/2 - timeText->GetBox().GetW()/2, -10});
 }
 
 std::string TimeInStr(int min, int sec) {
@@ -28,12 +30,14 @@ void GameTimer::Update(float dt) {
         // Problema, o tamanho da box muda pra determinados valores de tempo
         // e ai o texto se mexe as vezes. O problema ta no setSize do RemakeTexture
         timeText->SetText(TimeInStr(min, sec));
-
-    } 
+    }
+    if(min < 1) {
+        timeText->SetColor({255, 0, 0, 255});
+    }
 }
 
 void GameTimer::Render() {
-    timeText->Render(associated.box.GetX(), associated.box.GetW());
+    timeText->Render(associated.box.GetX(), associated.box.GetY());
 }
 
 bool GameTimer::Is(std::string type) {

@@ -20,7 +20,7 @@ public:
 private:
     Vec2 tileSizeScaled;
     std::vector<std::pair<int, int>> treesPos;
-    std::vector<std::shared_ptr<GameObject>> treeVector;
+    std::vector<std::weak_ptr<GameObject>> treeVector;
 
     void Load(std::string file_path);
 };
