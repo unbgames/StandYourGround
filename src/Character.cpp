@@ -13,6 +13,14 @@ Vec2 Character::Origin() const {
     return associated.box.Origin();
 }
 
+Vec2 Character::BottomLeft() const {
+    return associated.box.BottomLeft();
+}
+
+Vec2 Character::BottomRight() const {
+    return associated.box.BottomRight();
+}
+
 void Character::AddSound(const std::string &key, const std::string &file) {
     Sound *sound = new Sound(associated, file, true);
     if (sound == nullptr) {

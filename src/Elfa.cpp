@@ -81,7 +81,6 @@ void Elfa::Update(float dt) {
 }
 
 void Elfa::Render() {
-
 }
 
 bool Elfa::Is(std::string type) {

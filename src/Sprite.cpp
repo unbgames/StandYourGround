@@ -7,12 +7,14 @@
 #include <SDL2/SDL_image.h>
 
 Sprite::Sprite(GameObject &associated, int frameCount, float frameTime, float secondsToSelfDestruct) :
-    Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount),
-    currentFrame(0), frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct), hide(false), offset({0, 0}) {
+    Component(associated), texture(nullptr), scale(1, 1), frameCount(frameCount), currentFrame(0),
+    frameTime(frameTime), secondsToSelfDestruct(secondsToSelfDestruct), hide(false), offset({0, 0}),
+    opacity(255) {
 }
 
 Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float frameTime,
-    float secondsToSelfDestruct) : Sprite(associated, frameCount, frameTime, secondsToSelfDestruct) {
+    float secondsToSelfDestruct) :
+    Sprite(associated, frameCount, frameTime, secondsToSelfDestruct) {
     Open(file);
 }
 
@@ -55,7 +57,7 @@ void Sprite::Open(std::string file) {
 }
 
 void Sprite::Render() {
-    if(!hide) { 
+    if(!hide) {
         Vec2 camPos = Camera::pos;
         Render(associated.box.GetX() + camPos.GetX() + offset.GetX(), associated.box.GetY() + camPos.GetY() + offset.GetY());
     }
@@ -73,8 +75,10 @@ void Sprite::Render(float x, float y) {
     if (texture == nullptr) {
         std::cerr << "Error Sprite: Trying to render null texture." <<std::endl;
     }
+    SDL_SetTextureAlphaMod(texture.get(), opacity);
     SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(), &clipRect, &dstRect, associated.angle*180/PI,
         nullptr, SDL_FLIP_NONE);
+    SDL_SetTextureAlphaMod(texture.get(), 255);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -110,14 +114,16 @@ Vec2 Sprite::GetScale() {
 }
 
 void Sprite::Update(float dt) {
-    timer.Update(dt);
-    if (timer.Get() >= frameTime) {
-        timer.Restart();
-        currentFrame++;
-        if(currentFrame >= frameCount) {
-            currentFrame = 0;
+    if (frameTime > 0) {
+        timer.Update(dt);
+        if (timer.Get() >= frameTime) {
+            timer.Restart();
+            currentFrame++;
+            if(currentFrame >= frameCount) {
+                currentFrame = 0;
+            }
+            SetFrame(currentFrame);
         }
-        SetFrame(currentFrame);
     }
     /*if (secondsToSelfDestruct != 0) {
         if (timer.Get() > secondsToSelfDestruct) {
@@ -152,4 +158,10 @@ void Sprite::Hide() {
 
 void Sprite::Show() {
     hide = false;
+}
+
+void Sprite::Opacity(float percent) {
+    if (percent >= 0 && percent <= 100) {
+        opacity = std::floor(percent * 255 / 100);
+    }
 }

@@ -9,12 +9,25 @@ bool Rect::Contains(float _x, float _y) const {
     return (_x >= x && _x <= x+w && _y >= y && _y <= y+h);
 }
 
+bool Rect::Contains(const Vec2 &a) const {
+    return (a.GetX() >= x && a.GetX() <= x+w && a.GetY() >= y && a.GetY() <= y+h);
+}
+
+bool Rect::Intersect(const Rect &a) const {
+    return x < a.GetRight() && this->GetRight() > a.GetLeft() &&
+      this->GetTop() > a.GetBottom() && this->GetBottom() < a.GetTop();
+}
+
 Vec2 Rect::Center() const {
     return Vec2(x+w/2, y + h/2);
 }
 
 Vec2 Rect::BottomLeft() const {
     return Vec2(x, y+h);
+}
+
+Vec2 Rect::BottomRight() const {
+    return Vec2(x+w, y+h);
 }
 
 Vec2 Rect::Origin() const {
@@ -74,8 +87,24 @@ float Rect::GetX() const {
     return x;
 }
 
+float Rect::GetLeft() const {
+    return x;
+}
+
+float Rect::GetRight() const {
+    return x + w;
+}
+
 float Rect::GetY() const {
     return y;
+}
+
+float Rect::GetTop() const {
+    return y;
+}
+
+float Rect::GetBottom() const {
+    return y + h;
 }
 
 float Rect::GetH() const {

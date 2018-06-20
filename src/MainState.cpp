@@ -13,6 +13,7 @@
 #include "../include/Tree.h"
 #include "../include/Text.h"
 #include "../include/GameTimer.h"
+#include "../include/Forest.h"
 #include "../include/Debug.h"
 
 #ifdef DEBUG
@@ -68,41 +69,20 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goOrc->layer = 2;
     objectArray.push_back(goOrc);
 
-    auto goBoulder = std::make_shared<GameObject>();
-    goBoulder->box.SetOrigin(700, 500);
-    Sprite* boulderSprite = new Sprite(*goBoulder, "./assets/img/items/boulder.png");
-    goBoulder->AddComponent(boulderSprite);
-    goBoulder->box.SetSize(boulderSprite->GetWidth() - 35, boulderSprite->GetHeight());
-    goBoulder->AddComponent(new Collider(*goBoulder, {1, 1}, {0, 0}));
-    goBoulder->layer = 2;
-    objectArray.push_back(goBoulder);
-
-    auto goItem = std::make_shared<GameObject>();
-    goItem->box.SetOrigin(500, 100);
-    Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
-    goItem->AddComponent(itemSprite);
-    goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
-    goItem->AddComponent(new Collider(*goItem));
-    goItem->AddComponent(new Item(*goItem));
-    goItem->layer = 1;
-    objectArray.push_back(goItem);
-
-    auto goTree = std::make_shared<GameObject>();
-    goTree->box.SetOrigin(100, 100);
-    Sprite *treeSprite = new Sprite(*goTree, "./assets/img/items/tree.png");
-    goTree->AddComponent(treeSprite);
-    goTree->box.SetSize(treeSprite->GetWidth(), treeSprite->GetHeight());
-    goTree->AddComponent(new Collider(*goTree, {0.07, 0.2}, {30, 220}));
-    goTree->AddComponent(new Tree(*goTree));
-    goTree->layer = 2;
-    objectArray.push_back(goTree);
+    auto goForest = std::make_shared<GameObject>();
+    goForest->box.SetOrigin(0, 0);
+    goForest->box.SetSize(0, 0);
+    Forest* forest = new Forest(*goForest, "./assets/map/trees.csv", {40, 40});
+    goForest->AddComponent(forest);
+    goForest->layer = 2;
+    objectArray.push_back(goForest);
 
     auto goTimer = std::make_shared<GameObject>();
     goTimer->box.SetOrigin(450, 0);
     GameTimer *countDownTimer = new GameTimer(*goTimer, 4, 15);
     goTimer->AddComponent(countDownTimer);
     goTimer->box.SetSize(countDownTimer->GetBox().GetW(), countDownTimer->GetBox().GetH());
-    goTimer->layer = 2;
+    goTimer->layer = 4;
     objectArray.push_back(goTimer);
 }
 

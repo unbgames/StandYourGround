@@ -10,9 +10,12 @@ public:
     Rect () = default;
     Rect (float x, float y, float w, float h);
     bool Contains(float x, float y) const;
+    bool Contains(const Vec2 &a) const;
+    bool Intersect(const Rect &a) const;
     Vec2 Center() const;
     Vec2 Origin() const;
     Vec2 BottomLeft() const;
+    Vec2 BottomRight() const;
     static float CenterDist(const Rect &a, const Rect &b);
 
     void Shift(float dx, float dy);
@@ -31,6 +34,10 @@ public:
     float GetY() const;
     float GetW() const;
     float GetH() const;
+    float GetBottom() const;
+    float GetTop() const;
+    float GetLeft() const;
+    float GetRight() const;
     SDL_Rect toSDL() const;
 
 private:

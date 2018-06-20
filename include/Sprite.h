@@ -40,11 +40,12 @@ public:
     void SetFrame(int frame);
     void SetFrameCount(int frameCount);
     void SetFrameTime(float frameTime);
-
+    void SetDefaultFrame(int frame);
 
     void SetOffset(Vec2 offset);
     void Hide();
     void Show();
+    void Opacity(float percent);
 
 private:
     std::shared_ptr<SDL_Texture> texture;
@@ -56,6 +57,7 @@ private:
     int currentFrame;
     float frameTime;
     float secondsToSelfDestruct;
+    int opacity;
     Timer timer;
 
     Vec2 offset;

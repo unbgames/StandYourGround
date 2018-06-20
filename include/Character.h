@@ -58,6 +58,8 @@ public:
     CharState GetState() const;
     static std::string StateToString(const CharState &state);
     Vec2 Origin() const;
+    Vec2 BottomLeft() const;
+    Vec2 BottomRight() const;
 
 protected:
     int hp;
