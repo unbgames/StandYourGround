@@ -13,15 +13,19 @@ GameObject::~GameObject() {
     for (Component *cmp : components) {
         delete cmp;
     }
-    // std::cout<<"Delete"<<std::endl;
+    std::cout<<"Delete"<<std::endl;
     //std::cout<<"Delete isDead:"<<((isDead)?"True":"False")<<std::endl;
 }
 
 void GameObject::Update(float dt) {
     //std::cerr << "Size Components:"<<components.size()<<std::endl;
     //std::cout<<"Update isDead:"<<((isDead)?"True":"False")<<std::endl;
-    for (Component *cmp : components) {
-        if (cmp != nullptr) cmp->Update(dt);
+    // std::cout<<"Update GO"<<std::endl;
+    for (int i = 0; i < components.size(); i++) {
+        if (components[i] != nullptr) {
+            // std::cout<<"Update Component:"<< components[i]->Type() <<std::endl;
+            components[i]->Update(dt);
+        }
     }
 
 }
@@ -75,7 +79,7 @@ void GameObject::RequestDelete() {
 }
 
 void GameObject::AddComponent(Component *cpt) {
-    // std::cout<<"AddCmp "<< cpt <<std::endl;
+    // std::cout<<"AddCmp: "<< cpt->Type() <<std::endl;
     components.push_back(cpt);
     if (started) {
         cpt->Start();

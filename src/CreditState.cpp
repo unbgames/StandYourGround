@@ -4,7 +4,7 @@
 #include "../include/Text.h"
 #include "../include/Game.h"
 
-const char* membros[6] = {"Felipe da Costa Malaquias", "Lucas Mota Ribeiro", "Emille Catarine Cancado", "Vitor Teodoro", "Leo", "Brenda"};
+const char* membros[6] = {"Felipe da Costa Malaquias", "Lucas Mota Ribeiro", "Emille Catarine Rodrigues Cancado", "Vitor Teodoro Bastos", "Leonardo Bustamente", "Brenda"};
 
 CreditState::CreditState() {
     auto bgObj = std::make_shared<GameObject>();
@@ -20,7 +20,7 @@ CreditState::CreditState() {
     for(int i = 0; i < 6; i++) {
         auto creditTextObj = std::make_shared<GameObject>();
         objectArray.push_back(creditTextObj);
-        Text* membro = new Text(*creditTextObj, "./assets/font/pixel.ttf", 
+        Text* membro = new Text(*creditTextObj, "./assets/font/pixel.ttf",
                                 80, TextStyle::SOLID, membros[i], {0, 0, 0, 255});
         creditTextObj->box.SetOrigin(SCREEN_WIDTH/2 - membro->GetBox().GetW()/2, 100 + i*60);
         creditTextObj->layer = 2;
@@ -30,7 +30,7 @@ CreditState::CreditState() {
     auto backTextObj = std::make_shared<GameObject>();
     objectArray.push_back(backTextObj);
     backTextObj->box.SetOrigin(20, SCREEN_HEIGHT - 100);
-    Text* backText = new Text(*backTextObj, "./assets/font/pixel.ttf", 
+    Text* backText = new Text(*backTextObj, "./assets/font/pixel.ttf",
                               80, TextStyle::SOLID, "Voltar", {255, 0, 0, 255});
     backTextObj->AddComponent(backText);
     backTextObj->layer = 2;

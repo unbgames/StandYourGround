@@ -4,6 +4,9 @@
 #include "Timer.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "Sound.h"
+
+#include <map>
 
 class Tree : public Component {
     public:
@@ -20,6 +23,10 @@ class Tree : public Component {
         bool hitable; // Se o orc consegue bater na arvore
         float timeToLoseHp;
         Timer hitTime;
+        std::map<std::string, Sound*> soundMap;
+
+        void AddSound(const std::string &key, const std::string &file);
+        void PlaySound(const std::string &key, int volume = 128);
 };
 
 #endif
