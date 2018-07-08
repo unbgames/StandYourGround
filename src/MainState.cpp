@@ -61,7 +61,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goElfa->layer = 2;
     objectArray.push_back(goElfa);
 
-    goOrc->box.SetOrigin(100, 300);
+    goOrc->box.SetOrigin(200, 150);
     SpriteVector *vectorOrc = new SpriteVector(*goOrc);
     goOrc->AddComponent(vectorOrc);
     Orc* enemy = new Orc(*goOrc);
@@ -75,6 +75,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goForest->box.SetOrigin(0, 0);
     goForest->box.SetSize(0, 0);
     Forest* forest = new Forest(*goForest, "./assets/map/trees.csv", {40, 40});
+    Forest::forest = forest;
     goForest->AddComponent(forest);
     goForest->layer = 2;
     objectArray.push_back(goForest);

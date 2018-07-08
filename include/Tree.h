@@ -18,9 +18,12 @@ class Tree : public Component {
         bool Is(std::string type);
         std::string Type();
         void NotifyCollision(GameObject &other);
+        void Damage(int damage);
+
     private:
         int hp;
         bool hitable; // Se o orc consegue bater na arvore
+        bool gotHit; // Se o orc consegue bater na arvore
         float timeToLoseHp;
         Timer hitTime;
         std::map<std::string, Sound*> soundMap;

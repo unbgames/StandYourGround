@@ -12,6 +12,7 @@ public:
     void Rotate(float rad);
     Vec2 GetRotated(float rad) const;
     float Mag() const;
+    float L0Mag() const;
     void SetMag(float mag);
     static float EuclidianDist(const Vec2 &a, const Vec2 &b);
     static float ManhattamDist(const Vec2 &a, const Vec2 &b);

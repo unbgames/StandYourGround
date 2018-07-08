@@ -3,6 +3,7 @@
 
 #include "Character.h"
 #include "Timer.h"
+#include "Forest.h"
 
 class Orc : public Character {
 public:
@@ -18,7 +19,12 @@ public:
     static Orc* orc;
 
 private:
-    Timer timer;
+    Timer footstepTimer;
+    Timer chopTimer;
+    std::weak_ptr<GameObject> tree_w;
+    Forest* forest;
+    bool hitTree;
+    int damage;
 };
 
 #endif /* ORC_H */

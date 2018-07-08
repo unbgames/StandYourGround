@@ -16,6 +16,12 @@ public:
     bool Is(std::string type);
     std::string Type();
     void Start();
+    std::weak_ptr<GameObject> GetClosestTree(const Vec2 &pos) const;
+    void alertDeleteTree(const Vec2 &pos);
+    void alertDeleteTree(std::weak_ptr<GameObject> tree);
+
+
+    static Forest* forest;
 
 private:
     Vec2 tileSizeScaled;

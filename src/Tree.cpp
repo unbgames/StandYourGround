@@ -3,6 +3,7 @@
 #include "../include/Sprite.h"
 #include "../include/Elfa.h"
 #include "../include/Game.h"
+#include "../include/Forest.h"
 
 Tree::Tree(GameObject& associated) : Component(associated), hp(100), hitable(false), timeToLoseHp(0.1*5) {
     Sprite *treeSprite = new Sprite(associated, "./assets/map/tilemap_arvore_v2.png", 5, 0);
@@ -11,32 +12,23 @@ Tree::Tree(GameObject& associated) : Component(associated), hp(100), hitable(fal
     associated.AddComponent(treeSprite);
     associated.box.SetSize(treeSprite->GetWidth(), treeSprite->GetHeight());
     AddSound("chopp", "./assets/audio/chopp.mp3");
+    gotHit = false;
 }
 Tree::~Tree() {
+
 }
 
 void Tree::Update(float dt) {
-    InputManager& inp = InputManager::GetInstance();
-    if(inp.IsKeyDown(SPACE_KEY) && hitable) {
-        hitTime.Update(dt);
-        if(hitTime.Get() > timeToLoseHp) {
-            hitTime.Restart();
-            hp -= 20;
-            std::cout << "ARVORE TOMOU 20 DE DANO, RESTA " << hp << std::endl;
+    if(gotHit) {
+        Vec2 treePos = associated.box.Origin();
+        Elfa* elfaPtr = Elfa::elfa;
+        Vec2 elfPos = elfaPtr->Origin();
+        int reducer = int(std::pow(Vec2::EuclidianDist(treePos, elfPos), 2) / 4000);
+        // int reducer = int(Vec2::EuclidianDist(orcPos, elfPos) / 5);
+        // std::cout<<"PLAY SOUND at "<< reducer <<std::endl;
 
-            Vec2 treePos = associated.box.Origin();
-            Elfa* elfaPtr = Elfa::elfa;
-            Vec2 elfPos = elfaPtr->Origin();
-            int reducer = int(std::pow(Vec2::EuclidianDist(treePos, elfPos), 2) / 4000);
-            // int reducer = int(Vec2::EuclidianDist(orcPos, elfPos) / 5);
-            // std::cout<<"PLAY SOUND at "<< reducer <<std::endl;
-
-            PlaySound("chopp", 128 - std::min(reducer, 128));
-
-        }
-    }
-    else {
-        hitTime.Restart();
+        PlaySound("chopp", 128 - std::min(reducer, 128));
+        gotHit = false;
     }
 
     const Rect &rect = associated.box;
@@ -48,6 +40,7 @@ void Tree::Update(float dt) {
     }
 
     if(hp <= 0) {
+        Forest::forest->alertDeleteTree(rect.Origin());
         associated.RequestDelete();
         auto &state = Game::GetInstance().GetCurrentState();
         auto expObj = std::make_shared<GameObject>();
@@ -64,6 +57,10 @@ void Tree::Update(float dt) {
     //hitable = false;
 }
 
+void Tree::Damage(int damage) {
+    gotHit = true;
+    hp -= damage;
+}
 void Tree::Render() {
 }
 

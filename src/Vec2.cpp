@@ -29,6 +29,10 @@ float Vec2::Mag() const {
     return std::sqrt(std::pow(this->x, 2) + std::pow(this->y, 2));
 }
 
+float Vec2::L0Mag() const {
+    return std::abs(this->x) + std::abs(this->y);
+}
+
 void Vec2::SetMag(float newMag) {
     float mag = Mag();
     if (mag > 0) {
