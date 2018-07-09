@@ -59,3 +59,13 @@ void Bag::UseItem(ItemType type, int amount) {
             break;
     }
 }
+
+bool Bag::CanUseTrap(std::string trap) {
+    if(trap == "Hole") { // 3 gravetos e 2 cipos
+        return GetAmountItem(ItemType::galho) >= 3 && GetAmountItem(ItemType::cipo) >= 2;
+    } else if(trap == "Bomb") {
+        return GetAmountItem(ItemType::berry) >= 4 && GetAmountItem(ItemType::cipo) >= 2;
+    } else if(trap == "Cipo") {
+        return true;
+    }
+}

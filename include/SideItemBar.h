@@ -4,6 +4,7 @@
 #include "Text.h"
 #include "Component.h"
 #include "Sprite.h"
+#include "Timer.h"
 
 class SideItemBar : public Component {
     public:
@@ -14,6 +15,9 @@ class SideItemBar : public Component {
         bool Is(std::string type);
         std::string Type();
         void NotifyCollision(GameObject &other);
+        
+        // vai receber a trap e baseado nela vai piscar as cores dos itens que faltam
+        bool blinkItem(std::string trap);
     private:
         int berry;
         Text* berryAmount;
@@ -27,6 +31,9 @@ class SideItemBar : public Component {
         std::vector<GameObject*> itemList;
         std::vector<Sprite*> spriteItemList;
         std::vector<Text*> textItemList;
+
+        bool blinking;
+        Timer backToNormal;
 };
 
 #endif

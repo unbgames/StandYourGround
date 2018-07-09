@@ -110,6 +110,9 @@ std::string Character::StateToString(const CharState &state) {
             case Action::pick:
                 ret += "pick";
                 break;
+            case Action::cast:
+                ret += "cast";
+                break;
         }
         ret += '_';
         switch (state.dir) {

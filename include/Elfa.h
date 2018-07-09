@@ -21,6 +21,8 @@ public:
 private:
     Timer timer;
     Timer picking;
+    Timer casting;
+    bool cast;
 
 };
 

@@ -1,7 +1,6 @@
 #include "../include/HUD.h"
 #include "../include/Bag.h"
-#include "../include/SideItemBar.h"
-#include "../include/SkillBar.h"
+
 
 HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(player){
     GameObject* goTimer = new GameObject();
@@ -12,13 +11,13 @@ HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(p
     hudComponents.push_back(goTimer);
 
     GameObject* goSideItemBar = new GameObject();
-    SideItemBar * sideItemBar = new SideItemBar(*goSideItemBar);
+    sideItemBar = new SideItemBar(*goSideItemBar);
     goSideItemBar->layer = associated.layer;
     goSideItemBar->AddComponent(sideItemBar);
     hudComponents.push_back(goSideItemBar);
 
     GameObject* goSkillBar = new GameObject();
-    SkillBar *skillBar = new SkillBar(*goSkillBar);
+    skillBar = new SkillBar(*goSkillBar);
     goSkillBar->layer = associated.layer;
     goSkillBar->AddComponent(skillBar);
     hudComponents.push_back(goSkillBar);
@@ -47,4 +46,8 @@ bool HUD::GameOver() {
 }
 void HUD::NotifyCollision(GameObject &other) {
 
+}
+
+bool HUD::UseTrap(std::string trap) {
+    return sideItemBar->blinkItem(trap);
 }

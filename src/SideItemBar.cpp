@@ -2,8 +2,9 @@
 #include "../include/Game.h"
 #include "../include/Sprite.h"
 #include "../include/Bag.h"
+#include "../include/InputManager.h"
 
-SideItemBar::SideItemBar(GameObject& associated) : Component(associated) {
+SideItemBar::SideItemBar(GameObject& associated) : Component(associated), backToNormal(false) {
     GameObject* berryObj = new GameObject();
     berryAmount = new Text(*berryObj, "./assets/font/pixel.ttf", 80, TextStyle::SOLID, "0x", {0, 0, 0, 255});
     textItemList.push_back(berryAmount);
@@ -59,19 +60,69 @@ void SideItemBar::Update(float dt) {
         galho = Bag::GetAmountItem(ItemType::galho);
         galhoAmount->SetText(std::to_string(galho) + "x");
     }
+    
+    InputManager &inp = InputManager::GetInstance();
+    if(inp.KeyPress(SDLK_k)) {
+        blinkItem("Bomb");
+    }
+    else if(inp.KeyPress(SDLK_j)) {
+        blinkItem("Hole");
+    }
+
+    if(blinking) {
+        backToNormal.Update(dt);
+        if(backToNormal.Get() > 0.7) {
+            backToNormal.Restart();
+            blinking = false;
+            cipoAmount->SetColor({0, 0, 0, 255});
+            berryAmount->SetColor({0, 0, 0, 255});
+            galhoAmount->SetColor({0, 0, 0, 255});
+        }
+    }
 }
+
 void SideItemBar::Render() {
     for(int i = 0; i < itemList.size(); i++) {
         textItemList[i]->RenderNoCam();
         spriteItemList[i]->RenderNoCam();
     }
 }
+
 bool SideItemBar::Is(std::string type) {
 
 }
+
 std::string SideItemBar::Type() {
 
 }
+
 void SideItemBar::NotifyCollision(GameObject &other) {
 
+}
+
+bool SideItemBar::blinkItem(std::string trap) {
+    if(trap == "Hole") { // 3 gravetos e 2 cipos
+        if(Bag::GetAmountItem(ItemType::cipo) < 2) {
+            cipoAmount->SetColor({255, 0, 0, 1});
+            blinking = true;
+        }
+        if(Bag::GetAmountItem(ItemType::galho) < 3) {
+            galhoAmount->SetColor({255, 0, 0, 1});
+            blinking = true;
+        }
+    } else if(trap == "Bomb") {
+        if(Bag::GetAmountItem(ItemType::cipo) < 2) {
+            cipoAmount->SetColor({255, 0, 0, 1});
+            blinking = true;
+        }
+        if(Bag::GetAmountItem(ItemType::berry) < 4) {
+            berryAmount->SetColor({255, 0, 0, 1});
+            blinking = true;
+        }
+
+    } else if(trap == "Cipo") {
+
+    }
+    bool canUseItem = !blinking;
+    return canUseItem;
 }

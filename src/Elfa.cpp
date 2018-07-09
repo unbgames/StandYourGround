@@ -3,13 +3,15 @@
 #include "../include/SpriteVector.h"
 #include "../include/Game.h"
 #include "../include/Bomb.h"
+#include "../include/Hole.h"
 
 Elfa* Elfa::elfa = nullptr;
 
 Elfa::Elfa(GameObject& associated) : Character(associated,
-  {Direction::esq, Facing::up, Movement::idle, Action::no_action}), timer(true), picking(false) {
+  {Direction::esq, Facing::up, Movement::idle, Action::no_action}), timer(true), picking(false), casting(false) {
     hp = 100;
     speed = 200;
+    cast = false;
     AddSound("footstep", "./assets/audio/footstep_grass2.mp3");
 }
 
@@ -70,13 +72,76 @@ void Elfa::Update(float dt) {
             };
         }
         picking.Update(dt);
-    } else if(inp.IsKeyDown(SDLK_j)) {
-    } else {
+    } else if(inp.IsKeyDown(SDLK_k) && (Bag::CanUseTrap("Bomb") || state.act == Action::pick)) {
+        if(!cast) {
+            auto goTrap = std::make_shared<GameObject>();
+            goTrap->box.SetSize(4*40, 4*20);
+            goTrap->box.SetOrigin(this->associated.box.GetX(), this->associated.box.GetY()+30);
+            // trapSpr->Hide();
+            Bomb *bomb = new Bomb(*goTrap);
+            goTrap->AddComponent(bomb);
+            goTrap->layer = 2;
+            Game::GetInstance().GetCurrentState().AddObject(goTrap);
+            cast = true;
+            Bag::UseItem(ItemType::berry, 4);
+            Bag::UseItem(ItemType::cipo, 2);
+        }
+        
+        if(casting.Get() < 0.9) {
+            newState = {
+                state.dir,
+                state.face,
+                state.move,
+                Action::pick
+            };
+        } else {
+            newState = {
+                state.dir,
+                state.face,
+                state.move,
+                Action::no_action
+            };
+        }
+        casting.Update(dt);
+    } else if(inp.IsKeyDown(SDLK_j) && (Bag::CanUseTrap("Hole") || state.act == Action::pick)) {
+        if(!cast) {
+            auto goTrap = std::make_shared<GameObject>();
+            goTrap->box.SetSize(4*40, 4*20);
+            goTrap->box.SetOrigin(this->associated.box.GetX(), this->associated.box.GetY()+30);
+            Hole *hole = new Hole(*goTrap);
+            goTrap->AddComponent(hole);
+            goTrap->layer = 2;
+            Game::GetInstance().GetCurrentState().AddObject(goTrap);
+            cast = true;
+            Bag::UseItem(ItemType::cipo, 2);
+            Bag::UseItem(ItemType::galho, 3);
+        }
+        if(casting.Get() < 0.9) {
+            newState = {
+                state.dir,
+                state.face,
+                state.move,
+                Action::pick
+            };
+        } else {
+            newState = {
+                state.dir,
+                state.face,
+                state.move,
+                Action::no_action
+            };
+        }
+        casting.Update(dt);
+    }else {
         // Se o run for setado somente no A e D ele nao deixa idle aqui
         state.move = Movement::idle;
     }
     if(inp.KeyRelease(SDLK_e)) {
         picking.Restart();
+    }
+    if(inp.KeyRelease(SDLK_j) || inp.KeyRelease(SDLK_k)) {
+        casting.Restart();
+        cast = false;
     }
     Vec2 shift(velX, velY);
     if (shift.Mag() > 0) { // Is moving
@@ -115,6 +180,8 @@ std::string Elfa::Type() {
 void Elfa::NotifyCollision(GameObject &other) {
     if(other.GetComponent("Item") != nullptr) {
         Item* item = (Item*) other.GetComponent("Item");
+
+    } else if(other.GetComponent("Trap") != nullptr) {
 
     }
     else {

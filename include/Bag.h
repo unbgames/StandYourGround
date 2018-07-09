@@ -8,6 +8,7 @@ class Bag {
         static void PickItem(ItemType type, int amount=1);
         static int GetAmountItem(ItemType type);
         static void UseItem(ItemType type, int amount);
+        static bool CanUseTrap(std::string trap);
     private:
         static int cipo;
         static int berry;
