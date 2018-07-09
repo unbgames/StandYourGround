@@ -17,7 +17,7 @@ std::weak_ptr<GameObject> State::AddObject(std::weak_ptr<GameObject> go) {
         if (started) {
             shared->Start();
         }
-        std::cout <<"Added Object"<<std::endl;
+        // std::cout <<"Added Object"<<std::endl;
         return go;
     } else {
         std::cerr <<"Tried to add null GameObject"<<std::endl;

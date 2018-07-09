@@ -6,7 +6,7 @@
 Totem* Totem::totem = nullptr;
 
 Totem::Totem(GameObject& associated, int trees, int health) : Component(associated), trees(trees), health(health) {
-    std::cout << "CAN ATTACK:"<<trees<<"|"<<health<<std::endl;
+    // std::cout << "CAN ATTACK:"<<trees<<"|"<<health<<std::endl;
     Sprite *totemSpr = new Sprite(associated, "./assets/img/totem.png", 20, 0.1, 0);
     totemSpr->SetScale({4, 4});
     associated.box.SetSize(totemSpr->GetWidth(), totemSpr->GetHeight()*0.75);
@@ -47,7 +47,7 @@ void Totem::alertTreeFall() {
 }
 
 bool Totem::canAttack() const {
-    std::cout << "CAN ATTACK:"<<trees<<std::endl;
+    // std::cout << "CAN ATTACK:"<<trees<<std::endl;
     return (trees == 0);
 }
 

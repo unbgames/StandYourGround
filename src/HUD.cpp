@@ -4,7 +4,7 @@
 
 HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(player){
     GameObject* goTimer = new GameObject();
-    GameTimer *countDownTimer = new GameTimer(*goTimer, 1, 20);
+    GameTimer *countDownTimer = new GameTimer(*goTimer, 3, 1);
     goTimer->AddComponent(countDownTimer);
     goTimer->box.SetSize(countDownTimer->GetBox().GetW(), countDownTimer->GetBox().GetH());
     goTimer->layer = associated.layer;
@@ -45,7 +45,6 @@ bool HUD::GameOver() {
     return timer->gameOver();
 }
 void HUD::NotifyCollision(GameObject &other) {
-
 }
 
 bool HUD::UseTrap(std::string trap) {

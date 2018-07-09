@@ -19,6 +19,7 @@
 #include "../include/Hole.h"
 #include "../include/Bomb.h"
 #include "../include/Totem.h"
+#include "../include/ItemFactory.h"
 
 
 #ifdef DEBUG
@@ -52,7 +53,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     tileObj->layer = 1;
     tileObj->AddComponent(tileLayers);
 
-    goElfa->box.SetOrigin(900, 900);
+    goElfa->box.SetOrigin(950, 900);
     SpriteVector *vectorElfa = new SpriteVector(*goElfa);
     goElfa->AddComponent(vectorElfa);
     Elfa* player = new Elfa(*goElfa);
@@ -84,7 +85,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     objectArray.push_back(goForest);
 
     auto goTotem = std::make_shared<GameObject>();
-    goTotem->box.SetOrigin(1150, 400);
+    goTotem->box.SetOrigin(3000, 700);
     Totem *totem = new Totem(*goTotem, 15);
     goTotem->AddComponent(totem);
     Totem::totem = totem;
@@ -278,6 +279,7 @@ void MainState::Render() {
 }
 
 void MainState::Start() {
+    ItemFactory::Load({"./assets/map/flowers.csv", "./assets/map/berries.csv", "./assets/map/galhos.csv"});
     // auto goTrap = std::make_shared<GameObject>();
     // goTrap->box.SetOrigin(850, 580);
     // Sprite *trapSpr = new Sprite(*goTrap, "./assets/img/trap/buraco.png");
