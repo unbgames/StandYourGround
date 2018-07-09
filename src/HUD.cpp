@@ -6,7 +6,7 @@
 
 HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(player){
     GameObject* goTimer = new GameObject();
-    timer = new GameTimer(*goTimer, 0,2);
+    timer = new GameTimer(*goTimer, 3,1);
     goTimer->AddComponent(timer);
     goTimer->box.SetSize(timer->GetBox().GetW(), timer->GetBox().GetH());
     goTimer->layer = associated.layer;
