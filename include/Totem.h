@@ -25,6 +25,7 @@ public:
     static Totem* totem;
 
 private:
+    SpriteVector *totemSpr;
     Timer chopTimer;
     int health;
     int trees;

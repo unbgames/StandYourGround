@@ -21,6 +21,12 @@ Hole::~Hole() {
 
 }
 
+void Hole::StopTrap() {
+    fell = false;
+    associated.RequestDelete();
+    std::cout << "TRAP DELETE" << std::endl;
+}
+
 Vec2 Hole::GetShiftAfter() const {
     return {40, 40};
 }
@@ -63,7 +69,9 @@ void Hole::Update(float dt) {
             std::cout << "TRAP UPDATE: after" << std::endl;
             trapSprites->SetCurSprite("after");
             goSprite->box.SetOrigin(spritePos + shiftMap[TrapState::after]);
+        } else if (state == TrapState::after && time > mapStateDuration[TrapState::after]) {
             fell = false;
+            state = TrapState::iddle;
         }
         if (previous != state) {
             trapSprites->ResetFrameCount();

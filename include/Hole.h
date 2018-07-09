@@ -10,7 +10,8 @@ public:
     Vec2 GetShiftAfter() const;
     bool ShouldHide() const;
     void Update(float dt);
-    
+    void StopTrap();
+
     Rect box;
 private:
     float duration;

@@ -33,10 +33,12 @@ class SpriteVector : public Component {
         void Update(float dt);
         void Hide();
         void Show();
+        void Opacity(float percent);
 
     private:
         std::unordered_map<std::string, Sprite *> sprites;
         std::string currentSprite;
+        int opacity;
         bool hide;
 };
 

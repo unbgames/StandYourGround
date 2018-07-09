@@ -79,3 +79,12 @@ void SpriteVector::Render(float x, float y) {
 void SpriteVector::Update(float dt) {
     GetCurSprite()->Update(dt);
 }
+
+void SpriteVector::Opacity(float percent) {
+    if (percent >= 0 && percent <= 100) {
+        opacity = std::floor(percent * 255 / 100);
+        for (auto spPair : sprites)  {
+            spPair.second->Opacity(opacity);
+        }
+    }
+}

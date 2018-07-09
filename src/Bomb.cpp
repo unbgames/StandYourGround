@@ -27,6 +27,7 @@ Vec2 Bomb::GetShiftAfter() const {
 bool Bomb::ShouldHide() const {
     return (state == TrapState::interm || state == TrapState::finish || state == TrapState::after);
 }
+
 void Bomb::StopTrap() {
     fell = false;
     associated.RequestDelete();

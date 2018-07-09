@@ -86,7 +86,7 @@ void Elfa::Update(float dt) {
             Bag::UseItem(ItemType::berry, 4);
             Bag::UseItem(ItemType::cipo, 2);
         }
-        
+
         if(casting.Get() < 0.9) {
             newState = {
                 state.dir,
@@ -106,10 +106,13 @@ void Elfa::Update(float dt) {
     } else if(inp.IsKeyDown(SDLK_j) && (Bag::CanUseTrap("Hole") || state.act == Action::pick)) {
         if(!cast) {
             auto goTrap = std::make_shared<GameObject>();
-            goTrap->box.SetSize(4*40, 4*20);
+            Sprite *trapSpr = new Sprite(*goTrap, "./assets/img/trap/buraco.png");
             goTrap->box.SetOrigin(this->associated.box.GetX(), this->associated.box.GetY()+30);
+            trapSpr->SetScale({4, 4});
+            goTrap->box.SetSize(trapSpr->GetWidth(), trapSpr->GetHeight());
             Hole *hole = new Hole(*goTrap);
             goTrap->AddComponent(hole);
+            goTrap->AddComponent(trapSpr);
             goTrap->layer = 2;
             Game::GetInstance().GetCurrentState().AddObject(goTrap);
             cast = true;
