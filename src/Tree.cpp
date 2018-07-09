@@ -7,19 +7,21 @@
 #include "../include/Sprite.h"
 
 Tree::Tree(GameObject& associated, int type, int status) : Component(associated), hp((status+1)*20), hitable(false), timeToLoseHp(0.1*5) {
+    // status += 1;
     std::string sprite;
     if (type == 0) {
-        sprite = "./assets/map/tilemap_arvore_v2.png";
+        sprite = "./assets/map/arv1.png";
     } else {
-        sprite = "./assets/map/tilemap_arvore_v2.png";
+        sprite = "./assets/map/arv2.png";
     }
-    treeSprite = new Sprite(associated, sprite , 5, 0);
+
+    // std::cout <<"TYPE:"<<type<< " STATUS:"<<status << std::endl;
+    treeSprite = new Sprite(associated, sprite , (type == 0)?4:5, 0);
     this->status = status;
     pickCipo = false;
     std::cout << status << std::endl;
     treeSprite->SetFrame(status);
     treeSprite->SetScale({4, 4});
-    treeSprite->SetFrame(status);
     associated.AddComponent(treeSprite);
     associated.box.SetSize(treeSprite->GetWidth(), treeSprite->GetHeight());
     AddSound("chopp", "./assets/audio/chopp2.wav");

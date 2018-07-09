@@ -61,7 +61,6 @@ bool HUD::Win() {
 }
 
 void HUD::NotifyCollision(GameObject &other) {
-
 }
 
 bool HUD::UseTrap(std::string trap) {

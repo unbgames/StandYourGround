@@ -56,17 +56,17 @@ void Forest::Start() {
     std::cout << "NUM_ARVORES " << treesPos.size() << std::endl;
     for (const std::tuple<int, int, int, int> &pos : treesPos) {
         auto treeObj = std::make_shared<GameObject>();
-        //std::cout <<"POS: ("<<std::get<0>(pos) * tileSizeScaled.GetX() << ',' <<std::get<1>(pos) * tileSizeScaled.GetY() <<')'<< std::endl;
+        // std::cout <<"POS: ("<<std::get<0>(pos) * tileSizeScaled.GetX() << ',' <<std::get<1>(pos) * tileSizeScaled.GetY() <<')'<< std::endl;
         treeObj->layer = associated.layer;
         Tree *tree = new Tree(*treeObj, std::get<2>(pos), std::get<3>(pos));
         treeObj->AddComponent(tree);
         treeVector.push_back(treeObj);
         state.AddObject(treeObj);
-        
+
         float pos_x = std::get<0>(pos) * tileSizeScaled.GetX();
         float pos_y = std::get<1>(pos) * tileSizeScaled.GetY();
         treeObj->box.SetOrigin(pos_x, pos_y);
-        
+
         Collider *colTree = new Collider(*treeObj, {0.15, 0.65}, {-3, 115});
         treeObj->AddComponent(colTree);
     }

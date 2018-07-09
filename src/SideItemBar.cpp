@@ -11,10 +11,10 @@ SideItemBar::SideItemBar(GameObject& associated) : Component(associated), backTo
     berryObj->AddComponent(berryAmount);
     berryObj->layer = associated.layer;
     berryObj->box.SetOrigin(SCREEN_WIDTH-100, 100);
-    Sprite* berrySprite = new Sprite(*berryObj, "./assets/img/items/Berries x800.png");
+    Sprite* berrySprite = new Sprite(*berryObj, "./assets/img/items/Berriest x4.png");
     spriteItemList.push_back(berrySprite);
     berrySprite->SetOffset({50, 10});
-    berrySprite->SetScale(0.3, 0.3);
+    berrySprite->SetScale({1, 1});
     berryObj->AddComponent(berrySprite);
     itemList.push_back(berryObj);
 
@@ -60,7 +60,7 @@ void SideItemBar::Update(float dt) {
         galho = Bag::GetAmountItem(ItemType::galho);
         galhoAmount->SetText(std::to_string(galho) + "x");
     }
-    
+
     InputManager &inp = InputManager::GetInstance();
     if(inp.KeyPress(SDLK_k)) {
         blinkItem("Bomb");
