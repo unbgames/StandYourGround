@@ -95,44 +95,6 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goTotem->layer = 3;
     objectArray.push_back(goTotem);
 
-    /*for(int i = 1; i < 15; i++) {
-        auto goItem = std::make_shared<GameObject>();
-        goItem->box.SetOrigin(600, 100*i);
-        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
-        itemSprite->SetScale(0.2, 0.2);
-        goItem->AddComponent(itemSprite);
-        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
-        goItem->AddComponent(new Collider(*goItem));
-        goItem->AddComponent(new Item(*goItem, ItemType::berry));
-        goItem->layer = 3;
-        objectArray.push_back(goItem);
-    }
-
-    for(int i = 1; i < 15; i++) {
-        auto goItem = std::make_shared<GameObject>();
-        goItem->box.SetOrigin(800, 100*i);
-        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/cipo.png");
-        itemSprite->SetScale(0.3, 0.3);
-        goItem->AddComponent(itemSprite);
-        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
-        goItem->AddComponent(new Collider(*goItem));
-        goItem->AddComponent(new Item(*goItem, ItemType::cipo));
-        goItem->layer = 3;
-        objectArray.push_back(goItem);
-    }
-
-    for(int i = 1; i < 15; i++) {
-        auto goItem = std::make_shared<GameObject>();
-        goItem->box.SetOrigin(1000, 100*i);
-        Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/galho.png");
-        itemSprite->SetScale(0.4, 0.4);
-        goItem->AddComponent(itemSprite);
-        goItem->box.SetSize(itemSprite->GetWidth(), itemSprite->GetHeight());
-        goItem->AddComponent(new Collider(*goItem));
-        goItem->AddComponent(new Item(*goItem, ItemType::galho));
-        goItem->layer = 3;
-        objectArray.push_back(goItem);
-    }*/
 
 
     // Concentra todos os elementos do HUD dentro da classe HUD

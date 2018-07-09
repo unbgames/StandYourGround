@@ -1,11 +1,12 @@
 #include "../include/HUD.h"
 #include "../include/Bag.h"
 #include "../include/Totem.h"
+#include "../include/Game.h"
 
 
 HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(player){
     GameObject* goTimer = new GameObject();
-    timer = new GameTimer(*goTimer, 5, 1);
+    timer = new GameTimer(*goTimer, 0,2);
     goTimer->AddComponent(timer);
     goTimer->box.SetSize(timer->GetBox().GetW(), timer->GetBox().GetH());
     goTimer->layer = associated.layer;
@@ -23,6 +24,14 @@ HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(p
     goSkillBar->AddComponent(skillBar);
     hudComponents.push_back(goSkillBar);
 
+    GameObject* totemHP = new GameObject();
+    totemHP->box.SetOrigin(100, 100);
+    totemHP->box.SetSize(300, 300);
+    Sprite *hp = new Sprite(*totemHP, "./assets/img/hp.png");
+    hp->SetScale({3, 3});
+    totemHP->layer = associated.layer;
+    totemHP->AddComponent(hp);
+    hudComponents.push_back(totemHP);
 }
 
 void HUD::Update(float dt) {
