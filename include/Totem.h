@@ -21,6 +21,7 @@ public:
     void Damage(int damage);
     bool IsDead() const;
 
+    int GetNumTrees();
     static Totem* totem;
 
 private:

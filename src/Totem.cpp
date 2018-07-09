@@ -67,3 +67,7 @@ bool Totem::IsDead() const {
 
 void Totem::NotifyCollision(GameObject &other) {
 }
+
+int Totem::GetNumTrees() {
+    return trees;
+}

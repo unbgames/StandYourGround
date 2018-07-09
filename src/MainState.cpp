@@ -200,7 +200,7 @@ void checkCollision(GameObject* go1, GameObject* go2) {
 
 void MainState::Update(float dt) {
     if(hud->GameOver() && !CABO_ESSA_DESGRACA) {
-        bool win = true;
+        bool win = hud->Win();
         std::cout << "Cabo porra" << std::endl;
 
         auto bgObj = std::make_shared<GameObject>();
@@ -219,13 +219,12 @@ void MainState::Update(float dt) {
         objectArray.push_back(messageObj);
         messageObj->box.SetOrigin(SCREEN_WIDTH/2-128, SCREEN_HEIGHT/2-75);
         messageObj->box.SetSize(256, 150);
-        Sprite *sprText = new Sprite(*messageObj, "./assets/img/win.png");
+        std::string endGame = win ? "win" : "lose";
+        Sprite *sprText = new Sprite(*messageObj, "./assets/img/" + endGame + ".png");
         messageObj->AddComponent(sprText);
         messageObj->layer = 10000;
         messageObj->box.SetOrigin(270, 540);
         messageObj->box.SetSize(256, 120);
-
-
 
         CABO_ESSA_DESGRACA = true;
     }
@@ -267,8 +266,8 @@ void MainState::Update(float dt) {
     // if(orc != nullptr && sprVecOrc != nullptr) {
     //     sprVecOrc->SetCurSprite(Character::StateToString(orc->GetState()));
     // }
-
-    UpdateArray(dt);
+    if(!CABO_ESSA_DESGRACA)
+        UpdateArray(dt);
 
     for(int i = 0; i < objectArray.size(); i++) {
         GameObject* go1 = objectArray[i].get();

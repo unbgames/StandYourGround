@@ -20,6 +20,7 @@ class HUD : public Component {
 
         bool GameOver();
         bool UseTrap(std::string trap);
+        bool Win();
     private:
         Elfa* player;
         GameTimer* timer;
