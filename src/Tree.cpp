@@ -82,7 +82,7 @@ std::string Tree::Type() {
 
 void Tree::NotifyCollision(GameObject &other) {
     if(other.GetComponent("Orc") != nullptr) {
-        std::cout << "COLIDIU" << std::endl;
+        // std::cout << "COLIDIU" << std::endl;
         hitable = true;
     }
 }

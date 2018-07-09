@@ -4,11 +4,10 @@
 #include "Timer.h"
 #include "Forest.h"
 #include "Trap.h"
-#include "Orc.h"
 
 class Totem : public Component {
 public:
-    Totem(GameObject& associated);
+    Totem(GameObject& associated, int trees, int health = 300);
     ~Totem();
     void Start();
     void Update(float dt);
@@ -16,12 +15,17 @@ public:
     bool Is(std::string type);
     std::string Type();
     void NotifyCollision(GameObject &other);
+    void alertTreeFall();
+    bool canAttack() const;
+    Vec2 Center() const;
+    void Damage(int damage);
 
-    static Orc* orc;
+    static Totem* totem;
 
 private:
     Timer chopTimer;
-    int damage;
+    int health;
+    int trees;
 
     void AddSound(const std::string &key, const std::string &file);
     void PlaySound(const std::string &key, int volume = 128);

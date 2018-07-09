@@ -2,6 +2,7 @@
 #include "../include/Game.h"
 #include "../include/Tree.h"
 #include "../include/Collider.h"
+#include "../include/Totem.h"
 
 #include <limits>
 #include <fstream>
@@ -75,7 +76,7 @@ void Forest::Load(std::string file_path, int type) {
             int status = std::stoi(cell);
             // std::cout << val <<",";
             if (status != -1) {
-                treesPos.push_back(std::make_tuple(column, row, type, status));
+                treesPos.push_back(std::make_tuple(column, row - 6, type, status));
             }
             column++;
         }
@@ -108,6 +109,8 @@ void Forest::alertDeleteTree(const Vec2 &treePos) {
     for (const std::tuple<int, int, int, int> &pos : treesPos) {
         Vec2 auxTreePos(std::get<0>(pos) * tileSizeScaled.GetX(), std::get<1>(pos) * tileSizeScaled.GetY());
         if (auxTreePos == treePos) {
+            Totem * totem = Totem::totem;
+            totem->alertTreeFall();
             std::cout << "Deleted Tree at index: " << idx << std::endl;
             break;
         }

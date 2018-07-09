@@ -18,6 +18,7 @@
 #include "../include/Debug.h"
 #include "../include/Hole.h"
 #include "../include/Bomb.h"
+#include "../include/Totem.h"
 
 
 #ifdef DEBUG
@@ -32,8 +33,8 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     objectArray.push_back(bgObj);
     bgObj->box.SetOrigin(0, 0);
     bgObj->box.SetSize(1024, 600);
-    Sprite *spr = new Sprite(*bgObj, "./assets/img/bg.jpg");
-    bgObj->AddComponent(spr);
+    Sprite *bgSpr = new Sprite(*bgObj, "./assets/img/bg.jpg");
+    bgObj->AddComponent(bgSpr);
     CameraFollower *followerBg = new CameraFollower(*bgObj);
     bgObj->layer = 0;
     bgObj->AddComponent(followerBg);
@@ -81,6 +82,14 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goForest->AddComponent(forest);
     goForest->layer = 3;
     objectArray.push_back(goForest);
+
+    auto goTotem = std::make_shared<GameObject>();
+    goTotem->box.SetOrigin(2050, 1000);
+    Totem *totem = new Totem(*goTotem, 1);
+    goTotem->AddComponent(totem);
+    Totem::totem = totem;
+    goTotem->layer = 3;
+    objectArray.push_back(goTotem);
 
     for(int i = 1; i < 15; i++) {
         auto goItem = std::make_shared<GameObject>();
@@ -270,7 +279,7 @@ void MainState::Render() {
 
 void MainState::Start() {
     auto goTrap = std::make_shared<GameObject>();
-    goTrap->box.SetOrigin(1050, 800);
+    goTrap->box.SetOrigin(850, 580);
     Sprite *trapSpr = new Sprite(*goTrap, "./assets/img/trap/buraco.png");
     // trapSpr->Hide();
     trapSpr->SetScale({4, 4});

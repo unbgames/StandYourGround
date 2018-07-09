@@ -4,6 +4,7 @@
 #include "../include/SpriteVector.h"
 #include "../include/Collider.h"
 #include "../include/Tree.h"
+#include "../include/Totem.h"
 
 Orc* Orc::orc = nullptr;
 
@@ -55,22 +56,81 @@ void Orc::Update(float dt) {
             onTrap =  false;
         }
     } else {
-        std::shared_ptr<GameObject> tree = tree_w.lock();
-        if (tree == nullptr) { // Get new tree
-            if (forest != nullptr) {
-                std::cout << "GOT TREE"<<std::endl;
-                tree_w = forest->GetClosestTree(orcColl->box.Center());
-                hitTree = false;
+        Totem *totem = Totem::totem;
+        if (!totem->canAttack()) {
+            std::shared_ptr<GameObject> tree = tree_w.lock();
+            if (tree == nullptr) { // Get new tree
+                if (forest != nullptr) {
+                    std::cout << "GOT TREE"<<std::endl;
+                    tree_w = forest->GetClosestTree(orcColl->box.Center());
+                    hitTree = false;
+                } else {
+                    std::cout << "NULL FOREST"<<std::endl;
+                    forest = Forest::forest;
+                }
             } else {
-                std::cout << "NULL FOREST"<<std::endl;
-                forest = Forest::forest;
+                //speed * dt
+                Collider *coll = (Collider *) tree->GetComponent("Collider");
+                Rect colBox = coll->box;
+                Vec2 diff = colBox.Center() - orcColl->box.Center();
+                if (!hitTree) { // Is far to the tree diagonal.
+                    firstHit = true;
+                    chopTimer.Restart(); // Chopp stop.
+                    // std::cout << "Diff: "<<diff<<std::endl;
+                    if (std::abs(diff.GetY()) > speed * dt) { // Still has to walk on Y
+                        if ((diff.GetY() > 0)) { // Going down
+                            newState = {
+                                Direction::dir,
+                                Facing::down,
+                                Movement::run,
+                            };
+                            velY = speed * dt;
+                        } else {// Going up
+                            newState = {
+                                state.dir,
+                                Facing::up,
+                                Movement::run,
+                            };
+                            velY = -speed * dt;
+                        }
+                    } else { // Still has to walk on X
+                        if ((diff.GetX() > 0)) { // Going right
+                            newState = {
+                                Direction::dir,
+                                Facing::down,
+                                Movement::run,
+                            };
+                            velX = speed * dt;
+                        } else {// Going left
+                            newState = {
+                                Direction::esq,
+                                Facing::down,
+                                Movement::run,
+                            };
+                            velX = -speed * dt;
+                        }
+                    }
+                } else { // Is close to the tree.
+                    float time = 0;
+                    if (firstHit) {
+                        time = 0.1*2.5;
+                    } else {
+                        time = 0.1*5;
+                    }
+                    chopTimer.Update(dt);
+                    newState.act = Action::atq;
+                    Tree *tComp = (Tree*) tree->GetComponent("Tree");
+                    if (chopTimer.Get() > time && tComp != nullptr) {
+                        std::cout<<"HIT TREE"<<std::endl;
+                        tComp->Damage(damage);
+                        chopTimer.Restart();
+                        firstHit = false;
+                    }
+                }
             }
-        } else {
-            //speed * dt
-            Collider *coll = (Collider *) tree->GetComponent("Collider");
-            Rect colBox = coll->box;
-            Vec2 diff = colBox.Center() - orcColl->box.Center();
-            if (!hitTree) { // Is far to the tree diagonal.
+        } else { // TOTEMMMMMM
+            Vec2 diff = totem->Center() - orcColl->box.Center();
+            if (!hitTotem) { // Is far to the tree diagonal.
                 firstHit = true;
                 chopTimer.Restart(); // Chopp stop.
                 // std::cout << "Diff: "<<diff<<std::endl;
@@ -116,10 +176,9 @@ void Orc::Update(float dt) {
                 }
                 chopTimer.Update(dt);
                 newState.act = Action::atq;
-                Tree *tComp = (Tree*) tree->GetComponent("Tree");
-                if (chopTimer.Get() > time && tComp != nullptr) {
+                if (chopTimer.Get() > time && totem != nullptr) {
                     std::cout<<"HIT TREE"<<std::endl;
-                    tComp->Damage(damage);
+                    totem->Damage(damage);
                     chopTimer.Restart();
                     firstHit = false;
                 }
@@ -219,6 +278,11 @@ void Orc::NotifyCollision(GameObject &object) {
         trap = trapAux;
         // std::cout << "TRAAAAP" << std::endl;
         onTrap = true;
+    }
+    auto totem = (Totem *) object.GetComponent("Totem");
+    if(totem != nullptr) {
+        std::cout << "TOTEM" << std::endl;
+        hitTotem = true;
     }
     if(object.GetComponent("Item") == nullptr) {
         associated.box = oldBox;

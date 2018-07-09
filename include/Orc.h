@@ -25,6 +25,7 @@ private:
     std::weak_ptr<GameObject> tree_w;
     Forest* forest;
     bool hitTree;
+    bool hitTotem;
     bool firstHit;
 
     bool onTrap;
