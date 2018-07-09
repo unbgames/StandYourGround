@@ -2,6 +2,7 @@
 #include "../include/InputManager.h"
 #include "../include/SpriteVector.h"
 #include "../include/Game.h"
+#include "../include/Bomb.h"
 
 Elfa* Elfa::elfa = nullptr;
 
@@ -69,6 +70,7 @@ void Elfa::Update(float dt) {
             };
         }
         picking.Update(dt);
+    } else if(inp.IsKeyDown(SDLK_j)) {
     } else {
         // Se o run for setado somente no A e D ele nao deixa idle aqui
         state.move = Movement::idle;

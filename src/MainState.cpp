@@ -183,10 +183,6 @@ void checkCollision(GameObject* go1, GameObject* go2) {
 }
 
 void MainState::Update(float dt) {
-    if(hud->GameOver()) {
-        std::cout << "Cabou porra" << std::endl;
-        quitRequested = true;
-    }
     Camera::Update(dt);
 
     InputManager &inp = InputManager::GetInstance();
