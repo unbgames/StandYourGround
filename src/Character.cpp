@@ -123,7 +123,7 @@ std::string Character::StateToString(const CharState &state) {
                 ret += "dir";
             break;
         }
-        std::cout << ret << std::endl;
+        // std::cout << ret << std::endl;
     }
     // std::cout<<"STATE:"<<ret<<std::endl;
     return ret;

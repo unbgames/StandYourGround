@@ -47,17 +47,22 @@ void Totem::alertTreeFall() {
 }
 
 bool Totem::canAttack() const {
-
     std::cout << "CAN ATTACK:"<<trees<<std::endl;
     return (trees == 0);
 }
 
 Vec2 Totem::Center() const {
-    return associated.box.Center();
+    auto collider = (Collider *) associated.GetComponent("Collider");
+    return collider->box.Center();
 }
 
 void Totem::Damage(int damage) {
     health -= damage;
+    std::cout << "TOTEM LIFE:"<<health<<std::endl;
+}
+
+bool Totem::IsDead() const {
+    return (health <= 0);
 }
 
 void Totem::NotifyCollision(GameObject &other) {

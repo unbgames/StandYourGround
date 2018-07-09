@@ -19,6 +19,7 @@ public:
     bool canAttack() const;
     Vec2 Center() const;
     void Damage(int damage);
+    bool IsDead() const;
 
     static Totem* totem;
 

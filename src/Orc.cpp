@@ -130,7 +130,7 @@ void Orc::Update(float dt) {
             }
         } else { // TOTEMMMMMM
             Vec2 diff = totem->Center() - orcColl->box.Center();
-            if (!hitTotem) { // Is far to the tree diagonal.
+            if (!hitTotem) { // Is far to the totem diagonal.
                 firstHit = true;
                 chopTimer.Restart(); // Chopp stop.
                 // std::cout << "Diff: "<<diff<<std::endl;
@@ -167,7 +167,7 @@ void Orc::Update(float dt) {
                         velX = -speed * dt;
                     }
                 }
-            } else { // Is close to the tree.
+            } else if (!totem->IsDead()) { // Is close to the totem.
                 float time = 0;
                 if (firstHit) {
                     time = 0.1*2.5;

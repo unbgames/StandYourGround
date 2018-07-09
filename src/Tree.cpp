@@ -5,7 +5,7 @@
 #include "../include/Game.h"
 #include "../include/Forest.h"
 
-Tree::Tree(GameObject& associated, int type, int status) : Component(associated), hp(status*30), hitable(false), timeToLoseHp(0.1*5) {
+Tree::Tree(GameObject& associated, int type, int status) : Component(associated), hp((status+1)*20), hitable(false), timeToLoseHp(0.1*5) {
     std::string sprite;
     if (type == 0) {
         sprite = "./assets/map/tilemap_arvore_v2.png";

@@ -84,8 +84,8 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     objectArray.push_back(goForest);
 
     auto goTotem = std::make_shared<GameObject>();
-    goTotem->box.SetOrigin(2050, 1000);
-    Totem *totem = new Totem(*goTotem, 1);
+    goTotem->box.SetOrigin(1150, 400);
+    Totem *totem = new Totem(*goTotem, 15);
     goTotem->AddComponent(totem);
     Totem::totem = totem;
     goTotem->layer = 3;
@@ -278,26 +278,26 @@ void MainState::Render() {
 }
 
 void MainState::Start() {
-    auto goTrap = std::make_shared<GameObject>();
-    goTrap->box.SetOrigin(850, 580);
-    Sprite *trapSpr = new Sprite(*goTrap, "./assets/img/trap/buraco.png");
-    // trapSpr->Hide();
-    trapSpr->SetScale({4, 4});
-    goTrap->box.SetSize(trapSpr->GetWidth(), trapSpr->GetHeight());
-    Hole *hole = new Hole(*goTrap);
-    goTrap->AddComponent(hole);
-    goTrap->AddComponent(trapSpr);
-    goTrap->layer = 1;
-    objectArray.push_back(goTrap);
-
-    auto goTrap1 = std::make_shared<GameObject>();
-    goTrap1->box.SetSize(4*40, 4*20);
-    goTrap1->box.SetOrigin(1050, 600);
-    // trapSpr->Hide();
-    Bomb *bomb = new Bomb(*goTrap1);
-    goTrap1->AddComponent(bomb);
-    goTrap1->layer = 1;
-    objectArray.push_back(goTrap1);
+    // auto goTrap = std::make_shared<GameObject>();
+    // goTrap->box.SetOrigin(850, 580);
+    // Sprite *trapSpr = new Sprite(*goTrap, "./assets/img/trap/buraco.png");
+    // // trapSpr->Hide();
+    // trapSpr->SetScale({4, 4});
+    // goTrap->box.SetSize(trapSpr->GetWidth(), trapSpr->GetHeight());
+    // Hole *hole = new Hole(*goTrap);
+    // goTrap->AddComponent(hole);
+    // goTrap->AddComponent(trapSpr);
+    // goTrap->layer = 1;
+    // objectArray.push_back(goTrap);
+    //
+    // auto goTrap1 = std::make_shared<GameObject>();
+    // goTrap1->box.SetSize(4*40, 4*20);
+    // goTrap1->box.SetOrigin(1050, 600);
+    // // trapSpr->Hide();
+    // Bomb *bomb = new Bomb(*goTrap1);
+    // goTrap1->AddComponent(bomb);
+    // goTrap1->layer = 1;
+    // objectArray.push_back(goTrap1);
 
 
     LoadAssets();
