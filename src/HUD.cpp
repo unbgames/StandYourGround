@@ -1,12 +1,13 @@
 #include "../include/HUD.h"
 #include "../include/Bag.h"
+#include "../include/Totem.h"
 
 
 HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(player){
     GameObject* goTimer = new GameObject();
-    GameTimer *countDownTimer = new GameTimer(*goTimer, 3, 1);
-    goTimer->AddComponent(countDownTimer);
-    goTimer->box.SetSize(countDownTimer->GetBox().GetW(), countDownTimer->GetBox().GetH());
+    timer = new GameTimer(*goTimer, 5, 1);
+    goTimer->AddComponent(timer);
+    goTimer->box.SetSize(timer->GetBox().GetW(), timer->GetBox().GetH());
     goTimer->layer = associated.layer;
     hudComponents.push_back(goTimer);
 
@@ -42,8 +43,14 @@ std::string HUD::Type() {
 }
 
 bool HUD::GameOver() {
-    return timer->gameOver();
+    return timer->gameOver() || Totem::totem->GetNumTrees() <= 0;
 }
+
+bool HUD::Win() {
+    std::cout << "NumTrees: " << Totem::totem->GetNumTrees() << std::endl;
+    return Totem::totem->GetNumTrees() > 1;
+}
+
 void HUD::NotifyCollision(GameObject &other) {
 }
 

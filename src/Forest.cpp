@@ -53,6 +53,7 @@ void Forest::Start() {
     std::mt19937 rng;
     rng.seed(std::random_device()());
     std::uniform_int_distribution<std::mt19937::result_type> dist20(-30,30);
+    std::cout << "NUM_ARVORES " << treesPos.size() << std::endl;
     for (const std::tuple<int, int, int, int> &pos : treesPos) {
         auto treeObj = std::make_shared<GameObject>();
         // std::cout <<"POS: ("<<std::get<0>(pos) * tileSizeScaled.GetX() << ',' <<std::get<1>(pos) * tileSizeScaled.GetY() <<')'<< std::endl;

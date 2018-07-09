@@ -53,5 +53,5 @@ void GameTimer::NotifyCollision(GameObject &other) {
 }
 
 bool GameTimer::gameOver() {
-    return min == 0 && sec == 0;
+    return min <= 0 && sec == 0;
 }
