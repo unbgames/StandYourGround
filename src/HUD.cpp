@@ -1,6 +1,7 @@
 #include "../include/HUD.h"
 #include "../include/Bag.h"
 #include "../include/SideItemBar.h"
+#include "../include/SkillBar.h"
 
 HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(player){
     GameObject* goTimer = new GameObject();
@@ -15,6 +16,13 @@ HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(p
     goSideItemBar->layer = associated.layer;
     goSideItemBar->AddComponent(sideItemBar);
     hudComponents.push_back(goSideItemBar);
+
+    GameObject* goSkillBar = new GameObject();
+    SkillBar *skillBar = new SkillBar(*goSkillBar);
+    goSkillBar->layer = associated.layer;
+    goSkillBar->AddComponent(skillBar);
+    hudComponents.push_back(goSkillBar);
+
 }
 
 void HUD::Update(float dt) {
