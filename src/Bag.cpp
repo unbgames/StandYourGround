@@ -47,15 +47,19 @@ void Bag::UseItem(ItemType type, int amount) {
     switch(type) {
         case ItemType::cipo:
             cipo-=amount;
+            cipo = cipo < 0 ? 0 : cipo;
             break;
         case ItemType::berry:
             berry-=amount;
+            berry = berry < 0 ? 0 : berry;
             break;
         case ItemType::flor:
             flor-=amount;
+            flor = flor < 0 ? 0 : flor;
             break;
         case ItemType::galho:
             galho-=amount;
+            galho = galho < 0 ? 0 : galho;
             break;
     }
 }
