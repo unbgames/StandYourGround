@@ -19,7 +19,8 @@ class SkillBar : public Component {
 
         Text* bombKey;
 
-
+        Text* cipoKey;
+        
         std::vector<GameObject*> skillList;
         std::vector<Sprite*> spriteSkillList;
         std::vector<Text*> textSkillList;

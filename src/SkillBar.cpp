@@ -7,8 +7,8 @@ SkillBar::SkillBar(GameObject& associated) : Component(associated) {
     textSkillList.push_back(holeKey);
     holeObj->AddComponent(holeKey);
     holeObj->layer = associated.layer;
-    holeObj->box.SetOrigin(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT-100);
-    Sprite* holeSprite = new Sprite(*holeObj, "./assets/img/trap/buraco.png");
+    holeObj->box.SetOrigin(SCREEN_WIDTH/2 - 140, SCREEN_HEIGHT-100);
+    Sprite* holeSprite = new Sprite(*holeObj, "./assets/img/trap/buraco_cam.png");
     spriteSkillList.push_back(holeSprite);
     holeSprite->SetOffset({50, 30});
     holeSprite->SetScale(3, 3);
@@ -21,13 +21,26 @@ SkillBar::SkillBar(GameObject& associated) : Component(associated) {
     textSkillList.push_back(bombKey);
     bombObj->AddComponent(bombKey);
     bombObj->layer = associated.layer;
-    bombObj->box.SetOrigin(SCREEN_WIDTH/2 + 40, SCREEN_HEIGHT-100);
+    bombObj->box.SetOrigin(SCREEN_WIDTH/2, SCREEN_HEIGHT-100);
     Sprite* bombSprite = new Sprite(*bombObj, "./assets/img/trap/flower.png");
     spriteSkillList.push_back(bombSprite);
-    bombSprite->SetOffset({20, 10});
+    bombSprite->SetOffset({17, 10});
     bombSprite->SetScale(3, 3);
     bombObj->AddComponent(bombSprite);
     skillList.push_back(bombObj);
+
+    GameObject* cipoObj = new GameObject();
+    cipoKey = new Text(*cipoObj, "./assets/font/pixel.ttf", 80, TextStyle::SOLID, "L", {30, 45, 60, 255});
+    textSkillList.push_back(cipoKey);
+    cipoObj->AddComponent(cipoKey);
+    cipoObj->layer = associated.layer;
+    cipoObj->box.SetOrigin(SCREEN_WIDTH/2 + 120, SCREEN_HEIGHT-100);
+    Sprite* cipoSprite = new Sprite(*cipoObj, "./assets/img/trap/cipo_armadilha.png");
+    spriteSkillList.push_back(cipoSprite);
+    cipoSprite->SetOffset({35, 24});
+    cipoSprite->SetScale(0.3, 0.3);
+    cipoObj->AddComponent(cipoSprite);
+    skillList.push_back(cipoObj);
 }
 
 void SkillBar::Update(float dt) {
