@@ -15,6 +15,8 @@ class HUD : public Component {
         bool Is(std::string type);
         std::string Type();
         void NotifyCollision(GameObject &other);
+
+        bool GameOver();
     private:
         Elfa* player;
         GameTimer* timer;

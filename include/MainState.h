@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "LayeredTile.h"
+#include "../include/HUD.h"
 
 class MainState : public State {
 public:
@@ -24,6 +25,7 @@ private:
     std::shared_ptr<GameObject> goElfa;
     std::shared_ptr<GameObject> goOrc;
     LayeredTile *tileLayers;
+    HUD *hud;
 };
 
 #endif

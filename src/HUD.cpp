@@ -41,6 +41,10 @@ bool HUD::Is(std::string type) {
 std::string HUD::Type() {
     return "HUD";
 }
+
+bool HUD::GameOver() {
+    return timer->gameOver();
+}
 void HUD::NotifyCollision(GameObject &other) {
 
 }

@@ -14,7 +14,7 @@
 #include "../include/Text.h"
 #include "../include/GameTimer.h"
 #include "../include/Forest.h"
-#include "../include/HUD.h"
+
 #include "../include/Debug.h"
 #include "../include/Hole.h"
 #include "../include/Bomb.h"
@@ -124,7 +124,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
 
     // Concentra todos os elementos do HUD dentro da classe HUD
     auto goHUD = std::make_shared<GameObject>();
-    HUD* hud = new HUD(*goHUD, Elfa::elfa);
+    hud = new HUD(*goHUD, Elfa::elfa);
     goHUD->AddComponent(hud);
     goHUD->layer = 5;
     objectArray.push_back(goHUD);
@@ -183,6 +183,10 @@ void checkCollision(GameObject* go1, GameObject* go2) {
 }
 
 void MainState::Update(float dt) {
+    if(hud->GameOver()) {
+        std::cout << "Cabou porra" << std::endl;
+        quitRequested = true;
+    }
     Camera::Update(dt);
 
     InputManager &inp = InputManager::GetInstance();
