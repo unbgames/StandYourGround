@@ -4,9 +4,9 @@
 
 HUD::HUD(GameObject& associated, Elfa* player) : Component(associated), player(player){
     GameObject* goTimer = new GameObject();
-    GameTimer *countDownTimer = new GameTimer(*goTimer, 1, 20);
-    goTimer->AddComponent(countDownTimer);
-    goTimer->box.SetSize(countDownTimer->GetBox().GetW(), countDownTimer->GetBox().GetH());
+    timer = new GameTimer(*goTimer, 0, 5);
+    goTimer->AddComponent(timer);
+    goTimer->box.SetSize(timer->GetBox().GetW(), timer->GetBox().GetH());
     goTimer->layer = associated.layer;
     hudComponents.push_back(goTimer);
 

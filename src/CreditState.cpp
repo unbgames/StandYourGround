@@ -4,14 +4,14 @@
 #include "../include/Text.h"
 #include "../include/Game.h"
 
-const char* membros[6] = {"Felipe da Costa Malaquias", "Lucas Mota Ribeiro", "Emille Catarine Rodrigues Cancado", "Vitor Teodoro Bastos", "Leonardo Bustamente", "Brenda"};
+const char* membros[6] = {"Felipe da Costa Malaquias", "Lucas Mota Ribeiro", "Emille Catarine Rodrigues Cancado", "Vitor Teodoro Bastos", "Leonardo Bustamente", "Brenda Holanda"};
 
 CreditState::CreditState() {
     auto bgObj = std::make_shared<GameObject>();
     objectArray.push_back(bgObj);
     bgObj->box.SetOrigin(0, 0);
     bgObj->box.SetSize(1024, 600);
-    Sprite *spr = new Sprite(*bgObj, "./assets/img/ocean.jpg");
+    Sprite *spr = new Sprite(*bgObj, "./assets/img/bg.jpg");
     bgObj->AddComponent(spr);
     bgObj->layer = 0;
     bgObj->box.SetOrigin(0, 0);

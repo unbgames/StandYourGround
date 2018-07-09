@@ -26,6 +26,7 @@ private:
     std::shared_ptr<GameObject> goOrc;
     LayeredTile *tileLayers;
     HUD *hud;
+    bool CABO_ESSA_DESGRACA;
 };
 
 #endif

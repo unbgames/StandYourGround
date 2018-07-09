@@ -20,6 +20,9 @@
 #include "../include/Bomb.h"
 #include "../include/Totem.h"
 
+#include "../include/EndGameState.h"
+#include "../include/CreditState.h"
+
 
 #ifdef DEBUG
     bool DEBUG_GO = false;
@@ -29,6 +32,7 @@
 #endif // DEBUG
 
 MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make_shared<GameObject>()) {
+    CABO_ESSA_DESGRACA = false;
     auto bgObj = std::make_shared<GameObject>();
     objectArray.push_back(bgObj);
     bgObj->box.SetOrigin(0, 0);
@@ -195,6 +199,36 @@ void checkCollision(GameObject* go1, GameObject* go2) {
 }
 
 void MainState::Update(float dt) {
+    if(hud->GameOver() && !CABO_ESSA_DESGRACA) {
+        bool win = true;
+        std::cout << "Cabo porra" << std::endl;
+
+        auto bgObj = std::make_shared<GameObject>();
+        objectArray.push_back(bgObj);
+        bgObj->box.SetOrigin(0, 0);
+        bgObj->box.SetSize(1024, 600);
+        Sprite *bgSpr = new Sprite(*bgObj, "./assets/img/bg.jpg");
+        bgObj->AddComponent(bgSpr);
+        CameraFollower *followerBg = new CameraFollower(*bgObj);
+        bgObj->layer = 990;
+        bgObj->AddComponent(followerBg);
+        bgObj->box.SetOrigin(0, 0);
+        bgObj->box.SetSize(1024, 600);
+
+        auto messageObj = std::make_shared<GameObject>();
+        objectArray.push_back(messageObj);
+        messageObj->box.SetOrigin(SCREEN_WIDTH/2-128, SCREEN_HEIGHT/2-75);
+        messageObj->box.SetSize(256, 150);
+        Sprite *sprText = new Sprite(*messageObj, "./assets/img/win.png");
+        messageObj->AddComponent(sprText);
+        messageObj->layer = 10000;
+        messageObj->box.SetOrigin(270, 540);
+        messageObj->box.SetSize(256, 120);
+
+
+
+        CABO_ESSA_DESGRACA = true;
+    }
     Camera::Update(dt);
 
     InputManager &inp = InputManager::GetInstance();
