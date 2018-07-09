@@ -5,13 +5,21 @@
 #include "../include/Game.h"
 #include "../include/Forest.h"
 
-Tree::Tree(GameObject& associated) : Component(associated), hp(100), hitable(false), timeToLoseHp(0.1*5) {
-    Sprite *treeSprite = new Sprite(associated, "./assets/map/tilemap_arvore_v2.png", 5, 0);
+Tree::Tree(GameObject& associated, int type, int status) : Component(associated), hp(status*30), hitable(false), timeToLoseHp(0.1*5) {
+    std::string sprite;
+    if (type == 0) {
+        sprite = "./assets/map/tilemap_arvore_v2.png";
+    } else {
+        sprite = "./assets/map/tilemap_arvore_v2.png";
+    }
+    Sprite *treeSprite = new Sprite(associated, sprite , 5, 0);
+    std::cout << status << std::endl;
+    treeSprite->SetFrame(status);
     treeSprite->SetScale({4, 4});
-    treeSprite->SetFrame(3);
+    treeSprite->SetFrame(status);
     associated.AddComponent(treeSprite);
     associated.box.SetSize(treeSprite->GetWidth(), treeSprite->GetHeight());
-    AddSound("chopp", "./assets/audio/chopp.mp3");
+    AddSound("chopp", "./assets/audio/chopp2.wav");
     gotHit = false;
 }
 Tree::~Tree() {
@@ -42,9 +50,9 @@ void Tree::Update(float dt) {
     if(hp <= 0) {
         Forest::forest->alertDeleteTree(rect.Origin());
         associated.RequestDelete();
-        auto &state = Game::GetInstance().GetCurrentState();
+        /*auto &state = Game::GetInstance().GetCurrentState();
         auto expObj = std::make_shared<GameObject>();
-        Sprite *expSpr = new Sprite(*expObj, "./assets/img/penguindeath.png", 5, 100, 10);
+        Sprite *expSpr = new Sprite(*expObj, "./assets/img/penguindeath.png", 5, 0.1, 0.5);
         expObj->box.SetSize(expSpr->GetWidth(), expSpr->GetHeight());
         expObj->box.SetCenter(associated.box.Center());
         Sound *expSnd = new Sound(*expObj, "./assets/audio/boom.wav");
@@ -52,7 +60,7 @@ void Tree::Update(float dt) {
         expObj->AddComponent(expSnd);
         state.AddObject(expObj);
         expSnd->Play();
-        std::cout << "BOOM" << std::endl;
+        std::cout << "BOOM" << std::endl;*/
     }
     //hitable = false;
 }

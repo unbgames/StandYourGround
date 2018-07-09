@@ -13,7 +13,7 @@ GameObject::~GameObject() {
     for (Component *cmp : components) {
         delete cmp;
     }
-    std::cout<<"Delete"<<std::endl;
+    // std::cout<<"Delete"<<std::endl;
     //std::cout<<"Delete isDead:"<<((isDead)?"True":"False")<<std::endl;
 }
 

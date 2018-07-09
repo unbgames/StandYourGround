@@ -10,7 +10,7 @@ void Menu::AddOption(std::string option, std::function<void()> func) {
     GameObject *goMenuItem = new GameObject();
     MenuItem* menuItem = new MenuItem(*goMenuItem, option, func);
     goMenuItem->layer = 2;
-    goMenuItem->box.SetOrigin({SCREEN_WIDTH/2 - menuItem->GetTextWidth()/2, 
+    goMenuItem->box.SetOrigin({SCREEN_WIDTH/2 - menuItem->GetTextWidth()/2,
                                nextOptionPosition});
     items.emplace_back(menuItem);
     nextOptionPosition += 60;

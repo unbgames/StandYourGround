@@ -1,4 +1,5 @@
-100 150
-sea.csv sea.png 10 10
-floor_base.csv floor_base.png 10 10
-decoracao.csv floor_base.png 10 10
+100 100
+walk.csv tilemap_chao_1.png 10 10
+sea.csv syg-tilemap_penhasco_completo.png 10 10
+floor.csv tilemap_chao_1.png 10 10
+floor_objects.csv tilemap_chao_1.png 10 10

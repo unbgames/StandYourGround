@@ -10,7 +10,7 @@
 
 class Tree : public Component {
     public:
-        Tree(GameObject& associated);
+        Tree(GameObject& associated, int type, int status);
         ~Tree();
 
         void Update(float dt);

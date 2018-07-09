@@ -16,7 +16,11 @@ class MenuState : public State {
         void Start();
         void Pause();
         void Resume();
+
     private:
+        void StartGame();
+        void QuitGame();
+        void Credits();
 };
 
 #endif

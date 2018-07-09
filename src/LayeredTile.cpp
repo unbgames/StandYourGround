@@ -16,7 +16,7 @@ LayeredTile::LayeredTile (GameObject& associated, std::string path, std::string 
 }
 
 LayeredTile::~LayeredTile() {
-    std::cout << "DELETED LAYERS"<<std::endl;
+    std::cout << "DELETED LAYERS" << std::endl;
 }
 
 void LayeredTile::Load(std::string file) {

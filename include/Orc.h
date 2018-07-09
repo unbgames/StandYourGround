@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Timer.h"
 #include "Forest.h"
+#include "Trap.h"
 
 class Orc : public Character {
 public:
@@ -24,6 +25,12 @@ private:
     std::weak_ptr<GameObject> tree_w;
     Forest* forest;
     bool hitTree;
+    bool firstHit;
+
+    bool onTrap;
+    bool prevOnTrap;
+    Trap *trap;
+
     int damage;
 };
 

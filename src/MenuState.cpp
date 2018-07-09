@@ -7,16 +7,16 @@
 #include "../include/GameTimer.h"
 #include "../include/CreditState.h"
 
-void StartGame() {
-    Game::GetInstance().GetCurrentState().Quit();
+void MenuState::StartGame() {
+    quitRequested = true;
     Game::GetInstance().Push(new MainState());
 }
 
-void QuitGame() {
+void MenuState::QuitGame() {
     Game::GetInstance().GetCurrentState().Quit();
 }
 
-void Credits() {
+void MenuState::Credits() {
     Game::GetInstance().Push(new CreditState());
 }
 
@@ -25,7 +25,7 @@ MenuState::MenuState() {
     objectArray.push_back(bgObj);
     bgObj->box.SetOrigin(0, 0);
     bgObj->box.SetSize(1024, 600);
-    Sprite *spr = new Sprite(*bgObj, "./assets/img/ocean.jpg");
+    Sprite *spr = new Sprite(*bgObj, "./assets/img/bg.jpg");
     bgObj->AddComponent(spr);
     bgObj->layer = 0;
     bgObj->box.SetOrigin(0, 0);
@@ -36,10 +36,18 @@ MenuState::MenuState() {
     Menu* mainMenu = new Menu(*menuObj);
     menuObj->layer = 2;
     menuObj->AddComponent(mainMenu);
-    mainMenu->AddOption("Start Game", StartGame);
-    mainMenu->AddOption("Credits", Credits);
-    mainMenu->AddOption("Exit", QuitGame);
+    mainMenu->AddOption("Start Game", [=] () {
+        this->StartGame();
+    });
+    // mainMenu->AddOption("Start Game", StartGame);
+    mainMenu->AddOption("Credits", [=] () {
+        this->Credits();
+    });
+    mainMenu->AddOption("Exit", [=] () {
+        this->QuitGame();
+    });
 }
+
 MenuState::~MenuState() {
     objectArray.clear();
 }
@@ -62,6 +70,7 @@ void MenuState::Update(float dt) {
 
     UpdateArray(dt);
 }
+
 void MenuState::Render() {
     RenderArray();
 }

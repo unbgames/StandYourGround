@@ -181,11 +181,11 @@ void Game::Run() {
 		// GAME LOOP
 	    while (!stateStack.empty()) {
 			if (GetCurrentState().QuitRequested()) {
-				std::cout<<"Saiu state"<<std::endl;
+				std::cout << "Exited state" << std::endl;
 				stateStack.pop();
 			}
 			if (storedState != nullptr) {
-				std::cout<<"Novo state"<<std::endl;
+				std::cout<<"New state"<<std::endl;
 				if (!stateStack.empty()) {
 					GetCurrentState().Pause();
 				}
@@ -209,6 +209,7 @@ void Game::Run() {
 }
 
 void Game::Push(State *state) {
+	std::cout<<"Pushed new state"<<std::endl;
 	storedState = state;
 }
 

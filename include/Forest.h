@@ -6,10 +6,13 @@
 #include "GameObject.h"
 #include "Component.h"
 #include <memory>
+#include <tuple>
 
 class Forest : public Component {
 public:
     Forest(GameObject &associated, std::string path, Vec2 tileMapSize);
+    Forest(GameObject &associated, std::vector<std::string> paths, Vec2 tileMapSize);
+
 
     void Update(float dt);
     void Render();
@@ -25,10 +28,10 @@ public:
 
 private:
     Vec2 tileSizeScaled;
-    std::vector<std::pair<int, int>> treesPos;
+    std::vector<std::tuple<int, int, int, int>> treesPos;
     std::vector<std::weak_ptr<GameObject>> treeVector;
 
-    void Load(std::string file_path);
+    void Load(std::string file_path, int type);
 };
 
 #endif /* FOREST_H */

@@ -82,6 +82,7 @@ void Elfa::Update(float dt) {
     }
     oldBox = associated.box;
     associated.box.Shift(shift);
+    Character::Update(dt);
 }
 
 void Elfa::Render() {
@@ -98,7 +99,7 @@ std::string Elfa::Type() {
 void Elfa::NotifyCollision(GameObject &other) {
     if(other.GetComponent("Item") != nullptr) {
         Item* item = (Item*) other.GetComponent("Item");
-        
+
     }
     else {
         associated.box = oldBox;

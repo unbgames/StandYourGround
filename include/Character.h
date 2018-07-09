@@ -56,10 +56,17 @@ class Character : public Component {
 public:
     Character(GameObject& associated, const CharState &state);
     CharState GetState() const;
+
+    bool Is(std::string type);
+    std::string Type();
+    void Render();
+    void Update(float dt);
+
     static std::string StateToString(const CharState &state);
     Vec2 Origin() const;
     Vec2 BottomLeft() const;
     Vec2 BottomRight() const;
+    void HideSprite(bool hide);
 
 protected:
     int hp;

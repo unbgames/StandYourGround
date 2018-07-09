@@ -1,6 +1,6 @@
 #include "../include/SpriteVector.h"
 
-SpriteVector::SpriteVector(GameObject& associated) : Component(associated), currentSprite("") {
+SpriteVector::SpriteVector(GameObject& associated) : Component(associated), currentSprite(""), hide(false) {
 
 }
 
@@ -31,6 +31,14 @@ void SpriteVector::SetCurSprite(std::string currentSprite) {
     }
 }
 
+void SpriteVector::ResetFrameCount() {
+    if(sprites.find(currentSprite) == sprites.end()) {
+        std::cout << "Reset Frame Count: No current sprite" << std::endl;
+    } else {
+        GetCurSprite()->SetFrame(0);
+    }
+}
+
 Sprite * SpriteVector::GetCurSprite() {
     if(sprites.find(currentSprite) == sprites.end()) {
         std::cout << "Tentando pegar sprite vazia de chave: " << currentSprite << std::endl;
@@ -48,7 +56,20 @@ std::string SpriteVector::Type() {
 }
 
 void SpriteVector::Render() {
+    if (hide){
+        GetCurSprite()->Hide();
+    } else {
+        GetCurSprite()->Show();
+    }
     GetCurSprite()->Render();
+}
+
+void SpriteVector::Hide() {
+    hide = true;
+}
+
+void SpriteVector::Show() {
+    hide = false;
 }
 
 void SpriteVector::Render(float x, float y) {

@@ -19,7 +19,7 @@ Sprite::Sprite(GameObject &associated, std::string file, int frameCount, float f
 }
 
 Sprite::~Sprite() {
-    std::cout << "DELETOU SPRITE" << std::endl;
+    // std::cout << "DELETOU SPRITE" << std::endl;
 }
 
 int Sprite::GetWidth() {
@@ -64,7 +64,7 @@ void Sprite::Render() {
 }
 
 void Sprite::RenderNoCam() {
-    if(!hide) { 
+    if(!hide) {
         Render(associated.box.GetX() + offset.GetX(), associated.box.GetY() + offset.GetY());
     }
 }
@@ -131,22 +131,6 @@ void Sprite::Update(float dt) {
             SetFrame(currentFrame);
         }
     }
-    /*if (secondsToSelfDestruct != 0) {
-        if (timer.Get() > secondsToSelfDestruct) {
-            associated.RequestDelete();
-        } else {
-            long frame = static_cast<long>(std::floor(timer.Get()*1000/frameTime));
-
-            clipRect.x = (frame%frameCount)*width;
-        }
-    } else {
-
-        long frame = static_cast<long>(std::floor(timer.Get()*1000/frameTime));
-
-        // if (frameCount == 3) std::cout<<"Elapsed:"<<timeElapsed<<" dt:"<<dt<<" Frame:"<<frame<<std::endl;
-        clipRect.x = (frame%frameCount)*width;
-
-    }*/
 }
 
 

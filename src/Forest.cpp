@@ -11,8 +11,17 @@ Forest* Forest::forest = nullptr;
 
 Forest::Forest(GameObject &associated, std::string path, Vec2 tileSizeScaled)
   : Component(associated),  tileSizeScaled(tileSizeScaled) {
-    Load(path);
+    Load(path, 0);
     // std::cout << treeVector.size() << std::endl;
+}
+
+Forest::Forest(GameObject &associated, std::vector<std::string> paths, Vec2 tileSizeScaled)
+  : Component(associated),  tileSizeScaled(tileSizeScaled) {
+  int i = 0;
+  for (const std::string &path : paths) {
+      Load(path, i);
+      i++;
+  }
 }
 
 void Forest::Update(float dt) {
@@ -38,23 +47,23 @@ std::string Forest::Type() {
 void Forest::Start() {
     std::cout << "Started Forest"<<std::endl;
     auto &state = Game::GetInstance().GetCurrentState();
-    for (const std::pair<int, int> &pos : treesPos) {
+    for (const std::tuple<int, int, int, int> &pos : treesPos) {
         auto treeObj = std::make_shared<GameObject>();
-        std::cout <<"POS: ("<<pos.first * tileSizeScaled.GetX() << ',' <<pos.second * tileSizeScaled.GetY() <<')'<< std::endl;
-        treeObj->layer = 2;
-        Tree *tree = new Tree(*treeObj);
+        std::cout <<"POS: ("<<std::get<0>(pos) * tileSizeScaled.GetX() << ',' <<std::get<1>(pos) * tileSizeScaled.GetY() <<')'<< std::endl;
+        treeObj->layer = associated.layer;
+        Tree *tree = new Tree(*treeObj, std::get<2>(pos), std::get<3>(pos));
         treeObj->AddComponent(tree);
         treeVector.push_back(treeObj);
         state.AddObject(treeObj);
-        treeObj->box.SetSize(treeObj->box.GetW(), treeObj->box.GetH());
-        treeObj->box.SetOrigin(pos.first * tileSizeScaled.GetX(), pos.second * tileSizeScaled.GetY());
+        // treeObj->box.SetSize(treeObj->box.GetW(), treeObj->box.GetH());
+        treeObj->box.SetOrigin(std::get<0>(pos) * tileSizeScaled.GetX(), std::get<1>(pos) * tileSizeScaled.GetY());
         Collider *colTree = new Collider(*treeObj, {0.15, 0.65}, {-3, 115});
         treeObj->AddComponent(colTree);
     }
     std::cout <<"Finished adding trees"<<std::endl;
 }
 
-void Forest::Load(std::string file_path) {
+void Forest::Load(std::string file_path, int type) {
     std::ifstream file(file_path);
     std::string line;
     int row = 0;
@@ -63,10 +72,10 @@ void Forest::Load(std::string file_path) {
         std::string cell;
         int column = 0;
         while(std::getline(lineStream, cell, ',')){
-            int val = std::stoi(cell);
+            int status = std::stoi(cell);
             // std::cout << val <<",";
-            if (val != -1) {
-                treesPos.push_back({column, row});
+            if (status != -1) {
+                treesPos.push_back(std::make_tuple(column, row, type, status));
             }
             column++;
         }
@@ -96,8 +105,8 @@ std::weak_ptr<GameObject> Forest::GetClosestTree(const Vec2 &pos) const {
 
 void Forest::alertDeleteTree(const Vec2 &treePos) {
     int idx = 0;
-    for (const std::pair<int, int> &pos : treesPos) {
-        Vec2 auxTreePos(pos.first * tileSizeScaled.GetX(), pos.second * tileSizeScaled.GetY());
+    for (const std::tuple<int, int, int, int> &pos : treesPos) {
+        Vec2 auxTreePos(std::get<0>(pos) * tileSizeScaled.GetX(), std::get<1>(pos) * tileSizeScaled.GetY());
         if (auxTreePos == treePos) {
             std::cout << "Deleted Tree at index: " << idx << std::endl;
             break;

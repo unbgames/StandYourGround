@@ -1,12 +1,43 @@
 #include "../include/Character.h"
+#include "../include/SpriteVector.h"
 
 Character::Character(GameObject& associated, const CharState &state) :
   Component(associated), hp(100), speed(100), state(state) {
 }
 
+bool Character::Is(std::string type) {
+    return (type == "Character");
+}
+
+std::string Character::Type() {
+    return "Character";
+}
+void Character::Render() {
+}
+
+void Character::Update(float dt) {
+    // std::cerr << "Update Char" << std::endl;
+    SpriteVector *sprVec = (SpriteVector *) associated.GetComponent("SpriteVector");
+    if(sprVec != nullptr) {
+        // std::cout << "CHAR UPDATE:"<<StateToString(state) << std::endl;
+        sprVec->SetCurSprite(StateToString(state));
+    }
+}
+
 CharState Character::GetState() const{
     // std::cout<<"Pegou state:"<<std::endl;
     return state;
+}
+
+void Character::HideSprite(bool hide) {
+    SpriteVector *sprVec = (SpriteVector *) associated.GetComponent("SpriteVector");
+    if(sprVec != nullptr) {
+        if (hide) {
+            sprVec->Hide();
+        } else {
+            sprVec->Show();
+        }
+    }
 }
 
 Vec2 Character::Origin() const {

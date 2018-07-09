@@ -23,6 +23,7 @@ class SpriteVector : public Component {
                        float secondsToSelfDestruct = 0, Vec2 scale = {1, 1});
 
         void SetCurSprite(std::string currentSprite);
+        void ResetFrameCount();
         Sprite *GetCurSprite();
 
         bool Is(std::string type);
@@ -30,9 +31,13 @@ class SpriteVector : public Component {
         void Render();
         void Render(float x, float y);
         void Update(float dt);
+        void Hide();
+        void Show();
+
     private:
         std::unordered_map<std::string, Sprite *> sprites;
         std::string currentSprite;
+        bool hide;
 };
 
 #endif /* SPRITEVECTOR_H */
