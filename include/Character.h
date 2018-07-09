@@ -25,6 +25,7 @@ enum class Movement {
 enum class Action {
     no_action,
     atq,
+    pick
 };
 
 typedef struct CharState {

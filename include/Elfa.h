@@ -20,6 +20,7 @@ public:
 
 private:
     Timer timer;
+    Timer picking;
 
 };
 

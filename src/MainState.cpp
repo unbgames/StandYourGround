@@ -149,6 +149,10 @@ void MainState::LoadAssets() {
         vector->AddSprite("idle_costa_dir", "./assets/img/elfa/idle/elfa_idle_costa_dir.png", 5, 0.11, 0.0, {4, 4});
         vector->AddSprite("run_costa_esq", "./assets/img/elfa/correndo/elfa_run_costa_esq.png", 4, 0.11, 0.0, {4, 4});
         vector->AddSprite("idle_costa_esq", "./assets/img/elfa/idle/elfa_idle_costa_esq.png", 5, 0.11, 0.0, {4, 4});
+
+        vector->AddSprite("pick_dir", "./assets/img/elfa/pegando_item/elfa_pick_dir.png", 8, 0.11, 0.0, {4, 4});
+        vector->AddSprite("pick_esq", "./assets/img/elfa/pegando_item/elfa_pick_esq.png", 8, 0.11, 0.0, {4, 4});
+
     }
 
     SpriteVector *vectorOrc = (SpriteVector*) goOrc->GetComponent("SpriteVector");

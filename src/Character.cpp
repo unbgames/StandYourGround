@@ -107,6 +107,9 @@ std::string Character::StateToString(const CharState &state) {
             case Action::atq:
                 ret += "atq";
                 break;
+            case Action::pick:
+                ret += "pick";
+                break;
         }
         ret += '_';
         switch (state.dir) {
@@ -117,6 +120,7 @@ std::string Character::StateToString(const CharState &state) {
                 ret += "dir";
             break;
         }
+        std::cout << ret << std::endl;
     }
     // std::cout<<"STATE:"<<ret<<std::endl;
     return ret;

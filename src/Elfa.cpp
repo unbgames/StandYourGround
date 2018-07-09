@@ -6,7 +6,7 @@
 Elfa* Elfa::elfa = nullptr;
 
 Elfa::Elfa(GameObject& associated) : Character(associated,
-  {Direction::esq, Facing::up, Movement::idle, Action::no_action}), timer(true) {
+  {Direction::esq, Facing::up, Movement::idle, Action::no_action}), timer(true), picking(false) {
     hp = 100;
     speed = 200;
     AddSound("footstep", "./assets/audio/footstep.wav");
@@ -58,9 +58,23 @@ void Elfa::Update(float dt) {
             Action::no_action
         };
         velY = speed * dt;
+    } else if(inp.IsKeyDown(SDLK_e)) {
+        if(picking.Get() < 0.9) {
+            std::cout << "PEGANDO" << std::endl;
+            newState = {
+                state.dir,
+                state.face,
+                state.move,
+                Action::pick
+            };
+        }
+        picking.Update(dt);
     } else {
         // Se o run for setado somente no A e D ele nao deixa idle aqui
         state.move = Movement::idle;
+    }
+    if(inp.KeyRelease(SDLK_e)) {
+        picking.Restart();
     }
     Vec2 shift(velX, velY);
     if (shift.Mag() > 0) { // Is moving
