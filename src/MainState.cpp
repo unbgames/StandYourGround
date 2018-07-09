@@ -80,9 +80,6 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     Forest::forest = forest;
     goForest->AddComponent(forest);
     goForest->layer = 3;
-
-    State &state = Game::GetInstance().GetCurrentState();
-    state.AddObject(goForest);
     objectArray.push_back(goForest);
 
     for(int i = 1; i < 15; i++) {

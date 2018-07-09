@@ -1,4 +1,5 @@
 #include "../include/Hole.h"
+#include "../include/Elfa.h"
 
 Hole::Hole(GameObject &associated) : Trap(associated) {
     AddSprite(TrapState::iddle, "./assets/img/trap/buraco_cam.png", 1, 0, 0, {4, 4});
@@ -32,13 +33,17 @@ void Hole::Update(float dt) {
     if (fell) {
         timer.Update(dt);
         float time = timer.Get();
+        Elfa* elfaPtr = Elfa::elfa;
+        Vec2 elfPos = elfaPtr->Origin();
+        unsigned int reducer = int(std::pow(Vec2::EuclidianDist(associated.box.Center(), elfPos), 2) / 4000);
         if (state == TrapState::iddle) {
             timer.Restart();
             state = TrapState::start;
             std::cout << "TRAP UPDATE: start" << std::endl;
             trapSprites->SetCurSprite("start");
             goSprite->box.SetOrigin(spritePos + shiftMap[TrapState::start]);
-            PlaySound("fall_in");
+            unsigned int maxVolume = 80;
+            PlaySound("fall_in", maxVolume - std::min(reducer, maxVolume));
         } else if (state == TrapState::start && time > mapStateDuration[TrapState::start]) {
             timer.Restart();
             state = TrapState::interm;
@@ -51,7 +56,8 @@ void Hole::Update(float dt) {
             std::cout << "TRAP UPDATE: finish" << std::endl;
             trapSprites->SetCurSprite("finish");
             goSprite->box.SetOrigin(spritePos + shiftMap[TrapState::finish]);
-            PlaySound("get_out");
+            unsigned int maxVolume = 80;
+            PlaySound("get_out", maxVolume - std::min(reducer, maxVolume));
         } else if (state == TrapState::finish && time > mapStateDuration[TrapState::finish]) {
             state = TrapState::after;
             std::cout << "TRAP UPDATE: after" << std::endl;
