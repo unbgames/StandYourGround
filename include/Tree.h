@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "GameObject.h"
 #include "Sound.h"
+#include "Sprite.h"
 
 #include <map>
 
@@ -20,6 +21,9 @@ class Tree : public Component {
         void NotifyCollision(GameObject &other);
         void Damage(int damage);
 
+        int GetStatus();
+        void setStatus(int newStatus);
+
     private:
         int hp;
         bool hitable; // Se o orc consegue bater na arvore
@@ -27,6 +31,11 @@ class Tree : public Component {
         float timeToLoseHp;
         Timer hitTime;
         std::map<std::string, Sound*> soundMap;
+
+        Sprite* treeSprite;
+        int status;
+
+        bool pickCipo;
 
         void AddSound(const std::string &key, const std::string &file);
         void PlaySound(const std::string &key, int volume = 128);

@@ -91,7 +91,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
     goTotem->layer = 3;
     objectArray.push_back(goTotem);
 
-    for(int i = 1; i < 15; i++) {
+    /*for(int i = 1; i < 15; i++) {
         auto goItem = std::make_shared<GameObject>();
         goItem->box.SetOrigin(600, 100*i);
         Sprite* itemSprite = new Sprite(*goItem, "./assets/img/items/Berries x800.png");
@@ -128,7 +128,7 @@ MainState::MainState() : goElfa(std::make_shared<GameObject>()), goOrc(std::make
         goItem->AddComponent(new Item(*goItem, ItemType::galho));
         goItem->layer = 3;
         objectArray.push_back(goItem);
-    }
+    }*/
 
 
     // Concentra todos os elementos do HUD dentro da classe HUD

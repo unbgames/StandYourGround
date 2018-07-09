@@ -4,6 +4,7 @@
 #include "../include/Elfa.h"
 #include "../include/Game.h"
 #include "../include/Forest.h"
+#include "../include/Sprite.h"
 
 Tree::Tree(GameObject& associated, int type, int status) : Component(associated), hp((status+1)*20), hitable(false), timeToLoseHp(0.1*5) {
     std::string sprite;
@@ -12,7 +13,9 @@ Tree::Tree(GameObject& associated, int type, int status) : Component(associated)
     } else {
         sprite = "./assets/map/tilemap_arvore_v2.png";
     }
-    Sprite *treeSprite = new Sprite(associated, sprite , 5, 0);
+    treeSprite = new Sprite(associated, sprite , 5, 0);
+    this->status = status;
+    pickCipo = false;
     std::cout << status << std::endl;
     treeSprite->SetFrame(status);
     treeSprite->SetScale({4, 4});
@@ -32,9 +35,6 @@ void Tree::Update(float dt) {
         Elfa* elfaPtr = Elfa::elfa;
         Vec2 elfPos = elfaPtr->Origin();
         int reducer = int(std::pow(Vec2::EuclidianDist(treePos, elfPos), 2) / 4000);
-        // int reducer = int(Vec2::EuclidianDist(orcPos, elfPos) / 5);
-        // std::cout<<"PLAY SOUND at "<< reducer <<std::endl;
-
         PlaySound("chopp", 128 - std::min(reducer, 128));
         gotHit = false;
     }
@@ -50,19 +50,17 @@ void Tree::Update(float dt) {
     if(hp <= 0) {
         Forest::forest->alertDeleteTree(rect.Origin());
         associated.RequestDelete();
-        /*auto &state = Game::GetInstance().GetCurrentState();
-        auto expObj = std::make_shared<GameObject>();
-        Sprite *expSpr = new Sprite(*expObj, "./assets/img/penguindeath.png", 5, 0.1, 0.5);
-        expObj->box.SetSize(expSpr->GetWidth(), expSpr->GetHeight());
-        expObj->box.SetCenter(associated.box.Center());
-        Sound *expSnd = new Sound(*expObj, "./assets/audio/boom.wav");
-        expObj->AddComponent(expSpr);
-        expObj->AddComponent(expSnd);
-        state.AddObject(expObj);
-        expSnd->Play();
-        std::cout << "BOOM" << std::endl;*/
     }
-    //hitable = false;
+    InputManager& inp = InputManager::GetInstance();
+    if(pickCipo) {
+        if(inp.KeyPress(SDLK_e)) {
+            std::cout << "Picked Cipo From Tree" << std::endl;
+            Bag::PickItem(ItemType::cipo);
+            this->setStatus(2);
+        }
+    }
+    if(inp.KeyPress(W_KEY) || inp.KeyPress(S_KEY) || inp.KeyPress(A_KEY) || inp.KeyPress(D_KEY))
+        pickCipo = false;
 }
 
 void Tree::Damage(int damage) {
@@ -85,6 +83,11 @@ void Tree::NotifyCollision(GameObject &other) {
         // std::cout << "COLIDIU" << std::endl;
         hitable = true;
     }
+    if(other.GetComponent("Elfa") != nullptr) {
+        if(GetStatus() == 3) {
+            pickCipo = true;
+        }
+    }
 }
 
 void Tree::AddSound(const std::string &key, const std::string &file) {
@@ -104,4 +107,13 @@ void Tree::PlaySound(const std::string &key, int volume) {
     } else {
         std::cerr << "Trying to play a sound not in the map: " << key << std::endl;
     }
+}
+
+void Tree::setStatus(int newStatus) {
+    this->status = status;
+    this->treeSprite->SetFrame(newStatus);
+}
+
+int Tree::GetStatus() {
+    return status;
 }

@@ -3,10 +3,12 @@
 #include "../include/Tree.h"
 #include "../include/Collider.h"
 #include "../include/Totem.h"
+#include "../include/Item.h"
 
 #include <limits>
 #include <fstream>
 #include <sstream>
+#include <random>
 
 Forest* Forest::forest = nullptr;
 
@@ -48,6 +50,9 @@ std::string Forest::Type() {
 void Forest::Start() {
     std::cout << "Started Forest"<<std::endl;
     auto &state = Game::GetInstance().GetCurrentState();
+    std::mt19937 rng;
+    rng.seed(std::random_device()());
+    std::uniform_int_distribution<std::mt19937::result_type> dist20(-30,30);
     for (const std::tuple<int, int, int, int> &pos : treesPos) {
         auto treeObj = std::make_shared<GameObject>();
         std::cout <<"POS: ("<<std::get<0>(pos) * tileSizeScaled.GetX() << ',' <<std::get<1>(pos) * tileSizeScaled.GetY() <<')'<< std::endl;
@@ -56,8 +61,11 @@ void Forest::Start() {
         treeObj->AddComponent(tree);
         treeVector.push_back(treeObj);
         state.AddObject(treeObj);
-        // treeObj->box.SetSize(treeObj->box.GetW(), treeObj->box.GetH());
-        treeObj->box.SetOrigin(std::get<0>(pos) * tileSizeScaled.GetX(), std::get<1>(pos) * tileSizeScaled.GetY());
+        
+        float pos_x = std::get<0>(pos) * tileSizeScaled.GetX();
+        float pos_y = std::get<1>(pos) * tileSizeScaled.GetY();
+        treeObj->box.SetOrigin(pos_x, pos_y);
+        
         Collider *colTree = new Collider(*treeObj, {0.15, 0.65}, {-3, 115});
         treeObj->AddComponent(colTree);
     }
