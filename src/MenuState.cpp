@@ -20,12 +20,14 @@ void MenuState::Credits() {
     Game::GetInstance().Push(new CreditState());
 }
 
-MenuState::MenuState() {
+MenuState::MenuState() : music("./assets/audio/soundtrack_menu.mp3"){
+    music.Play();
     auto bgObj = std::make_shared<GameObject>();
     objectArray.push_back(bgObj);
     bgObj->box.SetOrigin(0, 0);
-    bgObj->box.SetSize(1024, 600);
-    Sprite *spr = new Sprite(*bgObj, "./assets/img/bg.jpg");
+    bgObj->box.SetSize(265, 150);
+    Sprite *spr = new Sprite(*bgObj, "./assets/img/bg_menu.jpg");
+    spr->SetScale({0.8, 0.8});
     bgObj->AddComponent(spr);
     bgObj->layer = 0;
     bgObj->box.SetOrigin(0, 0);
@@ -49,6 +51,7 @@ MenuState::MenuState() {
 }
 
 MenuState::~MenuState() {
+    music.Stop();
     objectArray.clear();
 }
 

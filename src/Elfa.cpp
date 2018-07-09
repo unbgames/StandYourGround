@@ -9,7 +9,7 @@ Elfa::Elfa(GameObject& associated) : Character(associated,
   {Direction::esq, Facing::up, Movement::idle, Action::no_action}), timer(true), picking(false) {
     hp = 100;
     speed = 200;
-    AddSound("footstep", "./assets/audio/footstep.wav");
+    AddSound("footstep", "./assets/audio/footstep_grass2.mp3");
 }
 
 Elfa::~Elfa() {
@@ -83,7 +83,7 @@ void Elfa::Update(float dt) {
         float elapsed = timer.Get();
         if (elapsed > 0.22 || elapsed == 0) {
             // std::cout<<"PLAY SOUND"<<std::endl;
-            PlaySound("footstep");
+            PlaySound("footstep", 10);
             timer.Restart();
         }
     } else { // Stopped

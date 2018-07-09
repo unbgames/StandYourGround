@@ -2,6 +2,7 @@
 #define MENU_STATE_H
 
 #include "State.h"
+#include "Music.h"
 
 class MenuState : public State {
     public:
@@ -18,6 +19,7 @@ class MenuState : public State {
         void Resume();
 
     private:
+        Music music;
         void StartGame();
         void QuitGame();
         void Credits();

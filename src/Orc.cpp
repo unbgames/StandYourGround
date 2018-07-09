@@ -170,10 +170,11 @@ void Orc::Update(float dt) {
             Vec2 orcPos = associated.box.Origin();
             Elfa* elfaPtr = Elfa::elfa;
             Vec2 elfPos = elfaPtr->Origin();
-            int reducer = int(std::pow(Vec2::EuclidianDist(orcPos, elfPos), 2) / 4000);
+            unsigned int maxVolume = 128;
+            unsigned int reducer = int(std::pow(Vec2::EuclidianDist(orcPos, elfPos), 2) / 4000);
             // int reducer = int(Vec2::EuclidianDist(orcPos, elfPos) / 5);
             // std::cout<<"PLAY SOUND at "<< reducer <<std::endl;
-            PlaySound("footstep", 128 - std::min(reducer, 128));
+            PlaySound("footstep", maxVolume - std::min(reducer, maxVolume));
             footstepTimer.Restart();
         }
     } else { // Stopped
@@ -216,7 +217,7 @@ void Orc::NotifyCollision(GameObject &object) {
     auto trapAux = (Trap *) object.GetComponent("Trap");
     if(trapAux != nullptr) {
         trap = trapAux;
-        std::cout << "TRAAAAP" << std::endl;
+        // std::cout << "TRAAAAP" << std::endl;
         onTrap = true;
     }
     if(object.GetComponent("Item") == nullptr) {
